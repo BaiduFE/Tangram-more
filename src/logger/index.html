@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title> FE Logger V2.0 </title>
+    <meta name="generator" content="editplus">
+    <meta name="author" content="Michael Hu">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="Content-Type" content="text/html;charset=gb2312">
+
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.2.2.core.js"></script>
+<script type="text/javascript" src="logger_.js"></script>
+<script type="text/javascript" language="javascript">
+<!--
+var sHtml = '<script type="text/javascript">alert(111)<' + '/script>';
+var oLog = {
+    d: 'DEBUG日志',
+    t: 'TRACE日志',
+    n: 'NOTICE日志',
+    w: 'WARNING日志',
+    f: 'FATAL日志'
+};
+
+window.setInterval(function(){
+    baidu.more.logger.d(oLog.d + 1000 * Math.random());
+}, 1000);
+
+window.setInterval(function(){
+    baidu.more.logger.t(oLog.t + 1000 * Math.random());
+}, 2000);
+
+window.setInterval(function(){
+    baidu.more.logger.n(oLog.n + 1000 * Math.random());
+}, 3000);
+
+window.setInterval(function(){
+    baidu.more.logger.w(oLog.w + 1000 * Math.random());
+}, 4000);
+
+window.setInterval(function(){
+    baidu.more.logger.f(oLog.f + 1000 * Math.random());
+}, 5000);
+
+baidu.more.logger.d(sHtml);
+//-->
+</script>
+
+</head>
+
+<body style="height:100%">
+<h3>Tip：Looger初始时被最小化了，可以用F2唤出</h3>
+<h4><a href="http://tc-tstest01.tc.baidu.com:8888/my/mybdnews_201008191004_with_logger.html" target="_blank">更多例子&gt;&gt;</a></h4>
+<div style="height:1000px;">
+</div>
+</body>
+</html>

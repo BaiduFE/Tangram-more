@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.1.js"></script>
+<script type="text/javascript" src="ticker.js"></script>
+
+<style>
+p{font-style:italic;color:#aaaaaa;}
+</style>
+
+</head>
+<body>
+    <h1>滚动文字效果</h1>
+
+<p>baidu.more.ticker("ticker1",content);</p>
+<div id="ticker1"></div>
+
+<br/>
+<p>baidu.more.ticker("ticker2",content,{tWidth:"150px",tSpeed:1,tColor:"#0099cc"});</p>
+<div id="ticker2"></div>
+
+<script>
+var content="<a href='http://fe.baidu.com/dev/tangram/developer.html' target=_blank>Tangram</a>" + 
+"提供了开发时常用功能的封装，是核心的工具库。<a href='http://fe.baidu.com/dev/tangram/developer.html' target=_blank>了解、参与tangram开发</a>";
+window.onload = function(){
+	baidu.more.ticker("ticker1",content);
+	baidu.more.ticker("ticker2",content,{tWidth:"150px",tSpeed:1,tColor:"#0099cc"});
+}
+</script>
+
+</body>
+</html>

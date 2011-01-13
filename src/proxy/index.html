@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <meta http-equiv="Content-Language" content="zh-CN" />
+ <meta name="Designer mail" content="itchina110(at)126.com" />
+ <meta name="author" content="花随风落" />
+ <meta name="Keywords" content="" />
+ <meta name="Description" content="" />
+ <title>baidu.more.proxy参数绑定功能</title>
+ <script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.js"></script>
+ <script type="text/javascript" src="proxy.js"></script>
+</head>
+
+<body>
+    <ul id="test">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+
+<script language="javascript">
+<!--
+        baidu.each(baidu.G("test").getElementsByTagName("li"),function(ele,index){
+        baidu.on(ele,"click",baidu.more.proxy(function(i){
+                alert(i);
+                },index));
+        });
+        //当 index 为动态内容时很好用。
+//-->
+</script>
+
+</body>
+
+</html>
+

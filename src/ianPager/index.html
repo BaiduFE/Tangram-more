@@ -1,0 +1,168 @@
+<!DOCTYPE html> <!-- The new doctype -->
+<html>
+    <head>
+    
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+        
+        <title>ianPager demo</title>
+        
+        <link rel="stylesheet" type="text/css" href="styles.css" />
+        <script type="text/javascript" src="ianPager.js"></script>
+        <script type="text/javascript" src="nav.js"></script>
+        
+        <!-- Internet Explorer HTML5 enabling code: -->
+        
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        
+        <style type="text/css">
+        .clear {
+          zoom: 1;
+          display: block;
+        }
+        </style>
+
+        
+        <![endif]-->
+        <style type="text/css">
+        a, span {
+           margin-right:5px;
+        }
+        </style>
+           <script type="text/javascript">
+ /*<![CDATA[*/   
+
+ 
+ /*
+ 做Demo演示时临时写的函数
+ */
+function GetUrlParms()    
+{
+     var args=new Object();   
+     var query=location.search.substring(1);//获取查询串   
+     var pairs=query.split("&");//在逗号处断开   
+     for(var    i=0;i<pairs.length;i++)   
+     {   
+         var pos=pairs[i].indexOf('='); //查找name=value   
+            if(pos==-1)   continue;//如果没有找到就跳过   
+             var argname=pairs[i].substring(0,pos);//提取name   
+            var value=pairs[i].substring(pos+1); //提取value   
+            args[argname]=unescape(value);//存为属性   
+    }
+     return args;
+}
+
+/****************************************************************\
+        公用变量设置
+/****************************************************************/
+ 
+ //每页显示的项数  
+ var global_pageSize = 15;
+ 
+ //在url中表示要传递的页索引的参数的名称
+ var global_urlPageIndexName = "page";
+ 
+ //当前显示页的索引
+ var global_CurrentPageIndex = 1;
+
+ //记录的总数量
+ var global_RecordCount = 1000;
+
+//使用JS获取URL返回的参数
+args = GetUrlParms();
+if(args[global_urlPageIndexName] && !isNaN(args[global_urlPageIndexName])){global_CurrentPageIndex = parseInt(args[global_urlPageIndexName]);};
+/*]]>*/    
+    </script> 
+    </head>
+    
+    <body>
+    	
+    	<section id="page"> <!-- Defining the #page section with the section tag -->
+    
+            <header> <!-- Defining the header section of the page with the appropriate tag -->
+            
+                <hgroup>
+                    <h1><img alt="idoall.org" src="img/logo.jpg" /></h1>
+                </hgroup>
+                                
+                <nav class="clear"> <!-- The nav link semantically marks your main site navigation -->
+                    <ul>
+                                              <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getTopNavString());
+/*]]>*/ 
+    </script>
+                    </ul>
+                </nav>
+            
+            </header>
+            
+            <section > <!-- A new section with the articles -->
+
+				<!-- Article 1 start -->
+
+                <div class="line"></div>  <!-- Dividing line -->
+                
+                <article id="article1"> <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+                    <h2>
+                      <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getNavString());
+/*]]>*/ 
+    </script>
+                    </h2>
+                    
+                    <div class="line"></div>
+                    
+                    <div class="articleBody clear">
+                    <p>基本功能:</p>
+                    	<script type="text/javascript">
+ /*<![CDATA[*/  
+var pager = baidu.more.IanPager();
+pager.PageSize(global_pageSize);
+pager.Width("100%");
+pager.PrevPageText("<");
+pager.NextPageText(">");
+pager.FirstPageText("<<");
+pager.LastPageText(">>");
+pager.ShowInputBox("none");
+pager.AlwaysShow(true);
+pager.ShowPageIndex(true);
+pager.RecordCount(global_RecordCount);
+
+pager.CurrentPageIndex(global_CurrentPageIndex);
+pager.UrlPageIndexName(global_urlPageIndexName);
+pager.Render();
+/*]]>*/ 
+    </script>
+                    </div>
+                </article>
+                
+				<!-- Article 1 end -->
+
+
+
+
+            </section>
+
+        <footer> <!-- Marking the footer section -->
+
+           <div class="line"></div>
+           
+           <p>Copyright 2010 - idoall.org</p> <!-- Change the copyright notice -->
+           
+           <a href="#" class="up">Go UP</a>
+           <a href="http://idoall.org" class="by">idoall.org</a>
+           
+
+        </footer>
+            
+		</section> <!-- Closing the #page section -->
+        
+        <!-- JavaScript Includes -->
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+        <script src="jquery.scrollTo-1.4.2/jquery.scrollTo-min.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

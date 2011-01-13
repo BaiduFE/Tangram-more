@@ -1,0 +1,53 @@
+% baidu.more.ticker
+
+% 李周全
+
+ 
+
+  
+
+## baidu.more.ticker
+
+youname: lizhouquan@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.ticker滚动文字效果，可自定义宽度、速度、文字颜色、鼠标悬停等。
+
+ 
+
+  
+
+### 接口
+
+ 
+
+	 @param {string} id 需要展现滚动的区域id
+	 @param {string} content 滚动内容(支持字符串格式，如果是数组请拼接成字符串)
+	 @param options = {
+	     tWidth : '300px',      //滚动区域的宽度
+	     tHeight : '25px',      //滚动区域的高度
+	     tColor : '',           //文字颜色，空表示不设置颜色
+	     moStop : true,         //鼠标放上去的时候是否停止
+	     tSpeed : 2             //滚动速度由慢到快可设置 1-5(整数类型)。
+     }
+ 
+  
+### 示例
+
+//默认参数调用。
+baidu.more.ticker("滚动区域id","滚动文字内容"); 
+
+//自定义参数调用。
+baidu.more.ticker("滚动区域id","滚动文字内容",{tWidth:"150px",tSpeed:1,tColor:"#0099cc"}}); 
+
+
+### Demo
+
+http://fe.baidu.com/projects/tangram-more/ticker/index.html

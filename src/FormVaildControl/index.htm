@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="FormVaildControl.js"></script>
+     表单验证组件 - FE知识组
+    <style type="text/css">
+         body{font-size:12px;}
+        .style1 { width: 100%; }
+        .style3{background-color: #CBF4F5; height:28px;text-align:right; width:260px;}
+        .style4{ background-color: #E3E3E3;height:28px;  padding-left:5px; }
+        input{ border-width:1px}
+        i.red{ font-style:normal; color:Red; margin:0 3px 0 3px;}
+
+        /**
+            特殊说明
+            下面是验证组件使用的css样式
+            在使用的时候可以根据自己的需求去定制
+         **/
+        span.prompt{ background: url(http://img.baidu.com/img/iknow/shopimg/error.png) no-repeat 0px -1px; height:40px;  color:Red; padding:1px 0 0 20px; margin-left:10px;}
+    </style>
+     <script type="text/javascript">
+         /*<![CDATA[*/
+
+/*
+根据Id获取HTML元素
+*/
+function getElementById()
+{
+    var elements = new Array();
+    for (var i = 0; i < arguments.length; i++)
+    {
+        var element = arguments[i];
+        if (typeof element == 'string')
+        {
+            element = document["getElementById"](element);
+        }
+        if (arguments.length == 1)
+        {
+            return element;
+        }
+        elements.push(element);
+    }
+    return elements;
+}
+
+
+/*
+附加事件(内部使用)
+*/
+function AttachEvent(object,eventName,Function,cancelBubble)
+{
+    var cb = cancelBubble?true:false;
+    eventName = eventName.toLowerCase();
+    if(document.attachEvent){ object.attachEvent(eventName,Function);}
+    else{ object.addEventListener(eventName.substr(2), Function, cb);};
+}
+
+
+/*初始化页面*/
+function InitializePage() {
+
+    if(!window.VaildControl)
+    {
+        window.VaildControl = baidu.more.vaildControl;
+    }
+
+    //------------对Html控件进行验证 Begin
+    VaildControl.AddEmptyVaild(getElementById("ID_Name"), 40, "请输入物品名称");
+    VaildControl.AddRegxVaild(getElementById("ID_Name"), /^.{1,40}$/, "名称过长,最长为40个字符");
+    //
+    VaildControl.AddEmptyVaild(getElementById("ID_Wealth"), 10, "请输入财富值");
+    VaildControl.AddRegxVaild(getElementById("ID_Wealth"), /^[1-9][0-9]{0,9}$/, "最长10个字符长度的正整数");
+    //
+    VaildControl.AddEmptyVaildCus(getElementById("ID_BetRate"), 4, "请输入中奖概率", function() { return getElementById("ID_IsBet").checked; });
+    VaildControl.AddRegxVaildCus(getElementById("ID_BetRate"), /^[0-9]{1,4}$/, "最长4个字符长度的正整数", function() { return getElementById("ID_IsBet").checked; });
+	//
+	VaildControl.InitFocus(0);
+    //------------对Html控件进行验证 End
+
+    //为提交按钮附加事件
+    AttachEvent(getElementById("ID_Submit"), "onclick", OnSubmit);
+
+
+}
+
+/*
+提交事件
+*/
+function OnSubmit() {
+
+	if(VaildControl.Vaild())
+	{
+		alert("验证成功！");
+	}
+	else
+	{
+		//alert("验证失败！");
+	}
+}
+
+/*结束载入页面*/
+function UnInitializePage() {
+    //if(window.VaildControl){ VaildControl.Clear();}
+}
+
+
+AttachEvent(window, "onload", InitializePage);
+AttachEvent(window, "onunload", UnInitializePage);
+
+
+
+
+        /*]]>*/
+    </script>
+
+</head>
+<body>
+<form id="form1" method="post" action="">
+<div id="a"></div>
+<h3>创建物品</h3>
+    <table class="style1" id="ID_Table"  cellpadding=1 cellspacing=1>
+
+       <tr>
+            <td class="style3">
+                 名称：</td>
+            <td class="style4">
+                <input id="ID_Name" name="goodsName" type="text" /><i class="red">*</i></td>
+
+        </tr>
+       <tr>
+            <td class="style3">
+                财富值：</td>
+            <td class="style4">
+               <input id="ID_Wealth" name="wealth" type="text" /><i class="red">*</i></td>
+
+        </tr>
+       <tr>
+            <td class="style3">
+               (当复选框被选中时验证)抽奖设定：</td>
+            <td class="style4">
+               <input id="ID_IsBet" name="isBet" type="checkbox" />　中奖概率1/<input id="ID_BetRate" name="betRate" type="text" /></td>
+           </tr>
+
+       <tr>
+            <td colspan=2 align="center" height="80px">
+               <input  id="ID_Submit" type="button" value="提交" /></td>
+
+        </tr>
+
+    </table>
+
+ </form>
+
+</body>
+</html>

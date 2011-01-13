@@ -1,0 +1,64 @@
+% baidu.more.loadCss
+
+% yourname
+
+ 
+
+  
+
+## baidu.more.loadCss
+
+youname: yourmail@baidu.com
+
+ 
+
+  xx
+
+### 功能介绍
+
+ 
+
+baidu.more.loadCss提供了页面上动态加载css文件的功能。
+
+ 
+
+  
+
+### 接口
+
+ 
+
+loadCss ({string}cssPath)
+
+如果有多个接口，则声明多行
+
+moduleName.method1 (paramList)
+
+moduleName.method2 (paramList)
+
+......
+
+ 
+
+  
+
+### 示例
+
+ 
+
+示例请见http://......
+
+或直接在此书写简单的示例代码
+
+ 
+
+  
+
+### 注意
+
+ 
+
+在IE6下，加载css文件的过程可能造成浏览器渲染有问题，加载完毕后即恢复，请评估css文件的下载时间。
+
+
+[gbk->utf8 by AdoG]

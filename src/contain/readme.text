@@ -1,0 +1,54 @@
+% baidu.more.contain
+
+% 余鹏
+
+ 
+
+  
+
+## baidu.more.contain
+
+youname: yupeng@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.contain 实现一个节点是否包含另一个节点，可以判断文本节点。
+
+ 
+
+  
+
+### 接口
+
+ 
+
+	 /**
+	 * 判断包含一个节点
+	 *
+	 * @param {string} id container - 包含元素或元素的id 
+	 * @param {string} id contained - 被包含元素或元素的id或文本节点
+	 * 
+	 */
+ 
+  
+### 示例
+
+//判断文本节点。
+var child=baidu.g('john').firstChild;
+var flag = baidu.more.contain("john", child);
+
+//一般节点的判断。
+ baidu.dom.contains("container", "contained");   
+ baidu.dom.contains("container", "outer");  
+
+
+### Demo
+
+http://fe.baidu.com/projects/tangram-more/contain/index.html
+

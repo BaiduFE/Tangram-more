@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>xpc</title>
+<style type="text/css">
+* {
+	font:12px 'Consolas','Arial';
+}
+legend {
+	line-height:24px;
+	margin-left:10px;
+}
+legend input {
+	height:22px;
+	vertical-align:middle;
+	padding:0 2px;
+	margin:0;
+	font-size:10px;
+	line-height:22px;
+}
+</style>
+<script src="tangram.js"></script>
+<script src="xpc.js"></script>
+<script>
+function $(id){
+    return document.getElementById(id);
+}
+function loadFile(){
+    baidu.more.xpc($('filePath').value, {
+        method : 'GET',
+        async : false,
+        onsuccess : function(data){
+            $('result').value += data.responseText +
+                '\n================================================================================\n';
+        },
+        onfailure : function(data){
+            $('result').value += '错误：' + data.status +
+                '\n================================================================================\n';
+        }
+    });
+}
+function loadFile2(){
+    baidu.more.xpc($('filePath2').value, {
+        xpc : 'http://javascript.kodingen.com/xpc/xpc.html',
+        method : 'GET',
+        async : false,
+		data : 'username=fouber',
+        onsuccess : function(data){
+            $('result').value += data +
+                '\n================================================================================\n';
+        },
+        onfailure : function(data){
+            $('result').value += '错误：' + data +
+                '\n================================================================================\n';
+        }
+    });
+	//document.domain = 'baidu.com';
+	document.title = document.domain;
+}
+function loadFile3(){
+    eval($('filePath3').value);
+}
+</script>
+</head>
+<body>
+<fieldset>
+	<legend>简介：</legend>
+&nbsp;&nbsp;&nbsp;&nbsp;baidu.more.xpc可以发起同域及跨域ajax请求，支持与baidu.ajax.request相同的参数设置。跨域请求时，需在对方域下任意位置安排xpc.html文件。<br/><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;使用方法：<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;baidu.more.xpc({string}url, {object}options)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@params url {string} 发送请求的url<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@params options {object} 发送请求的选项参数。详情请参阅Tangram中关于baidu.ajax.request的说明（<a href="http://fe.baidu.com/dev/tangram/baidu_ajax_request.html" target="_blank">http://fe.baidu.com/dev/tangram/baidu_ajax_request.html</a>）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果要发送一个跨域，只须设置options对象的xpc属性指向对方域中的xpc.html文件地址即可<br/>
+<pre style="color:#c00">
+<span style="font-size:20px;font-weight:bold;">注意</span>
+1 跨域请求和同域请求在事件响应函数的处理上稍有差别：
+    同域请求中，onsuccess、onfailure等方法调用时传入的参数与Tangram中的ajax.request方法一致；
+    跨域请求中，onsuccess、onfailure等方法调用时仅传入XmlHttpRequest对象的responseText或status属性。
+
+2 若要进行跨域请求，必须在对方域下安排xpc.html文件，xpc.html文件中有三个script标签：
+    第一个script标签中的内容是要用到的tangram相关代码；
+    第二个script标签中声明了一个domain<Array>全局变量，可以根据需要设置允许提交跨域请求的域，如果数组中含有'*'项，则表示允许来自任何域的请求，这是从安全的角度考虑的；
+    第三个script标签中的内容是跨域通信的相关代码。
+</pre>
+</fieldset><br/>
+可以请求的文件：<br/>
+<img src="files.png" /><hr/><br/><br/>
+    <label for="filePath">GET请求当前域内容
+        <input type="text" name="filePath" size="50" id="filePath" value="xpc.js" />
+    </label>
+    <input type="button" value="发送" onclick="loadFile()" /><br>
+    <label for="filePath2">GET请求webairness.com域的内容
+        <input type="text" name="filePath2" size="50" id="filePath2" value="readme.text" />
+    </label>
+    <input type="button" value="发送" onclick="loadFile2()" /><br>
+    <fieldset style="float:left;">
+		<legend> 随便搞搞，编辑代码点击执行 <input type="button" value="执行" onclick="loadFile3()" /></legend>
+        <textarea type="text" name="filePath3" size="50" id="filePath3" cols="80" rows="25">baidu.more.xpc('login.asp', {
+    //定义了xpc即可跨域，不定义既是同域ajax;
+    xpc : 'http://javascript.kodingen.com/xpc/xpc.html',
+    //其他参数与baidu.ajax.request方法保持一致
+    method : 'POST',
+    async : false,
+    data : 'username=fouber',
+    headers : {
+        'Content-Type' : 'text/xml; charset=gb2312'
+    },
+    onsuccess : function(data){
+        //如果是跨域请求，则传入的data是responseText，反之则是XHR对象；
+        alert(data);
+    },
+    onfailure : function(data){
+        //如果是跨域请求，则传入的data是status，反之则是XHR对象；
+        alert(data);
+    }
+});</textarea>
+    </fieldset>
+	<fieldset style="float:left;">
+		<legend>显示结果：</legend>
+		<textarea id="result" cols="80" rows="25"></textarea>
+	</fieldset>
+</body></html>

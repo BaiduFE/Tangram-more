@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>troy</title>
+<script>/* Copyright (c) 2010 Baidu */
+//<!--
+var baidu=baidu||{version:"1-2-0"};baidu.guid="$BAIDU$";window[baidu.guid]=window[baidu.guid]||{};baidu.ajax=baidu.ajax||{};
+baidu.ajax.request=function(d,o){function j(){if(n.readyState==4){try{var q=n.status}catch(p){e("failure");return}e(q);if((q>=200&&q<300)||q==304||q==1223){e("success")
+}else{e("failure")}window.setTimeout(function(){n.onreadystatechange=new Function();if(g){n=null}},0)}}function c(){if(window.ActiveXObject){try{return new ActiveXObject("Msxml2.XMLHTTP")
+}catch(p){try{return new ActiveXObject("Microsoft.XMLHTTP")}catch(p){}}}if(window.XMLHttpRequest){return new XMLHttpRequest()
+}}function e(q){q="on"+q;var p=b[q],r=baidu.ajax[q];if(p){if(q!="onsuccess"){p(n)}else{p(n,n.responseText)}}else{if(r){if(q=="onsuccess"){return
+}r(n)}}}o=o||{};var i=o.data||"",g=!(o.async===false),h=o.username||"",m=o.password||"",a=(o.method||"GET").toUpperCase(),f=o.headers||{},b={},l,n;
+for(l in o){b[l]=o[l]}f["X-Request-By"]="baidu.ajax";try{n=c();if(a=="GET"){d+=(d.indexOf("?")>=0?"&":"?");if(i){d+=i+"&";
+i=null}if(o.noCache){d+="b"+(new Date()).getTime()+"=1"}}if(h){n.open(a,d,g,h,m)}else{n.open(a,d,g)}if(g){n.onreadystatechange=j
+}if(a=="POST"){n.setRequestHeader("Content-Type","application/x-www-form-urlencoded")}for(l in f){if(f.hasOwnProperty(l)){n.setRequestHeader(l,f[l])
+}}e("beforerequest");n.send(i);if(!g){j()}}catch(k){e("failure")}return n};baidu.json=baidu.json||{};baidu.json.parse=function(a){if(!/^[\],:{}\s]*$/.test(a.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,"@").replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,"]").replace(/(?:^|:|,)(?:\s*\[)+/g,""))){return null
+}return window.JSON&&window.JSON.parse?window.JSON.parse(a):(new Function("return "+a))()};baidu.json.stringify=(function(){var b={"\b":"\\b","\t":"\\t","\n":"\\n","\f":"\\f","\r":"\\r",'"':'\\"',"\\":"\\\\"};
+function a(f){if(/["\\\x00-\x1f]/.test(f)){f=f.replace(/["\\\x00-\x1f]/g,function(g){var h=b[g];if(h){return h}h=g.charCodeAt();
+return"\\u00"+Math.floor(h/16).toString(16)+(h%16).toString(16)})}return'"'+f+'"'}function d(m){var g=["["],h=m.length,f,j,k;
+for(j=0;j<h;j++){k=m[j];switch(typeof k){case"undefined":case"function":case"unknown":break;default:if(f){g.push(",")}g.push(baidu.json.stringify(k));
+f=1}}g.push("]");return g.join("")}function c(f){return f<10?"0"+f:f}function e(f){return'"'+f.getFullYear()+"-"+c(f.getMonth()+1)+"-"+c(f.getDate())+"T"+c(f.getHours())+":"+c(f.getMinutes())+":"+c(f.getSeconds())+'"'
+}return function(j){switch(typeof j){case"undefined":return"undefined";case"number":return isFinite(j)?String(j):"null";case"string":return a(j);
+case"boolean":return String(j);default:if(j===null){return"null"}else{if(j instanceof Array){return d(j)}else{if(j instanceof Date){return e(j)
+}else{var g=["{"],i=baidu.json.stringify,f,h;for(key in j){if(j.hasOwnProperty(key)){h=j[key];switch(typeof h){case"undefined":case"unknown":case"function":break;
+default:if(f){g.push(",")}f=1;g.push(i(key)+":"+i(h))}}}g.push("}");return g.join("")}}}}}})();//--></script>
+<script>
+var domains = ['*'];
+/*这里可以配置白名单，'*'表示允许来自任何域的请求，例如：
+var domains = [
+	'http://localhost',
+	'http://www.webairness.com',
+	'http://fouber.kodingen.com'
+];*/
+</script>
+<script>
+//<!--
+	var XPC = {
+		send : function(){},
+		onMessage : function(evt){
+			evt = evt || window.event;
+			var domain = evt.origin;
+			var win = evt.source;
+			for(var i = 0; i < domains.length; i++) {
+				if(domains[i] == '*' || domains[i] == domain){
+					var s = evt.data;
+					var o = baidu.json.parse(s);
+					var that = XPC;
+					o.onsuccess = function(xpc){
+						that.send(s + '1' + xpc.responseText, domain, win);
+					}
+					o.onfailure = function(xpc){
+						that.send(s + '0' + xpc.status, domain, win);
+					}
+					baidu.ajax.request(o.url, o);
+				}
+			}
+		}
+	}
+	if(window.postMessage){
+		if(window.addEventListener){
+			window.addEventListener('message', XPC.onMessage, false);
+			XPC.send = function(msg, domain, win){
+				win.postMessage(msg, domain);
+			}
+		} else if(window.attachEvent){
+			window.attachEvent('onmessage', XPC.onMessage);
+			XPC.send = function(msg, domain, win){
+				win.postMessage(msg, domain);
+			}
+		} else {
+			alert('您的浏览器不支持事件监听');
+		}
+	} else {
+		try {
+			window.opener.XPC.childReceiveHandler = XPC.onMessage;
+			XPC.send = function(msg, domain){
+				var o = {
+					data : msg,
+					origin : domain
+				};
+				window.opener.XPC.parentReceiveHandler(o);
+			}
+		} catch(e) {}
+	}
+//-->
+</script>
+    </head>
+    <body></body>
+</html>

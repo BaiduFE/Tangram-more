@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<title>inputTip </title>
+		<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.core.js">
+		</script>
+		<script src="tip.js">
+		</script>
+	</head>
+	<body>
+		<input type="text" value="hello word test01!" style="color:#838383" id="input_1">
+		<br>
+		<br>
+		<br>
+		<br>
+		<input type="text" value="hello word test02!" style="color:red" id="input_2">
+		<script>
+			var input_1_cfg = {
+			    inputId: "input_1",
+			    tipColor: "#838383",
+			    inputColor: "#000"
+			}
+			baidu.more.inputTip(input_1_cfg);
+			var input_2_cfg = {
+			    inputId: "input_2",
+			    tipColor: "red",
+			    inputColor: "#000"
+			}
+			baidu.more.inputTip(input_2_cfg);
+		</script>
+	</body>
+</html>

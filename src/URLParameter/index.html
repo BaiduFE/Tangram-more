@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>URLParameter</title>
+<style>
+p{font-size:85%;}
+pre{margin-bottom:3em; padding:10px; background:#eee; font-size:75%; color:#666;}
+#Code{width:400px; height:200px; font-size:75%;}
+</style>
+</head>
+
+<body>
+<h1>URLParameter类使用方式</h1>
+<p>除了可以用在拼URL参数串上，也可以用在cookie的实现里。<a href="./URLParameter.js">查看源码</a></p>
+<h2>初始化</h2>
+<p>通过new一个对象获得一个URLParameter的实例 <button type="button" onclick="initParam();">测试</button></p>
+<pre>
+var param = new baidu.more.URLParameter();
+</pre>
+
+<h2>设置参数的方法</h2>
+<p>param.set()方法</p>
+<p>设置一个参数 <button type="button" onclick="setParam('a', 1);">测试</button></p>
+<pre>
+param.set('a', 1);
+</pre>
+<p>设置一个多值参数 <button type="button" onclick="setParam('b', [2, 3, 4]);">测试</button></p>
+<pre>
+param.set('b', [2, 3, 4]);
+</pre>
+<p>设置一组参数 <button type="button" onclick="setParam({'a': 2, 'c': '中文'});">测试</button></p>
+<pre>
+param.set({'a': 2, 'c': '中文'});
+</pre>
+<p>删除参数c <button type="button" onclick="setParam({'c': null});">测试</button></p>
+<pre>
+param.set({'c': null});
+</pre>
+
+<h2>获取参数的方法</h2>
+<p>param.get()方法</p>
+<p>获取参数c <button type="button" onclick="getParam('c');">测试</button></p>
+<pre>
+param.get('c');
+</pre>
+
+<h2>输出字符串（encodeURIComponent编码）</h2>
+<p>param.toString(encodeURIComponent)方法</p>
+<p>输出字符串 <button type="button" onclick="stringify(encodeURIComponent);">测试</button></p>
+<pre>
+param.toString(encodeURIComponent);
+</pre>
+
+
+<h2>更多测试</h2>
+<p>可以使用已经声明的param对象，也可以使用其他任意代码（文本框里的代码将以eval方式执行）。</p>
+<p><textarea id="Code"></textarea><button type="button" onclick="custom();">运行</button></p>
+
+<script src="URLParameter.js"></script>
+<script>
+var param = new baidu.more.URLParameter();
+
+function output (s) {
+	alert('现在的参数串："' + s + '"');
+}
+
+function initParam() {
+	output(param = new baidu.more.URLParameter());
+}
+
+function setParam() {
+	output(param.set.apply(param, arguments));
+}
+
+function getParam(key) {
+	alert(param.get(key));
+}
+
+function stringify(encoder) {
+	output(param.toString(encoder));
+}
+
+function custom() {
+	eval(document.getElementById('Code').value);
+}
+</script>
+</body>
+</html>

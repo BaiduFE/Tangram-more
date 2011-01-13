@@ -1,0 +1,59 @@
+% baidu.more.data
+% stayalive
+ 
+  
+## baidu.more.data
+stayalive: yangyujing@baidu.com
+ 
+  
+### 功能介绍
+ 
+baidu.more.data 提供页面元素存储读取数据缓存的方法。
+ 
+  
+### 接口
+获取或设定元素上储存的相应名字的数据
+baidu.more.data({HTMLElement|element|window}[elem],{string}name,{string|number|element|array}[data])
+	@param {HTMLElement|element|window} elem	目标对象,DOM节点或window,可选如没有指定则为window
+	@param {string} name 数据名称 必选
+	@param {string|number|element|array} data	数据值 可选，存储在元素上面对应name的值，如果没有指定则为获取name对应的值
+	@return {string|number|element|array} 返回值 设定的数据,如果没有返回
+移除元素上储存的数据
+baidu.more.data.remove({HTMLElement|element|window}[elem],{string}name)
+	@param {HTMLElement|element|window} elem	目标对象,DOM节点或window,可选如没有指定则为window
+	@param {string} name	数据名称 必选值
+判断对象是否为空对象
+baidu.more.data.isEmptyObject({element}obj)
+	@param  {element} elem	对象
+	@return {bool} 返回值 true:空对象;false:不为空对象
+### 示例
+ 
+alert(baidu.more.data(baidu.G('test'),'id'));//获取test对象上设置的id值null
+baidu.more.data(baidu.G('test'),'id','hello');//id设置为hello
+alert(baidu.more.data(baidu.G('test'),'id'));//hello
+baidu.more.data(baidu.G('test'),'id',10086);//id设置为10086
+alert(baidu.more.data(baidu.G('test'),'id'));//10086
+baidu.more.data(baidu.G('test'),'id',[1,2]);//id设置为数组
+alert(baidu.more.data(baidu.G('test'),'id').join('-'));//数组[1,2]
+baidu.more.data(baidu.G('test'),'id',{id:'obj'});//id设置为对象
+alert(typeof baidu.more.data(baidu.G('test'),'id'));//对象
+baidu.more.data.remove(baidu.G('test'),'id');//移除id
+alert(baidu.more.data(baidu.G('test'),'id'));//null
+alert(baidu.more.data('id'));//获取window对象上设置的id值null
+baidu.more.data('id','hello');//id设置为hello
+alert(baidu.more.data('id'));//hello
+baidu.more.data('id',10086);//id设置为10086
+alert(baidu.more.data('id'));//10086
+baidu.more.data('id',[1,2]);//id设置为数组
+alert(baidu.more.data('id').join('-'));//数组[1,2]
+baidu.more.data('id',{id:'obj'});//id设置为对象
+alert(typeof baidu.more.data('id'));//对象
+baidu.more.data.remove('id');//移除id
+alert(baidu.more.data('id'));//null(ie下，对象为window remove后返回值为undefined而不是null)
+ 
+  
+### 注意
+1.embed object applet 节点不能添加数据
+2.ie下：数据添加到window中，remove后返回值不是null而是undefined
+3.数据对obejct对象时候依赖于baidu.object.extend
+4.此方法抽取于jquery :1.4.2

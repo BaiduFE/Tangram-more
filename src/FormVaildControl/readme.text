@@ -1,0 +1,78 @@
+% baidu.more.VaildControl
+
+% 侯迦壹
+
+ 
+
+  
+
+## baidu.more.VaildControl
+
+youname: houjianxun@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.VaildControl提供了页面表单中Html控件的验证。
+
+ 
+
+  
+
+### 接口
+ 
+
+添加不能为空验证
+@obj     {Object}       要验证的对象
+@maxlen  {int}          允许最大输入的长度
+@message {string}       出错时提示的消息
+VaildControl.AddEmptyVaild (obj, maxlen, message)
+
+
+添加不能为空验证(方法重载)
+@obj        {Object}       要验证的对象
+@maxlen     {int}          允许最大输入的长度
+@message    {string}       出错时提示的消息
+@validFun   {function}     当有其他验证条件时，传递的判断匿名函数
+VaildControl.AddEmptyVaildCus (obj, maxlen, message, validFun)
+
+
+添加正则验证
+@obj       {Object}       要验证的对象
+@strRegex  {regx}         自定义的正则验证
+@message   {string}       出错时提示的消息
+VaildControl.AddRegxVaild(obj, strRegex, message)
+  
+  
+添加正则验证(方法重载)
+@obj       {object}        要验证的对象
+@maxlen    {int}           允许最大输入的长度
+@message   {string}        出错时提示的消息
+@validFun  {function}      当有其他验证条件时，传递的判断匿名函数
+VaildControl.AddRegxVaildCus(obj, strRegex, message, validFun)
+
+
+清除添加过的Html控件对象
+VaildControl.Clear()
+
+### 示例
+
+ 
+示例请见http://fe.baidu.com/~lion/_tangram/FormVaildControl.htm
+
+
+
+ 
+
+  
+
+### 注意
+
+ 
+
+在IE6下，加载css文件的过程可能造成浏览器渲染有问题，加载完毕后即恢复，请评估css文件的下载时间。

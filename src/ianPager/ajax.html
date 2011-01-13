@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!-- The new doctype -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>ianPager demo</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script type="text/javascript" src="ianPager.js"></script>
+    <script type="text/javascript" src="nav.js"></script>
+    <!-- Internet Explorer HTML5 enabling code: -->
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        
+        <style type="text/css">
+        .clear {
+          zoom: 1;
+          display: block;
+        }
+        </style>
+
+        
+        <![endif]-->
+    <style type="text/css">
+        a, span
+        {
+            margin-right: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+ /*<![CDATA[*/   
+
+ 
+
+/****************************************************************\
+        公用变量设置
+/****************************************************************/
+ 
+ //每页显示的项数  
+ var global_pageSize = 15;
+ 
+ //在url中表示要传递的页索引的参数的名称
+ var global_urlPageIndexName = "page";
+ 
+ //当前显示页的索引
+ var global_CurrentPageIndex = 1;
+
+ //记录的总数量
+ var global_RecordCount = 1000;
+
+/*]]>*/    
+    </script>
+</head>
+<body>
+    <section id="page"> <!-- Defining the #page section with the section tag -->
+    
+            <header> <!-- Defining the header section of the page with the appropriate tag -->
+            
+                <hgroup>
+                    <h1><img alt="idoall.org" src="img/logo.jpg" /></h1>
+                </hgroup>
+                                
+                <nav class="clear"> <!-- The nav link semantically marks your main site navigation -->
+                    <ul>
+                        
+                      <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getTopNavString());
+/*]]>*/ 
+    </script>
+                    </ul>
+                </nav>
+            
+            </header>
+            
+            <section > <!-- A new section with the articles -->
+
+				<!-- Article 1 start -->
+
+                <div class="line"></div>  <!-- Dividing line -->
+                
+                <article id="article1"> <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+                    <h2>
+                      <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getNavString());
+/*]]>*/ 
+    </script>
+                    </h2>
+                    
+                    <div class="line"></div>
+                    
+                    <div class="articleBody clear">
+                    <p>ajax支持:</p>
+                    <span id="jspager"></span>
+                      <script type="text/javascript">
+ /*<![CDATA[*/  
+function createJsPager(pageIndex, pageSize)
+{
+    var pager = baidu.more.IanPager();
+    pager.PageSize(pageSize);
+    pager.Width("100%");
+    pager.PrevPageText("上一页");
+    pager.NextPageText("下一页");
+    pager.FirstPageText("首页");
+    pager.LastPageText("尾页");
+    pager.ShowInputBox("None");
+    pager.ShowMoreButton(true);
+    pager.RecordCount(1000);
+    pager.CurrentPageIndex(pageIndex);
+    pager.UrlPageIndexName(global_urlPageIndexName);
+    pager.CustomJsPageFunction("createJsPager({0},"+ pageSize +")");
+    document.getElementById("jspager").innerHTML = pager.Html();
+}
+createJsPager(global_CurrentPageIndex, global_pageSize);
+/*]]>*/ 
+    </script>
+                    </div>
+                </article>
+                
+				<!-- Article 1 end -->
+
+
+
+
+            </section>
+
+        <footer> <!-- Marking the footer section -->
+
+           <div class="line"></div>
+           
+           <p>Copyright 2010 - idoall.org</p> <!-- Change the copyright notice -->
+           
+           <a href="#" class="up">Go UP</a>
+           <a href="http://idoall.org" class="by">idoall.org</a>
+           
+
+        </footer>
+            
+		</section>
+    <!-- Closing the #page section -->
+    <!-- JavaScript Includes -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="jquery.scrollTo-1.4.2/jquery.scrollTo-min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

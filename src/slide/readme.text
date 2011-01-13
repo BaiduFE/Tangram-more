@@ -1,0 +1,36 @@
+% baidu.more.slide
+% zhangmingzhu（月高不知归）
+
+
+## baidu.more.slide
+zhangmingzhu@baidu.com
+
+   
+### 功能介绍
+
+baidu.more.slide 图片左右滑动。
+
+1、点击左右箭头可进行滑动；
+2、可设置图片是否自动进行左右滑动；
+3、每次滚动一张图片（或多张）；
+4、有缓动功能；
+5、始终循环；
+
+
+### 接口
+
+baidu.more.slide.play(ElementId, ElementId, ElementId, ElementId, ElementId [, {width:174, speed:10, auto:true}]);
+
+
+### 示例
+
+baidu.more.slide.play("SlideBox", "Holder1", "Holder2", "ArrLeft", "ArrRight", {width:174,speed:10,auto:true});
+
+param:
+  width: 每次滚动的宽，可以缺省，默认值为100;
+  speed: 速度，可以缺省，默认值为10;
+  auto:  是否自动滚动，可以缺省，默认值为true;
+
+### 注意
+
+如果图片需要进行等比缩放，可在图片外增加一个div（固定宽高，overflow:hidden）

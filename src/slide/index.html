@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>图片左右滑动</title>
+<style type="text/css">
+body{font:12px arial;color:#000;background:#fff}
+form,p,ol,ul,li,dl,dt,dd,h1,h2,h3,h4,h5{margin:0;padding:0}
+ul{list-style:none}
+
+#SlideDiv{width:741px;overflow:hidden}
+#SlideDiv #ArrLeft{width:20px;height:58px;display:block;float:left;background:url(img/arr.gif) -25px 0;margin:27px 4px 0 0}
+#SlideDiv #ArrRight{width:20px;height:58px;display:block;float:left;background:url(img/arr.gif) 0 0;margin:27px 0 0 5px}
+#SlideDiv #SlideBox{width:692px;height:140px;float:left;overflow:hidden}
+#SlideDiv .mask{width:10000px;zoom:1}
+#SlideDiv ul{float:left}
+#SlideDiv li{width:174px;text-align:center;float:left;background:none}
+#SlideDiv li img{border:1px solid #d2d2d2;padding:2px;display:block;margin:0 auto}
+#SlideDiv li p{height:24px;overflow:hidden;line-height:24px}
+#ScrollBox{width:100%;height:144px;overflow:hidden}
+#ScrollBox li{line-height:24px}
+
+.box{width:741px;border:1px solid #A0D0CB}
+.box dt{font-size:14px;font-weight:bold;color:#fff;background:#4C9469;line-height:26px;padding-left:10px}
+.box dd{padding-top:10px}
+</style>
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.js"></script>
+<script type="text/javascript" src="slide.js"></script>
+</head>
+
+<body>
+<a href="readme.text">readme</a><br><br>
+<dl class="box">
+    <dt>精彩图片</dt>
+    <dd class="photos f14">
+        <div id="SlideDiv">
+            <a href="javascript:void(0)" id="ArrLeft" onFocus="this.blur()"></a>
+            <div id="SlideBox">
+                <div class="mask">
+                    <ul id="Holder1"> 
+                        <li> 
+                            <a href="#"><img src="img/1.jpg" width="150" height="100"></a> 
+                            <p><a href="#">图片1</a></p> 
+                        </li> 
+                        <li> 
+                            <a href="#"><img src="img/2.jpg" width="150" height="100"></a> 
+                            <p><a href="#">图片2</a></p> 
+                        </li> 
+                        <li> 
+                            <a href="#"><img src="img/3.jpg" width="150" height="100"></a> 
+                            <p><a href="#">图片3</a></p> 
+                        </li> 
+                        <li> 
+                            <a href="#"><img src="img/4.jpg" width="150" height="100"></a> 
+                            <p><a href="#">图片4</a></p> 
+                        </li> 
+                        <li> 
+                            <a href="#"><img src="img/5.jpg" width="150" height="100"></a> 
+                            <p><a href="#">图片5</a></p> 
+                        </li> 
+                    </ul> 
+                    <ul id="Holder2"></ul> 
+                </div> 
+            </div> 
+            <a href="javascript:void(0)" id="ArrRight" onFocus="this.blur()"></a>
+        </div>
+    </dd>
+</dl>
+<script type="text/javascript">baidu.more.slide.play("SlideBox", "Holder1", "Holder2", "ArrLeft", "ArrRight", {width:174,speed:10,auto:true});</script>
+</body>
+</html>

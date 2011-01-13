@@ -1,0 +1,143 @@
+<!-- title:贡献代码 -->
+<div class="toc-outer"><div class="toc">
+	<div class="toc-title">文档结构<small id="tocFolder">[收起]</small></div>
+	<div class="toc-list" id="tocList">
+		<h1><a href="#h1">贡献代码</a></h1>
+			<h2><a href="#why">为什么大家需要您</a></h2>
+			<h2><a href="#start">开始</a></h2>
+			<h2><a href="#step1">step1. 创建模块文件夹</a></h2>
+			<h2><a href="#step2">step2. 创建readme.txt</a></h2>
+			<h2><a href="#step3">step3. 整理和封装您的代码</a></h2>
+			<h2><a href="#step4">step4. 示例与索引</a></h2>
+			<h2><a href="#notice">还有一些需要了解的</a></h2>
+			<h2><a href="#embody">收录到Tangram</a></h2>
+	</div>
+</div></div>
+
+<h1>贡献代码<a name="h1"></a></h1>
+
+<h2>为什么大家需要您<a name="why"></a></h2>
+<p>重新发明轮子是一个重复繁琐而无效的事情。相信在每个产品线中都有很多通用性较强的代码，在过去，这些通用代码是不为其他产品线所知的。</p>
+<p>
+因此我们邀请各位工程师贡献自己的代码到tangram框架中来！
+</p>
+
+<p>您的贡献能使大家可以避免在您已经解决的问题上浪费时间。</p>
+<p>您的贡献可能会被其他产品线所使用，对您来说相信也是一件愉悦的事情。</p>
+<p>您的贡献可能会被其他工程师下载学习，相信这是一个互相进步的过程。</p>
+
+<h2>开始<a name="start"></a></h2>
+<p>为了让大家能更容易理解聪明的您，在提交代码之前，您应该完成如下事情:</p>
+<p>&nbsp;&nbsp;<a href="#step1">1. 在svn上新建一个目录，作为您的模块文件夹。</a></p>
+<p>&nbsp;&nbsp;<a href="#step2">2. 新建一个readme.text文件，对您的模块功能进行一个简单的说明。</a></p>
+<p>&nbsp;&nbsp;<a href="#step3">3. 整理和封装您的代码。</a></p>
+<p>&nbsp;&nbsp;<a href="#step4">4. 还需要一个或一些示例，并索引她们。</a></p>
+<p>好了，完成上面的事情后，您就可以提交您的代码了。想要使用的工程师或许会直接找到您，请尽量nice的帮助他们吧。</p>
+
+
+<h2>step1. 创建模块文件夹<a name="step1"></a></h2>
+<p>您需要将代码贡献的svn地址checkout出来，新建您的模块目录，然后提交她。</p>
+<p>代码贡献的svn地址为：<a href="http://fe.baidu.com/repos/projects/tangram-more" target="_blank">http://fe.baidu.com/repos/projects/tangram-more</a>。</p>
+
+
+<h2>step2. 创建readme.text<a name="step2"></a></h2>
+<p>在您新建的模块目录下，创建readme.text文件，简单介绍您的模块，并留下您的信息。</p>
+<p>下面是readme.text的简单示例，该模块非真实存在。</p>
+<pre code="js">
+% baidu.more.loadCss
+% yourname
+ 
+  
+## baidu.more.loadCss
+yourname: yourmail@baidu.com
+ 
+  
+### 功能介绍
+ 
+baidu.more.loadCss提供了页面上动态加载css文件的功能。
+ 
+  
+### 接口
+{literal} 
+loadCss ({string}cssPath)
+如果有多个接口，则声明多行
+moduleName.method1 (paramList)
+moduleName.method2 (paramList)
+......
+ 
+  
+### 示例
+ 
+示例请见http://......
+或直接在此书写简单的示例代码
+ 
+  
+### 注意
+ 
+在IE6下，加载css文件的过程可能造成浏览器渲染有问题，加载完毕后即恢复，请评估css文件的下载时间。
+</pre>
+
+<h2>step3. 整理和封装您的代码<a name="step3"></a></h2>
+<p>在您的项目中，您的模块可能是作为业务层组件，或耦合在业务逻辑内部的。您需要把功能独立剥离出来，更便于大家使用。</p>
+<p>请分析模块职责，从功能的角度考虑应该暴露的接口，并进行封装。在这个过程中，您需要遵循一些规则：</p>
+<p>1. 您的模块必须在baidu.more包下。js如此自由的语言，我们不愿限制您通过接口扩展模块，请您以下面的代码起始声明您的模块。当然，您可以把它封装在闭包内。</p>
+<pre code="js">
+// 预声明包
+baidu.more = baidu.more || { };
+baidu.more.myModule = //Function or Object;
+</pre>
+<p>如果您的模块不依赖与Tangram，您可能需要在顶上多加一行var baidu = baidu || { }。建议您基于Tangram1.1开发。
+<p>2. 您的每个js文件需要包含文件注释，说明模块名、您的名字、文件路径、修改日期以及版本号。下面是文件说明的例子。</p>
+<pre code="js">
+/*
+ * your module name
+ * 
+ * path: filename.js
+ * author: yourname
+ * version: 1.1.0
+ * date: 2010/10/10
+ */
+</pre>
+<p>3. 对于每个暴露的接口，您需要进行符合jsdoc规范的详细注释。下面是一个方法注释的示例。您也可以从tangram的源代码中参考注释的形式。</p>
+
+<pre code="js">
+/**
+ * 获取目标元素所属的window对象
+ *
+ * @param {HTMLElement|string} element  目标元素或目标元素的id
+ * @param {string}             position 插入html的位置信息，取值为beforeBegin,afterBegin,beforeEnd,afterEnd
+ * @param {string}             html     要插入的html
+ */
+</pre>
+{/literal}
+<p>4. 如果您的模块依赖Tangram，请按tangram的<a href="../tangram/howtouse.html">使用方法</a>使用，如使用统一的CDN引用，或codesearch等。</p>
+
+<p>5. 您代码的格式与命名需要遵循<a href="http://fe.baidu.com/doc/rules/JavaScript%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83.doc" target="_blank">《Javascript编码规范》</a>。</p>
+
+<h2>step4. 示例与索引<a name="step4"></a></h2>
+<p>创建示例：请创建一个或多个html页面，展示您模块的用法。您的代码示例和运行效果会对大家很有用。</p>
+<p>创建索引：在完成示例后，请创建index.html页，用链接索引到您的示例。</p>
+<p>如果您只有一个示例，可以在index.html中示例它。</p>
+<p>强烈建议您在index.html中索引到您的readme.txt。</p>
+
+<h2>还有一些需要了解的<a name="notice"></a></h2>
+<p>Javascript是如此自由的一门语言，我们需要遵循这样一些简单的规则，避免可能对大家产生的困扰：</p>
+<p>1. 暴露最少。您贡献的代码，在globel中应该只扩展了baidu.more.yourModule一个对象，避免可能产生的全局冲突。</p>
+<p>2. 请勿扩展原生对象与托管对象。对原生对象的扩展可能导致引入不同框架的扩展覆盖，在遍历时也可能产生不期望的结果。</p>
+<p>3. 如果您想要贡献的模块名其他人已经贡献过，请使用其他有意义的名字。</p>
+<p>&nbsp;&nbsp;如：baidu.more.Grid已经被使用，请使用baidu.more.BeidouGrid这样的命名，切勿使用类似baidu.more.Grid2的命名。</p>
+
+<h2>收录到Tangram<a name="embody"></a></h2>
+<p>如果您想要将您的功能模块代码作为Tangram官方发布，您或许需要贡献一些课余时间，因为距离实现与发布一个编程系统，我们还需要做很多。</p>
+<p>我们会与您一起对可能使用您贡献功能的产品线进行需求调研与分析、接口与实现评审、实现整理与测试用例开发、提测、详细的文档与示例整理。</p>
+<p>完成这些必须的事情后，您的模块就会被正式发布出来了，您的名字也会出现在<a href="http://fe.baidu.com/dev/tangram/#contribute">首页</a>哦。</p>
+
+<h2>奖励</h2>
+
+<p>
+只要您的模块贡献被tangram小组确认，将获得150公益积分，具体公益积分的政策见<a href="http://op.baidu.com/twiki/bin/view/OP/OPAI_SCORE_Rules" target="_blank">这里</a>
+</p>
+
+<p>
+还等什么，整理下您在产品线代码的通用部分，贡献给其他人，并且获得积分吧！
+</p>

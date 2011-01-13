@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.3.0.js"></script>
+<script type="text/javascript" src="data.js"></script>
+<title>baidu.more.data()</title>
+</head>
+
+<body>
+<div id="test">
+<button id="btn" onclick="foo();">debug</button>
+</div>
+<textarea id="code" style="width:98%; height:300px">
+alert(baidu.more.data(baidu.G('test'),'id'));//获取test对象上设置的id值null
+baidu.more.data(baidu.G('test'),'id','hello');//id设置为hello
+alert(baidu.more.data(baidu.G('test'),'id'));//hello
+baidu.more.data(baidu.G('test'),'id',10086);//id设置为10086
+alert(baidu.more.data(baidu.G('test'),'id'));//10086
+baidu.more.data(baidu.G('test'),'id',[1,2]);//id设置为数组
+alert(baidu.more.data(baidu.G('test'),'id').join('-'));//数组[1,2]
+baidu.more.data(baidu.G('test'),'id',{id:'obj'});//id设置为对象
+alert(typeof baidu.more.data(baidu.G('test'),'id'));//对象
+baidu.more.data.remove(baidu.G('test'),'id');//移除id
+alert(baidu.more.data(baidu.G('test'),'id'));//null
+alert('======================')
+alert(baidu.more.data('id'));//获取window对象上设置的id值null
+baidu.more.data('id','hello');//id设置为hello
+alert(baidu.more.data('id'));//hello
+baidu.more.data('id',10086);//id设置为10086
+alert(baidu.more.data('id'));//10086
+baidu.more.data('id',[1,2]);//id设置为数组
+alert(baidu.more.data('id').join('-'));//数组[1,2]
+baidu.more.data('id',{id:'obj'});//id设置为对象
+alert(typeof baidu.more.data('id'));//对象
+baidu.more.data.remove('id');//移除id
+alert(baidu.more.data('id'));//null(ie下，对象为window remove后返回值为undefined而不是null)
+</textarea>
+<script>
+function foo(){
+	try{
+		eval(baidu.g('code').innerHTML);
+	}catch(e){}
+}
+</script>
+</body>
+</html>

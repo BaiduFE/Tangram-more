@@ -1,0 +1,62 @@
+﻿% baidu.more.xpc
+% wukexin, zhangyunlong 
+ 
+  
+## baidu.more.xpc
+wukexin : wukexin@baidu.com
+zhangyunlong : zhangyunlong@baidu.com
+ 
+  
+### 功能介绍
+ 
+baidu.more.xpc可以发起同域及跨域ajax请求，支持与baidu.ajax.request相同的参数设置。跨域请求时，需在对方域下任意位置安排xpc.html文件。
+  
+### 接口
+ 
+baidu.more.xpc({string}url, {object}options)
+
+	@params url <string> 发送请求的url
+	@params options <object> 发送请求的选项参数。详情请参阅Tangram中关于baidu.ajax.request的说明（http://fe.baidu.com/dev/tangram/baidu_ajax_request.html）
+	如果要发送一个跨域，只须设置options对象的xpc属性指向对方域中的xpc.html文件地址即可。
+ 
+  
+### 示例
+
+demo1: 
+	发送一个同域的GET同步请求：
+	baidu.more.xpc('a.text', {
+		method : 'GET',
+		async : false,
+		onsuccess : function(data){
+			alert(data.responseText);
+		},
+		onfailure : function(data){
+			alert(data.status);
+		}
+	});
+	
+demo2:
+	发送一个跨域的POST异步请求：
+	baidu.more.xpc('b.text', {
+		xpc : 'http://www.b.com/xpc.html',			//只须多增加一个xpc属性，其他参数与同域ajax请求无异
+		method : 'POST',
+		async : true,
+		onsuccess : function(data){
+			alert(data);
+		},
+		onfailure : function(data){
+			alert(data);
+		}
+	});
+ 
+  
+### 注意
+ 
+1 跨域请求和同域请求在事件响应函数的处理上稍有差别：
+	同域请求中，onsuccess、onfailure等方法调用时传入的参数与Tangram中的ajax.request方法一致；
+	跨域请求中，onsuccess、onfailure等方法调用时仅传入XmlHttpRequest对象的responseText或status属性。
+
+2 若要进行跨域请求，必须在对方域下安排xpc.html文件，xpc.html文件中有三个script标签：
+	第一个script标签中的内容是要用到的tangram相关代码；
+	第二个script标签中声明了一个domain<Array>全局变量，可以根据需要设置允许提交跨域请求的域，如果数组中含有'*'项，则表示允许来自任何域的请求，这是从安全的角度考虑的；
+	第三个script标签中的内容是跨域通信的相关代码。

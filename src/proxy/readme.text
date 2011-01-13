@@ -1,0 +1,62 @@
+% baidu.more.proxy
+% conzi 
+
+
+  
+
+## baidu.more.proxy
+
+tangyilong@baidu.com
+
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.proxy 在不影响函数作用域的情况下，提供了参数绑定功能。
+
+
+
+  
+
+### 接口
+
+    @params fn <function> 需要绑定参数的函数引用
+    
+      
+
+### 示例
+
+demo1: 
+
+    var x =baidu.more.proxy(function(a){alert(a)},1);
+    x(); //效果等同于：alert(1),但不需要传递参数了。
+
+demo2:
+
+    :::html
+    <ul id="test">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+    </ul>
+    
+    :::javascript
+        baidu.each(baidu.G("test").getElementsByTagName("li"),function(ele,index){
+        baidu.on(ele,"click",baidu.more.proxy(function(i){
+                alert(i);
+                },index));
+        });
+        //当 index 为动态内容时很好用。
+ 
+      
+
+### 注意
+
+     
+

@@ -1,0 +1,52 @@
+<!doctype html public "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title> rate demo by xiaoqiang </title>
+		<script src="http://img.baidu.com/js/tangram-1.1.0.js" type="text/javascript"></script>
+		<script src="rate.js" type="text/javascript"></script>
+		<style type="text/css">
+			#rate {
+				margin: 100px;
+			}
+			.tangram-rate-star-on, .tangram-rate-star-off {
+				background:url("http://st.youa.baidu.com/resource/css/mall/images/ratingstars.gif") no-repeat scroll 0 0 transparent;
+				display:inline-block;
+				height:21px;
+				width:21px;
+				zoom: 1;
+				cursor: pointer;
+			}
+			.tangram-rate-star-on {
+				background-position:0 -40px;
+			}
+		</style>
+    </head>
+
+    <body>
+
+		<div id="rate"></div>
+		<br />
+		<br />
+		<br />
+		<div id="o"></div>
+
+		<script type="text/javascript">
+			baidu.more.rate.show("rate",{
+				'total' : 10,
+				'current' :3,
+				'leave' : function () {
+					baidu.g('o').innerHTML = 'leave';
+				},
+				'hover' : function (num) {
+					baidu.g('o').innerHTML = num;
+				},
+				'click' : function (num) {
+					alert(num);
+				}
+			});
+		</script>
+        
+    </body>
+</html>
+

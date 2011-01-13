@@ -1,0 +1,110 @@
+% baidu.more.IanPager
+
+% 侯迦壹
+
+ 
+
+  
+
+## baidu.more.IanPager
+
+youname: houjianxun@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.IanPager提出了与众不同的解决Web分页问题的方案，即将分页导航功能与数据显示功能完全独立开来，由用户自己控制数据的获取及显示方式，因此可以被灵活地应用于任何需要实现分页导航功能的地方，因为 ianPager控件和数据是独立的，因此要分页的数据可以来自任何数据源，如SQL Server、Oracle、Access、mysql、DB2等数据库以及XML文件、内存数据或缓存中的数据、文件系统等等。
+
+ 
+
+  
+
+### 接口
+ 
+
+获取或设置一个值，该值批示当鼠标指针悬停在导航按钮上时是否显示工具提示。
+IanPager.ShowNavigationToolTip ()
+
+
+获取或设置导航按钮工具提示文本的格式
+IanPager.NavigationToolTipTextFormatString ()
+
+
+获取或设置页索引数值导航按钮上文字的显示格式。
+使用NumericButtonTextFormatString属性指定页索引数值按钮的显示格式，如未设置该值时索引按钮文本将会是：1 2 3 ...，设置该值将改变索引按钮文本的显示格式，如将该值设为“[{0}]”则索引文本会显示为：[1] [2] [3] ...，将该值设为“-{0}-”则会使索引文本变为：-1- -2- -3- ...。
+IanPager.NumericButtonTextFormatString ()
+
+
+获取或设置分页导航按钮的类型，即使用文字还是图片。
+ <remarks>
+ 要使用图片按钮，您需要准备以下图片：从0到9的十个数值图片（当ShowPageIndex设为true时），第一页、上一页、下一页、最后一页及更多页（...）五个按钮图片（当ShowFirstLast及ShowPrevNext都设为true时），
+ 若需要使当前页索引的数值按钮不同于别的页索引数值按钮，则还需准备当前页索引的按钮图片；
+ 若需要使已禁用的第一页、上一页、下一页及最后一页按钮图片不同于正常的按钮图片，则还需准备这四个按钮在禁用状态下的图片；
+ <p><b>图片文件的命名规则如下：</b></p>
+ <p>从0到9十张数值按钮图片必须命名为“数值+ButtonImageNameExtension+ButtonImageExtension”，其中的ButtonImageNameExtension可以不用设置，
+ ButtonImageExtension是图片文件的后缀名，如 .gif或 .jpg等可以在浏览器中显示的任何图片文件类型。如页索引“1”的图片文件可命名为“1.gif”或“1.jpg”，
+ 当您有两套或更多套图片文件时，可以通过指定ButtonImageNameExtension属性值来区分不同套的图片，如第一套图片可以不用设ButtonImageNameExtension，则图片文件名类似于“1.gif”、“2.gif”等等，而第二套图片则设置ButtonImageNameExtension为“f”，图片文件名类似于“1f.gif”，“2f.gif”等等。</p>
+ <p>第一页按钮的图片文件名以“first”开头，上一页按钮图片名以“prev”开头，下一页按钮图片名以“next”开头，最后一页按钮图片名以“last”开头，更多页按钮图片名以“more”开头，是否使用ButtonImageNameExtension取决于数值按钮的设置及是否有更多套图片。</p>
+ </remarks>
+IanPager.PagingButtonType ()
+
+
+指定当前页数字索引按钮在所有数字页索引按钮中的位置
+@Beginning  当前页数字索引总是显示在所有数字页索引的最前面
+@End    当前页数字索引总是显示在所有数字页索引的最后面
+@Center 当前页数字索引总是显示在所有数字页索引的中间
+@Fixed  默认值，当前页索引位置固定不变
+IanPager.PagingButtonPosition ()
+
+
+获取或设置页导航数值按钮的类型，该值仅当PagingButtonType设为Image时才有效。
+当您将PagingButtonType设为Image当又不想让页索引数值按钮使用图片时，可以将该值设为Text，这会使页索引数据按钮使用文本而不是图片按钮。
+IanPager.NumericButtonType ()
+
+
+获取或设置第一页、上一页、下一页和最后一页按钮的类型，该值仅当PagingButtonType设为Image时才有效。
+当您将PagingButtonType设为Image但又不想让第一页、下一页、下一页和最后一页按钮使用图片，则可以将该值设为Text，这会使前面的四个按钮使用文本而不是图片按钮。
+IanPager.NavigationButtonType ()
+
+
+获取或设置“更多页”（...）按钮的类型，该值仅当PagingButtonType设为Image时才有效。
+当您将PagingButtonType设为Image但又不想让更多页（...）按钮使用图片时，可以将此值设为Text，这会使更多页按钮使用文本而不是图片按钮。
+IanPager.MoreButtonType ()
+
+
+获取或设置分页导航按钮之间的间距。
+IanPager.PagingButtonSpacing ()
+
+
+获取或设置应用于分页导航按钮之间的间距级联样式表类名。
+IanPager.PagingButtonSpacingCssClass ()
+
+
+获取或设置应用于分页导航按钮之间的间距CSS样式文本
+IanPager.PagingButtonSpacingStyle ()
+
+
+获取或设置一个值，该值指示是否在页导航元素中显示第一页和最后一页按钮。
+IanPager.ShowFirstLast ()
+
+### 示例
+
+ 
+示例请见http://fe.baidu.com/~lion/d/_ianpager/index.html
+
+
+
+ 
+
+  
+
+### 注意
+
+ 
+
+在IE6下，加载css文件的过程可能造成浏览器渲染有问题，加载完毕后即恢复，请评估css文件的下载时间。

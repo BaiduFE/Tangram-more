@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>index of validator</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="src/validator.js"></script>
+</head>
+<body>
+<h1>DEMO</h1>
+<form id="test" action="">
+    <table>
+        <tr>
+            <td><label for="ip_address">ip-address</label></td>
+            <td><input id="ip_address" name="ip-address" type="text" value=""/></td>
+        </tr>
+        <tr>
+            <td><label for="domain_name">domain-name</label></td>
+            <td><input id="domain_name" name="domain-name" type="text" value=""/></td>
+        </tr>
+        <tr>
+            <td><label for="email_address">email-address</label></td>
+            <td><input id="email_address" name="email-address" type="text" value=""/></td>
+        </tr>
+        <tr>
+            <td><input id="submit" type="submit"/></td>
+            <td><input id="reset" type="reset"/></td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+
+    document.getElementById('submit').onclick = function (){
+        if (!baidu.more.validator.test_ip_address(document.getElementById('ip_address').value)) {
+            alert('illegal ip-address');
+        }
+        if (!baidu.more.validator.test_domain_name(document.getElementById('domain_name').value)) {
+            alert('illegal domain_name');
+        }
+        if (!baidu.more.validator.test_email_address(document.getElementById('email_address').value)) {
+            alert('illegal email_address');
+        }
+        return false;
+    };
+</script>
+<a href="test/test.html">单元测试用例</a>
+<a href="readme.text">README</a>
+</body>
+</html>

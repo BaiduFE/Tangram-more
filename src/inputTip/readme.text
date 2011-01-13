@@ -1,0 +1,48 @@
+% baidu.more.inputTip
+
+% shenzhou
+
+ 
+
+  
+
+## baidu.more.inputTip
+
+youname: shenzhou@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+为input、textarea输入框tip提示功能
+
+ 
+
+  
+
+### 接口
+
+
+1.要提示的inpu框需的value中写入提示的语言；
+2.写对于要提示的配置文件，为json，格式如下：
+var input_cfg = {
+			    inputId: "input_2",//提示框的ID
+			    tipColor: "red",//提示框提示文字的颜色
+			    inputColor: "#000"//提示框输入文字的颜色
+			}
+
+### 示例
+
+ 
+见demo
+
+  
+
+### 注意
+
+ 
+

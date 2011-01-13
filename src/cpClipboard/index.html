@@ -1,0 +1,57 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312"> 
+<title>跨浏览器剪贴板baidu.more.copyClipBoard()</title>
+<style type="text/css">
+.copy-url-btn, .invite-btn {background:url("http://img.baidu.com/img/iknow/userteam/team_icon1.gif") no-repeat scroll 0 0 transparent;border:medium none;color:#FFFFFF;cursor:pointer;font-weight:bold;height:26px;margin-left:6px;width:75px;}
+.ipt {border:1px solid #6699CC;color:#333333;margin-bottom:5px;padding:3px;width:330px;}
+</style>
+</head>
+<body>
+
+<h1>跨浏览器剪贴板 baidu.more.copyClipBoard()</h1>
+
+Demo :
+<p>
+<!--被复制的输入文本框-->
+<input id="ti" type="text" class="ipt" value="InputInputInputInput"/>
+<br />
+<div id="clip_container">
+	<!--触发复制的按钮（被透明flash "clip_container"覆盖）-->
+	<input id="copyButton" type="button" value="复制地址" class="copy-url-btn" />
+</div>
+</p>
+
+<br /><br />
+
+<p>
+<textarea id="ta" class="ipt">TextareaTextareaTextarea</textarea>
+<div id="clip_area_container">
+	<!--触发复制的按钮（被透明flash "clip_area_container"覆盖）-->
+	<input id="copyAreaButton" type="button" value="复制地址" class="copy-url-btn" />
+</div>
+</p>
+
+Readme :
+<a href="readme.text">readme</a>
+
+<script type="text/javascript" src="cpClipboard.js"></script>
+<script type="text/javascript">
+/*
+ * baidu.more.copyClipBoard("被复制的文本框id","触发复制的按钮遮罩id","触发复制的按钮id","复制成功提示信息","提示类型","内容");
+ */
+/*
+ * <input type="text" />
+ */
+var customizedAlertInfos = "<div id=popAlert style=border-width:1px;border-color:0099cc;border-style:solid;width:200px;height:50px;text-align:center;z-index:1000;position:absolute;padding:10px;margin-left:100px;background-color:#f4faff;z-index:1000;color:#ff0000;margin-top:-22px;font-size:14px;><br />Input内容复制成功！</div>";
+
+baidu.more.copyClipBoard("ti","clip_container","copyButton",customizedAlertInfos,"html");
+
+
+/*
+ * <textarea></textarea>
+ */
+baidu.more.copyClipBoard("ta","clip_area_container","copyAreaButton","TextArea内容复制成功!alert！","alert");
+</script>
+</body>
+</html>

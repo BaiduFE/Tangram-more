@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk" />
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.1.js"></script>
+<script type="text/javascript" src="contain.js"></script>
+
+<style>
+p{font-style:italic;color:#aaaaaa;}
+</style>
+
+</head>
+<body>
+<h1>判断一个节点是否包含另一个节点,可以处理文本节点</h1>
+
+<p>baidu.more.contain("john",baidu.g('john').firstChild)</p>
+<table border="1" height="50" width="200">  
+    <tr id="test">  
+        <td id="john" name="myname">John</td>  
+        <td>Doe</td>  
+        <td id="jack">Jack</td>  
+    </tr>  
+  </table> 
+ 
+<br/>
+<p>baidu.more.contain("container","contained")</p>
+ <div id="container" style="background:red; width:200px; height:50px;">
+     container
+     <div id="contained" style="background:#dfdfdf">contained</div>
+ </div>
+ <div id="outer"style="background:blue; width:200px; height:20px;" >outer</div>
+<input type="button" value="测试john节点是否包含文本节点John" onclick="test(1)">
+<input type="button" value="container节点是否包含文本节点contained" onclick="test(2)">
+<input type="button" value="container节点是否包含文本节点outer" onclick="test(3)">
+<script>
+function test(i){
+ if(i==1){
+	alert(baidu.more.contain("john",baidu.g('john').firstChild));
+ }
+ else if (i==2){
+  alert(baidu.more.contain("container","contained"));
+ }
+ else if (i==3){
+   alert(baidu.more.contain("container","outer"));
+ }
+}
+
+</script>
+
+</body>
+</html>

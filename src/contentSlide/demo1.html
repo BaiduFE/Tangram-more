@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+		<title>Untitled Document</title>
+		<script src="js/base.js">
+		</script>
+		<script src="js/msg.js">
+		</script>
+		<script src="js/contentSlide.js">
+		</script>
+		<style>
+			body{margin:auto;font-family:arial;font-size:12px;}
+			html,body,div,h2,h3,h4,p,td,tr,ul,ol,li,table,dl,dd,dt,img,form{margin:0;padding:0;}
+			img{border:none}
+			/*
+			 *滑动内容样式 
+			 */
+			#contentSlide{width:900px;margin:0 auto;border:1px solid}
+			#preButton,#nextButton{width:25px;height:215px;float:left;}
+			#slideWraper{height:215px;width:480px;float:left;overflow:hidden;position:relative;}
+			#slideInner{height:215px;width:5000px;position:absolute;left:-480px}
+		    #slideInner .elm{float:left;width:113px;height:200px;border:1px solid red;margin:0 5px 0 0;}
+		    .pre_on{background:url(img/btn.png) -6px 0;cursor:pointer;}
+			.pre_off{background:url(img/btn.png) -54px 0;}
+			.next_on{background:url(img/btn.png) -92px 0;cursor:pointer;}
+			.next_off{background:url(img/btn.png) -132px 0;}
+		</style>
+	</head>
+	<body>
+		<br>
+		<br>
+		<div id="contentSlide">
+			<div id="preButton" class="pre_on">
+			</div>
+			<div id="slideWraper">
+				<div id="slideInner">
+				
+				</div>
+			</div>
+			<div id="nextButton" class="next_on">
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+		<button onclick="pre()">pre</button>
+			<button onclick="next()">next</button>
+		<script>
+			var contendDemo=new ContentSlide(ContentSlideCfg);
+			/*
+			 * 通过捕捉消息，来处理对应的按钮样式；
+			 */
+			function btnStyleHandler(msg){
+			    var tgt = msg.target;
+			    var cfg = tgt.cfg;
+			    if (tgt.firstNum == 0) {
+			        G('preButton').className = "pre_off";
+			    }
+			    else {
+			        G('preButton').className = "pre_on";
+			    }
+			    if (tgt.firstNum+cfg.stepNum+1 < cfg.modelCfg.dataNum) {
+					 G('nextButton').className = "next_on";
+			    }
+			    else {
+			       G('nextButton').className = "next_off";
+			    }
+			}
+			contendDemo.regMsgHandller("init",btnStyleHandler);
+			contendDemo.regMsgHandller("afterBrowseNext",btnStyleHandler);
+			contendDemo.regMsgHandller("afterBrowsePre",btnStyleHandler);
+			contendDemo.init();
+			contentLogic={
+				preStart:function(){
+//					contendDemo.isSerBrs=true;
+					contendDemo.browsePre();
+					
+				},
+				preStop:function(){
+					contendDemo.isSerBrs=false;
+				},
+				nextStart:function(){
+//					contendDemo.isSerBrs=true;
+					contendDemo.browseNext()
+				},
+				nextStop:function(){
+					contendDemo.isSerBrs=false;
+				}				
+			}
+			
+	  baidu.on(G('preButton'),"onmousedown",contentLogic.preStart);
+	  baidu.on(G('preButton'),"onmouseout",contentLogic.preStop);
+	  baidu.on(G('nextButton'),"onmousedown",contentLogic.nextStart);
+	  baidu.on(G('nextButton'),"onmouseout",contentLogic.nextStop);
+//			contendDemo.browseNext()
+		function pre(){
+				contendDemo.browsePre()
+			}
+		  function next(){
+				contendDemo.browseNext()
+			}
+		</script>
+	</body>
+</html>

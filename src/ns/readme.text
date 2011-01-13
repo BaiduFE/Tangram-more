@@ -1,0 +1,43 @@
+% baidu.more.nslog
+% conzi 
+
+
+
+## baidu.more.ns
+
+tangyilong@baidu.com
+
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.ns 提供一个简单的方式来创建namespace
+
+
+
+  
+
+### 接口
+
+    @params namespace <string> 要使用的namespace，如：iknow.qb.replyform
+
+      
+
+### 示例
+
+demo1: 
+    
+    baidu.more.ns("iknow.qb.replyform");
+    baidu.extend(iknow.qb.replyform,{
+            check:function(){
+        
+            }
+        });
+
+
+### 注意
+
+

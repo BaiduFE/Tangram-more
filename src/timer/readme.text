@@ -1,0 +1,75 @@
+% baidu.more.Timer
+% qiaogang
+ 
+  
+## baidu.more.Timer
+youname: qiaogang@baidu.com
+ 
+  
+### 功能介绍
+ 
+baidu.more.Timer 该类提供了一个 计时器的接口。 可以创建新的 Timer 对象，以便按指定的时间顺序运行代码。 使用 start() 方法来启动计时器。 为 timer 事件添加事件侦听器，以便将代码设置为按计时器间隔运行。
+ 
+  
+### 接口
+
+Timer(delay, repeatCount)
+构造函数
+@param {Number} delay 时器事件间的延迟 单位:毫秒(ms) 注意：间隔在0-15ms时可能计算不准确。
+@param {Number} repeatCount 设置的计时器运行总次数。如果重复计数设置为0，则计时器将持续不断运行，直至调用了 stop()/reset() 方法或程序停止。
+
+addEventListener(type, listener)
+添加事件侦听器
+监听类型:
+"timer" 每当 Timer 对象达到根据 Timer.delay 属性指定的间隔时调度。
+"onComplete" 每当它完成 Timer.repeatCount 设置的请求数后调度。
+@param {String} type 监听事件类型
+@param {Function} listener 事件侦听器，其中 listener接收两个参数(delay, currentCount),delay为设定的时间间隔，currentCount为当前的运行次数。
+
+reset()
+如果计时器正在运行，则停止计时器，并将 _currentCount 属性设回为 0，这类似于秒表的重置按钮。
+
+start()
+如果计时器尚未运行，则启动计时器。对于暂停的计数器，可以恢复计时。
+
+stop()
+停止计时器。 如果在调用 stop() 后调用 start()，则将继续运行计时器实例，运行次数为剩余的 重复次数（由 repeatCount 属性设置）。 
+
+pause()
+暂停计时器。
+调用时暂停计时器计时，start()后，从上次暂停时的时间开始继续计时。
+例如：一个20秒的计时器，在第5秒处暂停，当再次start()后，计时器将从第6秒开始，完成剩余的时间。
+注意：目前只支持repeatCount = 1的情况。其他情况调用等同于stop()。
+
+getCurrentCount()
+@return {Number} 
+获得计时器从 0 开始后触发的总次数。
+
+isRunning()
+@return {Boolean}
+判断计时器是否在运行
+
+  
+### 示例
+ 
+Timer.html
+
+code:
+//创建一个间隔100ms、执行150次的定时器
+var t0 = new baidu.more.Timer(100,150);
+//绑定定时器定时触发的方法
+//根据指定的delay的时间间隔触发方法
+t0.addEventListener("timer", function(delay, count){
+	//todo
+	
+});
+//绑定complete事件
+t0.addEventListener("onComplete", function(delay, count){
+	//todo
+	
+});
+ 
+  
+### 注意
+ 
+在Widnows系统下，设置时间间隔(delay)尽量不要低于15毫秒(ms)，因为在Windows系统下15毫秒以下的时间间隔计算会极不准确！

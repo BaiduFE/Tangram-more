@@ -1,0 +1,63 @@
+% baidu.more.contentSlide
+
+% shenzhou
+
+  
+
+   
+
+## baidu.more.contentSlide
+
+email: shenzhou@baidu.com 
+
+  
+
+   
+
+### 功能介绍 
+内容滑动类组件；
+
+  
+
+
+
+  
+
+   
+
+### 数据结构说明
+当new一个滑动类组件后，整个滑动类组件拥有如下的数据结构：
+    this.cfg = cfg; //当前组件的配置项
+    this.firstNum = 0;//当前滑动组件的第一个组件的序号
+    this.isBrsing = false;//是否正在浏览
+    this.isSerBrs = false;//是否连续浏览
+    this.stopBrs = false; //停止浏览，设置为true的时候，就停止浏览
+
+  
+
+###抛出消息说明
+    "beforeBrowseNext": [slideModel.nextLogic, slideView.nextRender],//开始向后浏览的消息处理    
+    "browseNext": [slideModel.next],//向后处理的消息处理
+    "afterBrowseNext": [],//1次向后浏览结束后的消息处理
+    "beforeBrowsePre": [slideModel.preLogic, slideView.preRender],//开始向前浏览的消息处理
+    "browsePre": [slideModel.pre],//向前浏览的消息处理
+    "afterBrowsePre": [],//向前浏览后的消息处理
+    "init": [init]//初始化消息处理
+
+
+   
+
+### 示例 
+
+  
+
+示例请见demo1.html;
+ 
+
+   
+
+### 注意 
+
+  
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.js"></script>
+<script src="substrByByte.js"></script>
+</head>
+<body>
+<h1>按字节截取字符串</h1>
+
+<textarea id="str" style="width:80%;height:50px;">这里fasdf是一fasdfasdf段要fasdf截取fas的字fasdfasdf符串，里fasdfasdf面还有asdf一些英fasdf文字符</textarea>
+<br /><br />截取字节数：<input type="text" id="byte" value="30" /><br /><br /><br /><br />
+<button onclick="testResult()">测试结果</button>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="testSpeed()">测试效率</button>
+<script>
+function testResult(){
+	var str = baidu.g('str').value;
+	baidu.g('testResult').innerHTML = '';
+	baidu.g('testResult').appendChild(document.createTextNode(baidu.more.substrByByte(str, parseInt(baidu.g('byte').value)||30)));
+}
+function test1(){
+	var timerStart = +new Date;
+	for(var i=0;i<10000;i++){
+		baidu.more.substrByByte(baidu.g('str').value, parseInt(baidu.g('byte').value)||30)
+	}
+	var timerEnd = +new Date;
+	return timerEnd - timerStart;
+}
+function test2(){
+	var timerStart = +new Date;
+	for(var i=0;i<10000;i++){
+		baidu.string.subByte(baidu.g('str').value, parseInt(baidu.g('byte').value)||30)
+	}
+	var timerEnd = +new Date;
+	return timerEnd - timerStart;
+}
+function testSpeed(){
+	var timer1 = test1(),
+		timer2 = test2();
+	baidu.g("testSpeed").innerHTML = "执行1000次：现在方法substrByByte所需时间"+timer1+'ms<br/>执行1000次：原有方法subByte所需时间'+timer2+'ms';
+}
+</script>
+<h2>测试结果</h2>
+<div id="testResult" style="border:1px solid green;padding:10px;"></div>
+<h2>测试效率</h2>
+<div id="testSpeed" style="border:1px solid green;padding:10px;"></div>
+</body></html>

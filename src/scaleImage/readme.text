@@ -1,0 +1,57 @@
+% baidu.more.scaleImage
+
+% yangxinming
+
+ 
+
+  
+
+## baidu.more.scaleImage
+
+youname: yangxinming@baidu.com
+
+ 
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.scaleImage实现指定宽度、高度等比例不失真缩放图片的功能。
+
+1、指定图片显示的标准宽度和高度。
+2、如果图片的大小超过了标准定义，那么等比例压缩图片。
+3、如果图片的大小等于标准定义，那么按照标准宽度和高度显示图片。
+4、如果图片的大小小于标准定义，那么不对图片进行任何压缩处理。 
+
+如被收录，建议放置在baidu.dom包下
+
+### 接口
+
+ 
+
+scaleImage ({HTMLElement}imgD,{number}iwidth,{number}iheight)
+
+ 
+
+  
+
+### 示例
+
+ 
+
+
+<img src="demo.jpg" onload="javascript:baidu.more.scaleImage(this,100,100)" />
+
+ 
+
+  
+
+### 注意
+
+ 
+
+如果图片较大，建议在图片标签里面同时设置期望的图片大小，这样不会导致页面在加载中撑开，该大小不会影响最终缩放效果。
+可以修改上面的代码为：
+<img src="demo.jpg" onload="javascript:baidu.more.scaleImage(this,100,100)" width="100px" height="100px"/>

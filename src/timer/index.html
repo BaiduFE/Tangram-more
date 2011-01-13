@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>timer</title>
+<script type="text/javascript" src="timer.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+//<![CDATA[
+function _$(id){
+	return document.getElementById(id);
+}
+function runCode(id){
+	var codeValue = _$(id).value;
+	_$('script_1').innerHTML = codeValue;
+	var res = window.eval(codeValue);
+	//_$("result").value += new Date().getHours() + ":" + new Date().getUTCMinutes() + ":" + new Date().getUTCSeconds() + ":" + " >> " + res + "\n";
+}
+function clearCode(){
+	_$("result").value = "";
+}
+
+function t(func) {
+	var t1 = +new Date();
+	func();
+	var t2 = +new Date();
+	return t2-t1;
+}
+//]]>
+</script>
+<script id="script_1" type="text/javascript">
+//<![CDATA[
+	//创建一个间隔100ms、执行150次的定时器
+	var t0 = new baidu.more.Timer(100,150);
+	//绑定定时器定时触发的方法
+	//根据指定的delay的时间间隔触发方法
+	t0.addEventListener("timer", function(delay, count){
+		_$("inp_0").value = delay+"ms";
+		_$("inp_1").value = count;
+		_$("inp_2").value = delay * count+"ms";
+	});
+	//绑定complete事件
+	t0.addEventListener("onComplete", function(delay, count){
+		_$("inp_3").value = "timer complete!";
+	});
+	
+	//创建一个间隔10*1000ms、执行1次的定时器
+	var t1 = new baidu.more.Timer(10*1000,1);
+	t1.addEventListener("timer", function(delay, count){
+		_$("inp_4").value = delay;
+		_$("inp_5").value = count;
+//		_$("inp_6").value = delay * count;
+	});
+	t1.addEventListener("onComplete", function(delay, count){
+		_$("inp_7").value = "timer complete!";
+		end = +new Date();
+		_$("inp_6").value = parseInt(_$("inp_6").value) + parseInt((end - start));
+	});
+	var start = 0, end = 0;
+	var isStart = false;
+	function start_0(){
+		t0.start();
+	}
+	function pause_0(){
+		t0.pause();
+	}
+	function stop_0(){
+		t0.stop();
+	}
+	function reset_0(){
+		t0.reset();
+		_$("inp_0").value = "0ms";
+		_$("inp_1").value = "0";
+		_$("inp_2").value = "0";
+		_$("inp_3").value = "";
+	}
+	
+	function start_1(){
+		t1.start();
+		if (!isStart){
+			start = +new Date();
+			isStart = true;
+		}
+	}
+	function pause_1(){
+		t1.pause();
+		if (isStart){
+			end = +new Date();
+			_$("inp_6").value = parseInt(_$("inp_6").value,10) + parseInt(end - start,10);
+			isStart = false;
+		}
+		
+	}
+	function stop_1(){
+		t1.reset();
+	}
+	function reset_1(){
+		t1.reset();
+		_$("inp_4").value = "0ms";
+		_$("inp_5").value = "0";
+		_$("inp_6").value = "0";
+		_$("inp_7").value = "";
+		start = end = 0;
+		isStart = false;
+	}
+	function timeConv(time){
+		var mil = time % 1000,
+			sec = Math.floor(time / 1000);
+		return sec + ":" + mil;
+	}
+	
+//]]>
+</script>
+<div>code:
+	<div>
+		<textarea id="code_1" style="width:50%;height:300px;"></textarea>
+		<input type="button" value="run code" onclick="runCode('code_1')"/>
+	</div>
+</div>
+<div>eg: t0; 
+	<div>
+		time delay(id=inp_0): <input id="inp_0" type="text" value="0ms"/>  current count(id=inp_1): <input id="inp_1" type="text" value="0"/> <br/>
+		delay*count(id=inp_2): <input id="inp_2" type="text" value="0"/> on complete(id=inp_3): <input id="inp_3" type="text" value=""/><br/>
+		<input type="button" value="start_0" onclick="start_0()"/>
+		<input type="button" value="pause_0" onclick="pause_0()"/>
+		<input type="button" value="stop_0" onclick="stop_0()"/>
+		<input type="button" value="reset_0" onclick="reset_0()"/>
+	</div>
+</div>
+<div>eg: t1; 
+	<div>
+		time delay(id=inp_4): <input id="inp_4" type="text" value="0ms"/>  current count(id=inp_5): <input id="inp_5" type="text" value="0"/><br/>
+		实际执行时间(ms)(id=inp_6): <input id="inp_6" type="text" value="0"/> on complete(id=inp_7): <input id="inp_7" type="text" value=""/><br/>
+		<input type="button" value="start_1" onclick="start_1()"/>
+		<input type="button" value="pause_1" onclick="pause_1()"/>
+		<input type="button" value="stop_1" onclick="stop_1()"/>
+		<input type="button" value="reset_1" onclick="reset_1()"/>
+	</div>
+</div>
+<script type="text/javascript">
+_$("code_1").value = _$("script_1").innerHTML;
+</script>
+</body>
+</html>

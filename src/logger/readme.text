@@ -1,0 +1,53 @@
+% baidu.more.logger
+% michael hu
+
+
+
+## baidu.more.logger
+
+hudamin@baidu.com
+
+
+  
+
+### 功能介绍
+
+baidu.more.logger 提供一个JS程序日志工具，是编程的好帮手。
+1. 单文件引入，即可使用
+2. 多级别日志记录，根据日志级别选择关注的日志
+3. 集中显示，不影响（打断）正常的程序流程
+4. 日志内容预缓存
+5. 对复杂程序模块的调试很有帮助，利于理清程序逻辑和BUG调试
+ 
+
+### 接口
+
+baidu.more.logger.log({string} str)			输出log日志，等同于debug日志
+baidu.more.logger.d({string} str)			输出debug日志
+baidu.more.logger.t({string} str)			输出trace日志
+baidu.more.logger.n({string} str)			输出notice日志
+baidu.more.logger.w({string} str)			输出warning日志
+baidu.more.logger.f({string} str)			输出fatal日志
+baidu.more.logger.setLevel({number} level)	设置日志级别，16-debug，8-trace，4-notice，2-warning，1-fatal
+
+    
+
+### 示例
+
+demo1: 
+	:::javascript
+	baidu.more.logger.d('<script type="text/javascript">alert(111)<' + '/script>'); 
+
+demo2:
+简单例子：index.html
+具体例子：http://tc-tstest01.tc.baidu.com:8888/my/mybdnews_201008191004_with_logger.html
+
+
+### 注意
+
+使用了tangram的部分函数，在引入之前确保以下方法可用：
+baidu.event.on
+baidu.browser
+baidu.string.format
+baidu.dom.getPosition
+baidu.string.encodeHTML

@@ -1,0 +1,53 @@
+% baidu.more.validator
+% wenyuxiang@baidu.com
+
+## baidu.more.proxy
+   tangyilong@baidu.com
+
+### 功能介绍
+提供一些常用的不太好写的格式验证, 避免大家重复劳动
+
+### 接口
+所有接口均在baidu.more.validator命名空间下
+
+boolean test_ip_address(string input) 验证ipv4地址
+
+boolean test_domain_name(string input) 验证域名
+
+boolean test_email_address(string input) 验证电子邮箱地址
+
+boolean test_id_card_number(string input) 验证身份证号码
+
+boolean test_web_url(string input, object options) 验证网址
+只支持ftp,http,https的网址
+options中可以有这些可选字段
+     * @config length {Function} 对长度进行验证
+     * @config protocol {Function} 验证协议(不包括":")
+     * @config userinfo {Function} 参数username, password
+     * @config domain {Function} 验证域名
+     * @config port {Function} 参数数字
+     * @config path {Function} 验证path
+     * @config query {Function} 验证query
+可以传入测试函数(tester)用来辅助验证, 返回值若为真, 则表示通过验证
+
+### 示例
+var valid = baidu.more.validator.test_web_url('https://username:password@ftp.upload.com/files.asp?folder=home', {
+    protocol: function (p){
+        return p == 'https';
+    },
+    userinfo: function (u, p){
+        return u == 'username' && p == 'password';
+    },
+    domain: function (d){
+        return d == 'ftp.upload.com';
+    },
+    path: function (p){
+        return p == '/files.asp';
+    },
+    query: function (q){
+        return q == '?folder=home';
+    }
+});
+
+### 注意
+目前并不提供过于强大的定制

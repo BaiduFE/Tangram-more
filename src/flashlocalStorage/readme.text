@@ -1,0 +1,86 @@
+% baidu.more.LocalStorage
+
+% js : heliang   flash :yangdong
+
+ 
+
+  
+
+## baidu.more.LocalStorage
+
+youname:   flash : yang_dong@baidu.com 	 js :he_liang@baidu.com
+
+### flash本地存储
+
+ 
+
+### 接口
+
+ 
+
+
+如果有多个接口，则声明多行
+
+render : 初始化
+
+/**
+* 存数据
+* @param {string} obj : flash对象的名称
+* @param {string} key : 对象的 key
+* @param {string,object,num,array} value : 对象的 value 可以是任意类型
+* @author liang
+*/ 
+setValue (obj,key,value) 
+
+
+/**
+* 取value
+* @param {string} obj : flash对象的名称
+* @param {string} key : 对象的 key
+* @author liang
+*/ 
+getValue : function(obj,key)
+
+
+
+/**
+ * 获取key列表
+ * @param {type} obj : flash对象的名称
+ * @returns {array} : 所有key的数组 
+ * @author liang
+ */ 
+getKeyList : function(obj)
+
+
+/**
+ * 清除obj下面的所有数据
+ * @param {string} obj : flash对象的名称
+ * @author liang
+ */ 
+clear:function(obj)
+
+
+/**
+ * 清除obj下面的某一个key
+ * @param {string} obj : flash对象的名称
+ * @param {string} key : 对象的 key
+ * @author liang
+ */ 
+removeItem:function(obj,key)
+ 
+
+  
+
+### 示例
+
+var store ;
+store = new baidu.more.LocalStorage({
+contentID : "Jcontent",         //必选 flash容器的id   	 
+flashID : "flashid",            //必选 flash对象在dom节点的id   插入到网页中形式为 <object  id="flashid" ...  
+flashURL : "LocalStorage.swf",  //必选 flash存储文件
+callback : function(){          // 加载flash成功后的回调方法
+     
+     
+}
+})
+store.render() 

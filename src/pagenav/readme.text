@@ -1,0 +1,58 @@
+% baidu.more.pagenav
+% conzi 
+
+ 
+
+  
+
+## baidu.more.pagenav
+
+tangyilong@baidu.com
+
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.pagenav 提供了js翻页功能，返回html代码，直接做为一个元素的innerHTML就可以了
+
+
+  
+
+### 接口
+
+ 
+    baidu.more.pagenav(cur,total,str_page_function,config)
+
+    @params cur <number> 当前页码。1 - n
+    @params total <number> 总页数 1 - n
+    @params str_page_function <string> 回调函数名 
+    @params config <object> 配置项，可以修改的内容见：baidu.more.pagenav.C;
+
+    @return html代码
+
+
+
+     
+
+      
+
+### 示例
+
+     
+
+    示例请见http://fe.baidu.com/projects/tangram-more/pagenav/demo.html
+
+    或直接在此书写简单的示例代码
+
+     
+
+      
+
+### 注意
+
+     
+    test
+

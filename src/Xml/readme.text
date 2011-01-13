@@ -1,0 +1,76 @@
+% baidu.more.xml 
+
+% yangxining 
+
+  
+
+   
+
+## baidu.more.xml 
+
+youname:yangxinming@baidu.com 
+
+  
+
+   
+
+### 功能介绍 
+
+  
+
+baidu.more.xml 提供了解析XML、转换XML文件成Json的功能。 
+
+  
+   
+
+### 接口 
+
+  
+	/**
+	*
+	* 将指定的字符串解析为 XML 文本并返回 DOM 表示。如果浏览器不支持本地 XML 解析，则会返回空 DIV 元素的 DOM 节点。
+	*
+	* @param {String} xml文件url地址
+	* @return {Node} xml文档节点
+	*/
+	xml.parse (xmltext)
+
+
+	/**
+	*
+	* 返回以 DOM 表示的 XML 文档片段的文本值（即仅纯文本内容）。
+	*
+	* @param {Node} xml文档节点
+	* @return {XmlNode} xml文档节点文本值
+	*/
+	xml.value (xmlnode) : 返回以 DOM 表示的 XML 文档片段的文本值（即仅纯文本内容）。 
+
+
+
+	/**
+	*
+	* 将XML文档转换成json对象字符串。
+	*
+	* @param {Node} xml文档节点
+	* @param {tab}  缩进”\t“制表符，格式化json
+	* @return {XmlNode} xml文档节点文本值
+	*/
+
+	xml.xml2json (xml,tab) : 将XML文档转换成json对象字符串。
+
+
+
+### 示例 
+
+  
+
+示例请见http://...... 
+
+或直接在此书写简单的示例代码 
+
+  
+
+   
+
+### 注意 
+

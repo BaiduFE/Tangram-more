@@ -1,0 +1,120 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.js"></script>
+<script src="xml.js"></script>
+<style>
+xmp{
+    background-color:#eee;
+    color:#666;
+    padding:10px;
+}
+.out{
+	 background-color:#eee;
+    color:#666;
+    padding:10px;
+}
+</style>
+<h1>XML文件解析及转换成JSON</h1>
+
+<p>
+    XML文件:
+<xmp>
+<result error="0" time="0">
+    <booklist>
+        <book no="1">
+            <id>7115152098</id>
+            <name>JavaScript高级程序设计</name>   
+            <author>Nicholas C.Zakas</author>
+            <price>59</price>  
+            <publisher>人民邮电出版社</publisher>  
+            <date>2006-9-26</date>
+        </book> 
+        <book no="2">
+            <id>111771687632817</id>
+            <name>ActionScript 3.0基础教程</name>   
+            <author>Derrick Ypenburg </author>
+            <price>39</price>  
+            <publisher>人民邮电出版社</publisher>  
+            <date>2009-10-28</date>
+        </book>
+    </booklist>
+</result>
+
+</xmp>
+</p>
+解析XML：<input type="button" value="解析XML,得到XMLDoc对象" onclick="getXmlDoc()"/>
+<p>
+<xmp>
+var xmltest = "<result error=\"0\" time=\"0\">
+    <booklist>
+        <book no="1">
+            <id>7115152098</id>
+            <name>JavaScript高级程序设计</name>
+            <author>Nicholas C.Zakas</author>
+            <price>59</price>
+            <publisher>人民邮电出版社</publisher>
+            <date>2006-9-26</date>
+        </book>
+        <book no="2">
+            <id>111771687632817</id>
+            <name>ActionScript 3.0基础教程</name>
+            <author>Derrick Ypenburg </author>
+            <price>39</price>
+            <publisher>人民邮电出版社</publisher>
+            <date>2009-10-28</date>
+        </book>
+    </booklist>
+</result>";
+//解析xml字符串
+var xmldoc = baidu.more.xml.parse(xmltest);
+</xmp>
+</p>
+
+</p>
+获取xml节点值：<input type="button" value="获取第一个book节点的孩子节点name值：" onclick="getValue()"/>
+<p>
+<xmp>
+//解析xml字符串
+var xmldoc = baidu.more.xml.parse(xmltest);
+var nameNode = xmldoc.getElementsByTagName("book")[0].childNodes[1];
+var nodeValue = baidu.more.xml.value(nameNode);
+alert(nodeValue);
+</xmp>
+</p>
+
+转换成==>JSON文件: <input type="button" value="转换成==>JSON文件" onclick="convert()"/>
+
+<p>
+ <div class="out" id="json_out"></div>
+</p>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var xmltest = "<result error=\"0\" time=\"0\"><booklist><book no=\"1\"><id>7115152098</id><name>JavaScript高级程序设计</name><author>Nicholas C.Zakas</author><price>59</price><publisher>人民邮电出版社</publisher><date>2006-9-26</date></book><book no=\"2\"><id>111771687632817</id><name>ActionScript 3.0基础教程</name><author>Derrick Ypenburg </author><price>39</price><publisher>人民邮电出版社</publisher><date>2009-10-28</date></book></booklist></result>";
+//解析xml字符串
+var xmldoc = baidu.more.xml.parse(xmltest);
+var nameNode = xmldoc.getElementsByTagName("book")[0].childNodes[1];
+var nodeValue = baidu.more.xml.value(nameNode);
+//将xml转换成json字符串
+var strjson = baidu.more.xml.xml2json(xmldoc,"	");
+eval("testJson="+strjson);
+//输出
+baidu.G("json_out").innerHTML = (strjson+"\n").replace(/&/g, "&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\n/g, "<br/>");
+//alert(nodeValue);
+
+function getXmlDoc(){
+	//解析xml字符串
+	var xmldoc = baidu.more.xml.parse(xmltest);
+	alert(xmldoc)
+}
+
+function getValue(){
+	var nodeValue = baidu.more.xml.value(nameNode);
+	alert(nodeValue)
+}
+
+function convert(){
+	var strjson = baidu.more.xml.xml2json(xmldoc,"");
+	alert(strjson)
+}
+
+//-->
+</SCRIPT>

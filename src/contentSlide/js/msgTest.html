@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=GB2312">
+		<title>Untitled Document</title>
+		<script src="msg.js">
+		</script>
+	</head>
+	<body>
+		<script>
+			function testMsg(id){
+			    this.id = id;
+			    msgObserver(this);
+			    this.testFire = function(){
+			        this.fireMsg({
+			            name: "test1",
+			            target: this,
+			            id: this.id
+			        });
+			    }
+			    this.testFire2 = function(){
+			        this.fireMsg({
+			            name: "test2",
+			            target: this
+			        });
+			    }
+			}
+			
+			var msgCase1 = new testMsg(1);
+			msgCase1.regMsgHandller("test1", function(msg){
+			    alert(msg.name);
+			});
+			msgCase1.regMsgHandller("test1", function(msg){
+			    alert(msg.target.id);
+			});
+			msgCase1.regMsgHandller("test2", function(msg){
+			    alert(msg.name);
+			});
+			msgCase1.regMsgHandller("test2", function(msg){
+			    alert(msg.target.id);
+			});
+			msgCase1.testFire();
+			msgCase1.testFire2();
+			var msgCase2 = new testMsg(2);
+			msgCase2.regMsgHandller("test1", function(msg){
+			    alert(msg.name);
+			});
+			msgCase2.regMsgHandller("test1", function(msg){
+			    alert(msg.target.id);
+			});
+			msgCase2.regMsgHandller("test2", function(msg){
+			    alert(msg.name);
+			});
+			msgCase2.regMsgHandller("test2", function(msg){
+			    alert(msg.target.id);
+			});
+			msgCase2.testFire();
+			msgCase2.testFire2();
+			
+		</script>
+	</body>
+</html>

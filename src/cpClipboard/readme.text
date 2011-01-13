@@ -1,0 +1,33 @@
+% baidu.more.copyClipBoard
+% popmusical
+ 
+  
+## baidu.more.copyClipBoard
+youname: zhaoxiaoyang@baidu.com
+ 
+  
+### 功能介绍
+ 
+baidu.more.copyClipBoard提供了跨浏览器剪贴板的功能。
+ 
+  
+### 接口
+ 
+baidu.more.copyClipBoard({Object}_txtId, {Object}_swfMark, {Object}_cpButton, {string}_info, {string}_type)
+
+  
+### 示例
+### baidu.more.copyClipBoard("被复制的文本框id","触发复制的按钮遮罩id","触发复制的按钮id","复制成功提示信息","提示类型(alert或html)");
+
+<input id="ti" type="text" value="InputInput"/>
+<div id="clip_container">
+	<input id="copyButton" type="button" value="复制" />
+</div>
+<script type="text/javascript">
+baidu.more.copyClipBoard("ti","clip_container","copyButton","复制成功！","alert");
+</script>
+
+
+### 注意
+1. 确定浏览器安装了flash player plugin, 并允许其运行;
+2. 慎用频繁触发copyClipBoard;

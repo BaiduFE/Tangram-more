@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<!-- The new doctype -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>ianPager demo</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script type="text/javascript" src="ianPager.js"></script>
+    <script type="text/javascript" src="nav.js"></script>
+    <!-- Internet Explorer HTML5 enabling code: -->
+    <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        
+        <style type="text/css">
+        .clear {
+          zoom: 1;
+          display: block;
+        }
+        </style>
+
+        
+        <![endif]-->
+    <style type="text/css">
+        a, span
+        {
+            margin-right: 5px;
+        }
+        ul, li
+        {
+            margin: 0px;
+            padding: 0px;
+        }
+        li
+        {
+            margin: 0 0 5px 0;
+            list-style: none;
+        }
+    </style>
+    <script type="text/javascript">
+ /*<![CDATA[*/   
+
+ 
+ /*
+ 做Demo演示时临时写的函数
+ */
+function GetUrlParms()    
+{
+     var args=new Object();   
+     var query=location.search.substring(1);//获取查询串   
+     var pairs=query.split("&");//在逗号处断开   
+     for(var    i=0;i<pairs.length;i++)   
+     {   
+         var pos=pairs[i].indexOf('='); //查找name=value   
+            if(pos==-1)   continue;//如果没有找到就跳过   
+             var argname=pairs[i].substring(0,pos);//提取name   
+            var value=pairs[i].substring(pos+1); //提取value   
+            args[argname]=unescape(value);//存为属性   
+    }
+     return args;
+}
+
+/****************************************************************\
+        公用变量设置
+/****************************************************************/
+ 
+ //每页显示的项数  
+ var global_pageSize = 15;
+ 
+ //在url中表示要传递的页索引的参数的名称
+ var global_urlPageIndexName = "page";
+ 
+ //当前显示页的索引
+ var global_CurrentPageIndex = 1;
+
+ //记录的总数量
+ var global_RecordCount = 1000;
+
+//使用JS获取URL返回的参数
+args = GetUrlParms();
+if(args[global_urlPageIndexName] && !isNaN(args[global_urlPageIndexName])){global_CurrentPageIndex = parseInt(args[global_urlPageIndexName]);};
+/*]]>*/    
+    </script>
+</head>
+<body>
+    <section id="page"> <!-- Defining the #page section with the section tag -->
+    
+            <header> <!-- Defining the header section of the page with the appropriate tag -->
+            
+                <hgroup>
+                    <h1><img alt="idoall.org" src="img/logo.jpg" /></h1>
+                </hgroup>
+                                
+                <nav class="clear"> <!-- The nav link semantically marks your main site navigation -->
+                    <ul>
+                                              <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getTopNavString());
+/*]]>*/ 
+    </script>
+                    </ul>
+                </nav>
+            
+            </header>
+            
+            <section > <!-- A new section with the articles -->
+
+				<!-- Article 1 start -->
+
+                <div class="line"></div>  <!-- Dividing line -->
+                
+                <article id="article1"> <!-- The new article tag. The id is supplied so it can be scrolled into view. -->
+                    <h2>
+                      <script type="text/javascript">
+ /*<![CDATA[*/  
+document.write(getNavString());
+/*]]>*/ 
+    </script>
+                    </h2>
+                    
+                    <div class="line"></div>
+                    
+                    <div class="articleBody clear">
+                    <p>分页按钮属性效果:</p>
+                    <span id="ID_Pager"></span>
+                    	<script type="text/javascript">
+ /*<![CDATA[*/  
+
+
+var pager = baidu.more.IanPager();
+pager.PageSize(global_pageSize);
+pager.Width("100%");
+pager.PrevPageText("<");
+pager.NextPageText(">");
+pager.FirstPageText("<<");
+pager.LastPageText(">>");
+pager.ShowInputBox("none");
+pager.AlwaysShow(true);
+pager.ShowPageIndex(true);
+pager.RecordCount(global_RecordCount);
+
+pager.CurrentPageIndex(global_CurrentPageIndex);
+pager.UrlPageIndexName(global_urlPageIndexName);
+document.getElementById("ID_Pager").innerHTML = pager.Html();
+/*
+当设置按钮被点击时发生的事件
+*/
+function onChange()
+{
+    
+        pager.ShowDisabledButtons(document.getElementById("ShowDisabledButtons").checked);
+        pager.ShowFirstLast(document.getElementById("ShowFirstLast").checked);
+        pager.ShowPrevNext(document.getElementById("ShowPrevNext").checked);
+        pager.ShowPageIndex(document.getElementById("ShowPageIndex").checked);
+        pager.ShowMoreButton(document.getElementById("ShowMoreButton").checked);
+
+    document.getElementById("ID_Pager").innerHTML = pager.Html();
+
+}
+/*]]>*/ 
+    </script>
+    <div class="line"></div>
+    <p>
+    属性设置：
+    </p>
+    <ul>
+        <li title="指定是否显示已禁用的分页导航按钮，当当前页为第一页时，第一页和上一页按钮将被禁用，当当前页为最后一页时，下一页和最后一页按钮将被禁用，被禁用的按钮没有链接，在按钮上点击也不会有任何作用。">
+            <input id="ShowDisabledButtons" checked=checked type="checkbox" /><label for="ShowDisabledButtons">ShowDisabledButtons</label>
+        </li>
+        <li title="是否在页导航元素中显示第一页和最后一页按钮">
+            <input id="ShowFirstLast" checked=checked type="checkbox" /><label for="ShowFirstLast">ShowFirstLast</label>
+        </li>
+        <li title="是否在页导航元素中显示上一页和下一页按钮">
+            <input id="ShowPrevNext" checked=checked type="checkbox" /><label for="ShowPrevNext">ShowPrevNext</label>
+        </li>
+        <li title="是否在页导航元素中显示页索引数值按钮">
+            <input id="ShowPageIndex" checked=checked type="checkbox" /><label for="ShowPageIndex">ShowPageIndex</label>
+        </li>
+        <li class="是否显示更多页">
+            <input id="ShowMoreButton" checked=checked type="checkbox" /><label for="ShowMoreButton">ShowMoreButton</label>
+         </li>    
+    </ul>
+<div class=clear></div>
+<input id="Button1" onclick="onChange();" type="button" value=" 设 置 " />
+<div class="line"></div>
+                    </div>
+                </article>
+                
+				<!-- Article 1 end -->
+
+
+
+
+            </section>
+
+        <footer> <!-- Marking the footer section -->
+
+           <div class="line"></div>
+           
+           <p>Copyright 2010 - idoall.org</p> <!-- Change the copyright notice -->
+           
+           <a href="#" class="up">Go UP</a>
+           <a href="http://idoall.org" class="by">idoall.org</a>
+           
+
+        </footer>
+            
+		</section>
+    <!-- Closing the #page section -->
+    <!-- JavaScript Includes -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script src="jquery.scrollTo-1.4.2/jquery.scrollTo-min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+% baidu.more.nslog
+% conzi 
+
+
+
+## baidu.more.nslog
+
+tangyilong@baidu.com
+
+
+  
+
+### 功能介绍
+
+ 
+
+baidu.more.nslog 提供一个简单的接口来发送请求到nslog 
+
+
+
+  
+
+### 接口
+
+    @params url <string> 被点击的url或当前的页面的url
+    @params type <number> 参数类型，区分同一产品线不同的统计
+    @params other <object> hash类型，传递扩展的参数
+
+      
+
+### 示例
+
+demo1: 
+    
+    baidu.more.nslog(location.href,1,{cmd:"pv",page:"iknow-qb"});
+
+
+demo2:
+
+    :::html
+        <a id="link" href="http://zhidao.baidu.com">知道</a>
+       
+
+    :::javascript
+        baidu.on(baidu.G("link"),"click",baidu.more.nslog(this.href,1,{cmd:'click',page:"qb"}));
+
+demo3:
+    
+    :::javascript
+    //当引入一个新功能时：
+    baidu.more.nslog.set("newfun","1");
+    //... 中间省略n多逻辑
+    baidu.more.nslog(location.href,1,{cmd:"pv",page:"iknow-qb"});
+    //相比1,发给nslog的统计项增加了一个newfun=1
+      
+
+### 注意
+
+

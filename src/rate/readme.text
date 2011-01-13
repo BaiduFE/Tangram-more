@@ -1,0 +1,27 @@
+% baidu.more.rate
+% xiaoqiang
+
+## baidu.more.rate
+xiaoqiang : zhengqianglong@baidu.com
+
+### 功能介绍
+
+实现一个较为通用的星星评价功能组件，当用户鼠标经过灰色星星上面的时候，变换星星显示，并提供当前数值的接口
+
+### 接口
+
+	 * Usage:
+	 * baidu.more.rate.show(ele,options);
+	 * 
+	 * @param ele  元素id的引用或者字符串形式
+	 * @param options = {
+	 * 		"total" : 5,	// 总共需要多少个星星【可选，默认显示5个】
+	 * 		"current" : 3,	// 亮着的星星数【可选，默认无】
+	 * 		"leave" : function () {} // 鼠标移出焦点区域触发函数【可选】
+	 * 		"hover" : function (num) {}  // 鼠标经过的触发功能函数【可选】
+	 * 		"click" : function (num) {} // 点击的触发功能函数【可选】
+	 * }
+
+
+
+

@@ -1,0 +1,37 @@
+% baidu.more.fixable
+% 李晓鹏
+
+## baidu.more.fixable
+李晓鹏:lixiaopeng @baidu.com
+
+### 功能介绍
+使目标元素拥有与页面可视区域相对位置保持不变移动的能力
+
+### 接口
+/**
+ * 使目标元素拥有与页面可视区域相对位置保持不变移动的能力
+ * 
+ * @param	{HTMLElement|string}	element	目标元素或目标元素的id
+ * @param	{JSON}					options	fix配置项
+ * 			{vertival,horizontal,offset,onload,onbeforemove,onmove,onaftermove,ondispose}
+ * 			vertival取值  :top或buttom,默认top
+ * 			horizontal取值:left和right,默认为left
+ * @return  new fix();
+ **/
+baidu.more.fixable(target,options);
+
+### 示例
+<div id="fdiv" style="background-color: red; width: 100px; height: 100px;" class="f"></div>
+<div id="fdiv1" style="background-color: green; width: 100px; height: 100px;" class="f"></div>
+
+<script type="text/javascript">
+	var options = {
+		vertival:"top",
+		horizontal:"right",
+		offset:{y:100,x:200}
+	};
+	
+	var fixable = {};
+	fixable.fdiv = baidu.more.fixable("fdiv",options);
+	fixable.fdiv1 = baidu.more.fixable("fdiv1",{});
+</script>

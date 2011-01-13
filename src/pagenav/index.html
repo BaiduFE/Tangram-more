@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+     <script type="text/javascript" src="http://img.baidu.com/js/tangram-1.1.0.js"></script>
+    <script type="text/javascript" src="pagenav.js"></script>
+    <title>js分页函数</title>
+    <style type="text/css">
+         body{font-size:12px;}
+    </style>
+    <script>
+        function page(offset){
+            //分页内容处理函数
+            baidu.G("page-content").innerHTML ="第"+ offset +"页";
+            baidu.G("pagenav").innerHTML = baidu.more.pagenav(offset,30,"page");
+        }
+
+        baidu.dom.ready(function(){
+        
+            page(5);
+        });
+    </script>
+    </head>
+    <body>
+        
+        <div id="page-content">
+
+        </div>
+
+        <div id="pagenav"></div>
+    </body>
+</html>

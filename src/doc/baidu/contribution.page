@@ -1,0 +1,175 @@
+<!-- title:贡献列表 -->
+<div class="contribution-list">
+   <table>
+      <caption><span>欢迎各位贡献组件，如果你有可以贡献的代码，请遵守<a href="contribution_notice.html">贡献说明</a>进行贡献。</span>代码贡献列表</caption>
+      <tr>
+         <th class="name">名称</th>
+         <th class="description">说明</th>
+         <th class="author">作者</th>
+         <th class="svn">SVN</th>
+         <th class="view-results">demo</th>
+      </tr>
+      <tr>
+         <td>baidu.more.scaleImage</td>
+         <td class="description">实现自定义宽度、高度，等比例不失真缩放图片的功能。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1714918908" target="_blank">杨新明</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/scaleImage/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/scaleImage/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr class="odd">
+         <td>baidu.more.URLParameter</td>
+         <td>提供了对URL中的参数部分管理的功能，使用该类型的实例可以方便的管理一个参数串中的各个部分，并在需要时转化为字符串，转化过程中的参数值编码提供了接口，可使用任意的编码函数，默认不编码。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-2047107528" target="_blank">严俊羿</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/URLParameter/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/URLParameter/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.substrByByte</td>
+         <td class="description">按字节截取字符串，效率要高很多</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1712312796" target="_blank">李成银</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/SubstrByByte/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/SubstrByByte/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.contentSlide</td>
+         <td class="description">内容滑动类组件</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-960007692">沈洲</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/contentSlide/">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/contentSlide/demo1.html">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.VaildControl</td>
+         <td class="description">提供页面表单中Html控件的验证</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1885556768">侯迦壹</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/FormVaildControl/">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/FormVaildControl/index.htm">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.inputTip</td>
+         <td class="description">为input、textarea输入框tip提示功能</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-960007692">沈洲</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/inputTip/">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/inputTip/demo.html">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.xml</td>
+         <td class="description">提供了解析XML、转换XML文件成Json的功能。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1714918908" target="_blank">杨新明</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/Xml/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/Xml/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.pagenav</td>
+         <td class="description">提供了js翻页功能，返回html代码，直接做为一个元素的innerHTML就可以了。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1850282465" target="_blank">唐益龙</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/pagenav/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/pagenav/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.nslog</td>
+         <td class="description">提供一个简单的接口来发送请求到nslog。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1850282465" target="_blank">唐益龙</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/nslog/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/nslog/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.proxy</td>
+         <td class="description">在不影响函数作用域的情况下，提供了参数绑定功能。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1850282465" target="_blank">唐益龙</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/proxy/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/proxy/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.slide</td>
+         <td class="description">图片左右滑动。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1912523283" target="_blank">张明主</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/slide/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/slide/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.rate</td>
+         <td class="description">实现一个较为通用的星星评价功能组件，当用户鼠标经过灰色星星上面的时候，变换星星显示，并提供当前数值的接口。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=1653216046" target="_blank">小强</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/rate/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/rate/rate.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.xpc</td>
+         <td class="description">baidu.more.xpc可以发起同域及跨域ajax请求，支持与baidu.ajax.request相同的参数设置。跨域请求时，需在对方域下任意位置安排xpc.html文件。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1917656122" target="_blank">张云龙、</a>
+            <a href="http://family.baidu.com/core/index.jsp?chc=-1011523387" target="_blank">武可新</a></td>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/xpc/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/xpc/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.fixable</td>
+         <td class="description">baidu.more.fixable使目标元素拥有与页面可视区域相对位置保持不变移动的能力</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-637522036" target="_blank">李晓鹏</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/fixable/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/fixable/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.validator</td>
+         <td class="description">baidu.more.validator提供一些常用的不太好写的格式验证, 避免大家重复劳动</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-637522036" target="_blank">文宇祥</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/validator/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/validator/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.ns</td>
+         <td class="description">baidu.more.ns 提供一个简单的方式来创建namespace。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1850282465" target="_blank">唐益龙</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/ns/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/ns/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.Timer</td>
+         <td class="description">baidu.more.Timer 该类提供了一个计时器的接口。 可以创建新的 Timer 对象，以便按指定的时间顺序运行代码。 使用 start() 方法来启动计时器。 为 timer 事件添加事件侦听器，以便将代码设置为按计时器间隔运行。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1499781880" target="_blank">乔刚</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/timer/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/timer/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.logger</td>
+         <td class="description">baidu.more.logger 提供一个JS程序日志工具，是编程的好帮手。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1691458037" target="_blank">胡大民</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/logger/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/logger/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.ianPager</td>
+         <td class="description">baidu.more.IanPager提出了与众不同的解决Web分页问题的方案，即将分页导航功能与数据显示功能完全独立开来，由用户自己控制数据的获取及显示方式，因此可以被灵活地应用并且分页的数据可以来自任何数据源。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=947155931" target="_blank">侯迦壹</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/ianPager/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/ianPager/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.data</td>
+         <td class="description">baidu.more.data 提供页面元素存储读取数据缓存的方法。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=1650520345" target="_blank">杨玉璟</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/data/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/data/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.copyClipBoard</td>
+         <td class="description">baidu.more.copyClipBoard提供了跨浏览器剪贴板的功能。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=1763484981" target="_blank">赵晓阳</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/cpClipboard/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/cpClipboard/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.ticker</td>
+         <td class="description">baidu.more.ticker滚动文字效果，可自定义宽度、速度、文字颜色、鼠标悬停等。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=-1720237812" target="_blank">李周全</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/ticker/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/ticker/index.html" target="_blank">查看demo</a></td>
+      </tr>
+      <tr>
+         <td>baidu.more.contain</td>
+         <td class="description">baidu.more.contain 可以判断一个节点是否包含另一个节点，包括文本节点。</td>
+         <td><a href="http://family.baidu.com/core/index.jsp?chc=1108906316" target="_blank">余鹏</a>
+         <td><a href="http://fe.baidu.com/repos/projects/tangram-more/contain/" target="_blank">查看svn</a></td>
+         <td><a href="http://fe.baidu.com/projects/tangram-more/contain/index.html" target="_blank">查看demo</a></td>
+      </tr>
+   </table>
+</div>
