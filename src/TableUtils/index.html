@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery.color.js"></script>
+    <script type="text/javascript" src="TableUtils.js"></script>
+    <style type="text/css">
+        #sandbox table {
+            border-collapse: collapse;
+        }
+        #sandbox td {
+            height: 40px;
+            width: 40px;
+            font-size: 12px;
+            border: 1px solid black;
+            text-align: center;
+        }
+        #sandbox td.selected {
+            background-color: #add8e6;
+        }
+        #sandbox td.anchor {
+            background-color: blue;
+        }
+        #sandbox td.focus {
+            background-color: green;
+        }
+        #rightpanel {
+            position: absolute;
+            background-color: #fbfbfb;
+            top: 20px;
+            right: 20px;
+            border: 1px solid gray;
+            width: 250px;
+        }
+    </style>
+</head>
+<body>
+<h1>TableUtils DEMO</h1>
+<hr/>
+<div id="sandbox"></div>
+<div id="rightpanel">
+    <fieldset>
+        <legend>cellInfo</legend>
+        <table width="100%">
+            <col/>
+            <col style="text-align: right;"/>
+            <tr><td>rowIndex:</td><td id="rowIndex">-1</td></tr>
+            <tr><td>cellIndex:</td><td id="cellIndex">-1</td></tr>
+            <tr><td>colIndex:</td><td id="colIndex">-1</td></tr>
+            <tr><td>rowSpan:</td><td id="rowSpan">-1</td></tr>
+            <tr><td>colSpan:</td><td id="colSpan">-1</td></tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>Operate</legend>
+        <label for="autoExtend">autoExtend</label><input id="autoExtend" type="checkbox" checked><br/>
+        <button id="mergeRange" onclick="test.mergeRange();">mergeRange</button><br/>
+        <button id="mergeRight" onclick="test.mergeRight();">mergeRight</button><br/>
+        <button id="mergeDown" onclick="test.mergeDown();">mergeDown</button><br/>
+        <button id="splitCell" onclick="test.splitCell();">splitCell</button><br/>
+        <button id="deleteCols" onclick="test.deleteCols();">deleteCols</button><br/>
+        <button id="deleteRows" onclick="test.deleteRows();">deleteRows</button><br/>
+    </fieldset>
+</div>
+<script type="text/javascript">
+    var test = {
+        init: function (){
+            var row_chars = '0123456789';
+            var col_chars = 'ABCDEFGHIJ';
+            var rows = [];
+            var k = 10;
+            while (k --) {
+                var row = [];
+                var j = 10;
+                while (j --) {
+                    row[j] = col_chars.charAt(j) + row_chars.charAt(k);
+                }
+                rows[k] = '<td>' + row.join('</td><td>') + '</td>'
+            }
+//            var spec = '<![if (!IE)|(gte IE 9)]><table><![endif]><!--[if lte IE 8]><table frame="box" rules="all"><![endif]-->';
+            $('#sandbox').html('<table><tr>' +  rows.join('</tr><tr>') + '</tr></table>');
+            this.tableutils = new TableUtils($('#sandbox table')[0]);
+            $('#sandbox').bind('mousedown selectstart', function (evt){
+                evt.preventDefault();
+            });
+            var me = this;
+            var anchorTd;
+            $('#sandbox').delegate('td', 'mousedown', function (){
+                anchorTd = this;
+                $('#sandbox td.selected').removeClass('selected');
+                $('#sandbox td.focus').removeClass('focus');
+                $('#sandbox td.anchor').removeClass('anchor');
+                $(this).addClass('anchor');
+                $(anchorTd).addClass('focus');
+                me.range = null;
+            });
+            $('#sandbox').delegate('td', 'mouseover', function (){
+                var focusTd = this;
+                if (anchorTd) {
+                    $('#sandbox td.focus').removeClass('focus');
+                    $(focusTd).addClass('focus');
+                    var range = me.tableutils.getRange(anchorTd, focusTd, !!$('#autoExtend:checked')[0]);
+                    $('#sandbox td.selected').removeClass('selected');
+                    if (range) {
+                        $(me.tableutils.getRangeCells(range)).addClass('selected');
+                    }
+                    me.range = range;
+                }
+            });
+            $(document).bind('mouseup', function (){
+                anchorTd = null;
+                me.update();
+            });
+
+            this.update();
+        },
+        deleteCols: function (){
+            var range = this.range;
+            this.tableutils.deleteCols(range.beginColIndex, range.endRowIndex - range.beginColIndex);
+            this.update();
+        },
+        deleteRows: function (){
+            var range = this.range;
+            this.tableutils.deleteRows(range.beginRowIndex, range.endRowIndex - range.beginRowIndex);
+            this.update();
+        },
+        splitCell: function (){
+            this.tableutils.splitCell($('#sandbox td.focus')[0]);
+            this.update();
+        },
+        mergeRange: function (){
+            this.tableutils.mergeRange(this.range);
+            this.update();
+        },
+        mergeRight: function (){
+            this.tableutils.mergeRight($('#sandbox td.focus')[0]);
+            this.update();
+        },
+        mergeDown: function (){
+            this.tableutils.mergeDown($('#sandbox td.focus')[0]);
+            this.update();
+        },
+        update: function (){
+            var cell = $('#sandbox td.focus')[0];
+            if (cell) {
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                for (var k in cellInfo) {
+                    var val = cellInfo[k];
+                    var info = $('#' + k);
+                    var oldVal = info.text();
+                    info.text(val);
+                    if (oldVal != val) {
+                        info.css({ backgroundColor: '#ffff00' });
+                        info.stop().animate({ backgroundColor: '#9acd32' }, 1000);
+                    } else {
+                        info.css({ backgroundColor: '#9acd32' });
+                    }
+                }
+            }
+            $('#deleteCols').attr('disabled', !this.range);
+            $('#deleteRows').attr('disabled', !this.range);
+            $('#mergeRange').attr('disabled', !this.range);
+            $('#mergeRight').attr('disabled', !this.tableutils.canMergeRight(cell));
+            $('#mergeDown').attr('disabled', !this.tableutils.canMergeDown(cell));
+            $('#splitCell').attr('disabled', !this.tableutils.canSplitCell(cell));
+        }
+    };
+    test.init();
+</script>
+</body>
+</html>
