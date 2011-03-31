@@ -118,7 +118,7 @@
         },
         deleteCols: function (){
             var range = this.range;
-            this.tableutils.deleteCols(range.beginColIndex, range.endRowIndex - range.beginColIndex);
+            this.tableutils.deleteCols(range.beginColIndex, range.endColIndex - range.beginColIndex);
             this.update();
         },
         deleteRows: function (){
