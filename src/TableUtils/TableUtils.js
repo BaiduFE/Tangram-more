@@ -28,7 +28,7 @@ TableUtils.prototype.update = function (table){
         cells = table.rows[0].cells;
         var k = cells.length;
         if (k) while (k --) {
-            numCols += (cell[k].colSpan || 1);
+            numCols += (cells[k].colSpan || 1);
         }
     }
     this.numRows = numRows;
