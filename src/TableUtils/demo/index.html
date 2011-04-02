@@ -123,7 +123,7 @@
             } else {
                 var cell = $('#sandbox td.focus')[0];
                 var cellInfo = this.tableutils.getCellInfo(cell);
-                this.tableutils.deleteCol(cellInfo.colIndex, cellInfo.colSpan);
+                this.tableutils.deleteCols(cellInfo.colIndex, cellInfo.colSpan);
             }
             this.update();
         },
@@ -134,7 +134,7 @@
             } else {
                 var cell = $('#sandbox td.focus')[0];
                 var cellInfo = this.tableutils.getCellInfo(cell);
-                this.tableutils.deleteCol(cellInfo.rowIndex, cellInfo.rowSpan);
+                this.tableutils.deleteRows(cellInfo.rowIndex, cellInfo.rowSpan);
             }
             this.update();
         },
