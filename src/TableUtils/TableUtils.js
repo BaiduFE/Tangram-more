@@ -352,18 +352,24 @@ TableUtils.prototype.deleteCols = function (colIndex, colSpan){
     this.update();
 };
 TableUtils.prototype.insertRow = function (rowIndex){
-    var infoRow = this._infoGrid[rowIndex];
-    var tableRow = this.$table.insertRow(rowIndex);
     var colIndex = 0;
     var numCols = this.numCols;
-    var cellIndex = 0;
-    for (; colIndex < numCols; colIndex ++) {
-        var cellInfo = infoRow[colIndex];
-        if (cellInfo.rowIndex < rowIndex) {
-            var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
-            cell.rowSpan = cellInfo.rowSpan + 1;
-        } else {
-            tableRow.insertCell(cellIndex ++);
+    var tableRow = this.$table.insertRow(rowIndex);
+    if (rowIndex == 0 || rowIndex == this.numRows) {
+        for (; colIndex < numCols; colIndex ++) {
+            tableRow.insertCell(colIndex);
+        }
+    } else {
+        var cellIndex = 0;
+        var infoRow = this._infoGrid[rowIndex];
+        for (; colIndex < numCols; colIndex ++) {
+            var cellInfo = infoRow[colIndex];
+            if (cellInfo.rowIndex < rowIndex) {
+                var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+                cell.rowSpan = cellInfo.rowSpan + 1;
+            } else {
+                tableRow.insertCell(cellIndex ++);
+            }
         }
     }
     this.update();
@@ -372,14 +378,27 @@ TableUtils.prototype.insertCol = function (colIndex){
     var infoGrid = this._infoGrid;
     var numRows = this.numRows;
     var rowIndex = 0;
-    for (; rowIndex < numRows; rowIndex ++) {
-        var cellInfo = infoGrid[rowIndex][colIndex];
-        if (cellInfo.colIndex < colIndex) {
-            var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
-            cell.colSpan = cellInfo.colSpan + 1;
-        } else {
-            var tableRow = this.$table.rows[rowIndex];
-            tableRow.insertCell(cellInfo.cellIndex);
+    var tableRow;
+    if (colIndex == 0) {
+        for (; rowIndex < numRows; rowIndex ++) {
+            tableRow = this.$table.rows[rowIndex];
+            tableRow.insertCell(0);
+        }
+    } else if (colIndex == this.numCols) {
+        for (; rowIndex < numRows; rowIndex ++) {
+            tableRow = this.$table.rows[rowIndex];
+            tableRow.insertCell(tableRow.cells.length);
+        }
+    } else {
+        for (; rowIndex < numRows; rowIndex ++) {
+            var cellInfo = infoGrid[rowIndex][colIndex];
+            if (cellInfo.colIndex < colIndex) {
+                var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+                cell.colSpan = cellInfo.colSpan + 1;
+            } else {
+                tableRow = this.$table.rows[rowIndex];
+                tableRow.insertCell(cellInfo.cellIndex);
+            }
         }
     }
     this.update();

@@ -119,18 +119,31 @@
                 anchorTd = null;
                 me.update();
             });
+            $(document).delegate(':not(#sandbox td)', 'click', function (){
+                $('#sandbox td.selected').removeClass('selected');
+                $('#sandbox td.focus').removeClass('focus');
+                $('#sandbox td.anchor').removeClass('anchor');
+            });
 
             this.update();
         },
         insertRow: function (){
             var cell = $('#sandbox td.focus')[0];
-            var cellInfo = this.tableutils.getCellInfo(cell);
-            this.tableutils.insertRow(cellInfo.rowIndex);
+            if (cell) {
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                this.tableutils.insertRow(cellInfo.rowIndex);
+            } else {
+                this.tableutils.insertRow(this.tableutils.numRows);
+            }
         },
         insertCol: function (){
             var cell = $('#sandbox td.focus')[0];
-            var cellInfo = this.tableutils.getCellInfo(cell);
-            this.tableutils.insertCol(cellInfo.colIndex);
+            if (cell) {
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                this.tableutils.insertCol(cellInfo.colIndex);
+            } else {
+                this.tableutils.insertCol(this.tableutils.numCols);
+            }
         },
         deleteRows: function (){
             var range = this.range;
