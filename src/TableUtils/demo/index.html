@@ -34,6 +34,10 @@
             border: 1px solid gray;
             width: 250px;
         }
+        #rightpanel fieldset {
+            margin: 10px;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
@@ -60,8 +64,10 @@
         <button id="mergeRight" onclick="test.mergeRight();">mergeRight</button><br/>
         <button id="mergeDown" onclick="test.mergeDown();">mergeDown</button><br/>
         <button id="splitCell" onclick="test.splitCell();">splitCell</button><br/>
-        <button id="deleteCols" onclick="test.deleteCols();">deleteCols</button><br/>
+        <button id="insertRow" onclick="test.insertRow();">insertRow</button><br/>
+        <button id="insertCol" onclick="test.insertCol();">insertCol</button><br/>
         <button id="deleteRows" onclick="test.deleteRows();">deleteRows</button><br/>
+        <button id="deleteCols" onclick="test.deleteCols();">deleteCols</button><br/>
     </fieldset>
 </div>
 <script type="text/javascript">
@@ -116,16 +122,15 @@
 
             this.update();
         },
-        deleteCols: function (){
-            var range = this.range;
-            if (range) {
-                this.tableutils.deleteCols(range.beginColIndex, range.endColIndex - range.beginColIndex);
-            } else {
-                var cell = $('#sandbox td.focus')[0];
-                var cellInfo = this.tableutils.getCellInfo(cell);
-                this.tableutils.deleteCols(cellInfo.colIndex, cellInfo.colSpan);
-            }
-            this.update();
+        insertRow: function (){
+            var cell = $('#sandbox td.focus')[0];
+            var cellInfo = this.tableutils.getCellInfo(cell);
+            this.tableutils.insertRow(cellInfo.rowIndex);
+        },
+        insertCol: function (){
+            var cell = $('#sandbox td.focus')[0];
+            var cellInfo = this.tableutils.getCellInfo(cell);
+            this.tableutils.insertCol(cellInfo.colIndex);
         },
         deleteRows: function (){
             var range = this.range;
@@ -135,6 +140,17 @@
                 var cell = $('#sandbox td.focus')[0];
                 var cellInfo = this.tableutils.getCellInfo(cell);
                 this.tableutils.deleteRows(cellInfo.rowIndex, cellInfo.rowSpan);
+            }
+            this.update();
+        },
+        deleteCols: function (){
+            var range = this.range;
+            if (range) {
+                this.tableutils.deleteCols(range.beginColIndex, range.endColIndex - range.beginColIndex);
+            } else {
+                var cell = $('#sandbox td.focus')[0];
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                this.tableutils.deleteCols(cellInfo.colIndex, cellInfo.colSpan);
             }
             this.update();
         },

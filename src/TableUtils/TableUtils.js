@@ -262,7 +262,7 @@ TableUtils.prototype.splitCell = function (cell){
         while (j --) {
             if (k || j) {
                 // 左上角的Cell保留原Cell, 不需要插入
-                tableRow.insertCell(leftCellIndex + (!k ? 2 : 1), cell.cloneNode(false));
+                tableRow.insertCell(leftCellIndex + (!k ? 2 : 1));
             }
         }
     }
@@ -349,6 +349,39 @@ TableUtils.prototype.deleteCols = function (colIndex, colSpan){
         this.deleteCol(colIndex + colSpan);
     }
     this._preventUpdate = false;
+    this.update();
+};
+TableUtils.prototype.insertRow = function (rowIndex){
+    var infoRow = this._infoGrid[rowIndex];
+    var tableRow = this.$table.insertRow(rowIndex);
+    var colIndex = 0;
+    var numCols = this.numCols;
+    var cellIndex = 0;
+    for (; colIndex < numCols; colIndex ++) {
+        var cellInfo = infoRow[colIndex];
+        if (cellInfo.rowIndex < rowIndex) {
+            var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+            cell.rowSpan = cellInfo.rowSpan + 1;
+        } else {
+            tableRow.insertCell(cellIndex ++);
+        }
+    }
+    this.update();
+};
+TableUtils.prototype.insertCol = function (colIndex){
+    var infoGrid = this._infoGrid;
+    var numRows = this.numRows;
+    var rowIndex = 0;
+    for (; rowIndex < numRows; rowIndex ++) {
+        var cellInfo = infoGrid[rowIndex][colIndex];
+        if (cellInfo.colIndex < colIndex) {
+            var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+            cell.colSpan = cellInfo.colSpan + 1;
+        } else {
+            var tableRow = this.$table.rows[rowIndex];
+            tableRow.insertCell(cellInfo.cellIndex);
+        }
+    }
     this.update();
 };
 /**
