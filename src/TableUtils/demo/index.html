@@ -118,12 +118,24 @@
         },
         deleteCols: function (){
             var range = this.range;
-            this.tableutils.deleteCols(range.beginColIndex, range.endColIndex - range.beginColIndex);
+            if (range) {
+                this.tableutils.deleteCols(range.beginColIndex, range.endColIndex - range.beginColIndex);
+            } else {
+                var cell = $('#sandbox td.focus')[0];
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                this.tableutils.deleteCol(cellInfo.colIndex, cellInfo.colSpan);
+            }
             this.update();
         },
         deleteRows: function (){
             var range = this.range;
-            this.tableutils.deleteRows(range.beginRowIndex, range.endRowIndex - range.beginRowIndex);
+            if (range) {
+                this.tableutils.deleteRows(range.beginRowIndex, range.endRowIndex - range.beginRowIndex);
+            } else {
+                var cell = $('#sandbox td.focus')[0];
+                var cellInfo = this.tableutils.getCellInfo(cell);
+                this.tableutils.deleteCol(cellInfo.rowIndex, cellInfo.rowSpan);
+            }
             this.update();
         },
         splitCell: function (){
@@ -159,8 +171,8 @@
                     }
                 }
             }
-            $('#deleteCols').attr('disabled', !this.range);
-            $('#deleteRows').attr('disabled', !this.range);
+            $('#deleteCols').attr('disabled', !(this.range || cell));
+            $('#deleteRows').attr('disabled', !(this.range || cell));
             $('#mergeRange').attr('disabled', !this.range);
             $('#mergeRight').attr('disabled', !this.tableutils.canMergeRight(cell));
             $('#mergeDown').attr('disabled', !this.tableutils.canMergeDown(cell));
