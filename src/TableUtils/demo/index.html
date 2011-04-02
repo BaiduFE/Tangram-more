@@ -119,10 +119,12 @@
                 anchorTd = null;
                 me.update();
             });
-            $(document).delegate(':not(#sandbox td)', 'click', function (){
-                $('#sandbox td.selected').removeClass('selected');
-                $('#sandbox td.focus').removeClass('focus');
-                $('#sandbox td.anchor').removeClass('anchor');
+            $(document).delegate('*', 'click', function (evt){
+                if (!$(evt.target).parents('#sandbox')[0]) {
+                    $('#sandbox td.selected').removeClass('selected');
+                    $('#sandbox td.focus').removeClass('focus');
+                    $('#sandbox td.anchor').removeClass('anchor');
+                }
             });
 
             this.update();
