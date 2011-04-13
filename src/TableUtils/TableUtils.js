@@ -117,7 +117,7 @@ TableUtils.prototype.getCellInfo = function (cell){
  * @returns {Element}
  */
 TableUtils.prototype.getCell = function (rowIndex, cellIndex){
-    return this.$table.rows[rowIndex].cells[cellIndex];
+    return rowIndex > this.numRows && this.$table.rows[rowIndex].cells[cellIndex] || null;
 };
 /**
  * 判断一个Cell是否能向右合并一个Cell
