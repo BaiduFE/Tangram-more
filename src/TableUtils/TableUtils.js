@@ -117,7 +117,7 @@ TableUtils.prototype.getCellInfo = function (cell){
  * @returns {Element}
  */
 TableUtils.prototype.getCell = function (rowIndex, cellIndex){
-    return rowIndex > this.numRows && this.$table.rows[rowIndex].cells[cellIndex] || null;
+    return rowIndex < this.numRows && this.$table.rows[rowIndex].cells[cellIndex] || null;
 };
 /**
  * 判断一个Cell是否能向右合并一个Cell
@@ -276,6 +276,7 @@ TableUtils.prototype.deleteRow = function (rowIndex){
     var infoRow = this._infoGrid[rowIndex];
     var numCols = this.numCols;
     var lastCellInfo;
+    var droppedCount = 0;
     for (var colIndex=0; colIndex<numCols; colIndex++) {
         var cellInfo = infoRow[colIndex];
         // 跳过已经处理过的Cell
@@ -283,10 +284,19 @@ TableUtils.prototype.deleteRow = function (rowIndex){
             continue;
         }
         lastCellInfo = cellInfo;
-        var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex);
+        var cell = this.getCell(cellInfo.rowIndex, cellInfo.cellIndex - droppedCount);
         // 如果Cell的rowSpan大于1, 表明它是从别的行rowSpan过来的, 修改它的rowSpan
         if (cell.rowSpan > 1) {
             cell.rowSpan = -- cellInfo.rowSpan;
+            // 如果是Cell所在行，需要将其搬到下一行
+            if (cellInfo.rowIndex == rowIndex) {
+                var nextRowIndex = rowIndex + 1;
+                var nextRowLeftCellIndex = colIndex == 0 ? 0 : this._infoGrid[nextRowIndex][colIndex - 1].cellIndex;
+                var nextRowLeftCell = this.getCell(nextRowIndex, nextRowLeftCellIndex + droppedCount);
+                droppedCount ++;
+                numCols --;
+                this.$table.rows[nextRowIndex].insertBefore(cell, nextRowLeftCell.nextSibling);
+            }
         }
     }
     this.$table.deleteRow(rowIndex);
