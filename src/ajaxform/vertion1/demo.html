@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=7" />
+  <title>ajaxform</title>
+  <script type="text/javascript" src="http://img.baidu.com/js/tangram-base-1.3.9.js"></script>
+  <script src="Ajaxform.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<input type="file" name="file3"/>
+	<form name="form" id="form" action="http://www.baidu.com">
+		<input type="text" name="age" />
+		1<input type="checkbox" name="cls" value="1"/>
+		2<input type="checkbox" name="cls" value="2"/>
+		3<input type="checkbox" name="cls" value="3"/>
+		<select name="type">	
+			<option value="xx">dsfs</option>
+			<option value="xdfx">ddfsdsfs</option>
+		</select>
+		
+        <input type="submit"  value="submit"/>
+		<input type="button" value="提交" id="btnSubmit"/>
+		<input type="button" value="重置" id="btnReset"/>
+	</form>
+<input type="file" name="file2"/>
+<script>
+var form = new baidu.more.Ajaxform("form");
+baidu.on("btnSubmit","click",function(){
+	form.ajaxSubmit({
+		method:"POST",
+		//url:"xxx.do",
+		//iframe:true,
+		onfailuer:function(){
+			console.log(arguments);
+		}
+	});	
+})
+</script>
+</body>
+</html>
