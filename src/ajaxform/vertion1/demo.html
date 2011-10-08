@@ -8,22 +8,27 @@
   <script src="Ajaxform.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-<input type="file" name="file3"/>
-	<form name="form" id="form" action="http://www.baidu.com">
-		<input type="text" name="age" />
-		1<input type="checkbox" name="cls" value="1"/>
-		2<input type="checkbox" name="cls" value="2"/>
-		3<input type="checkbox" name="cls" value="3"/>
-		<select name="type">	
-			<option value="xx">dsfs</option>
-			<option value="xdfx">ddfsdsfs</option>
+<form name="form" id="form" action="http://www.baidu.com">
+<ul>
+	<li>text:<input type="text" name="text"/></li>
+	<li>radio:<input type="radio" name="radio" value="1"/>1, <input type="radio" name="radio" value="2"/>2</li>
+	<li>checkbox:<input type="checkbox" name="checkbox" value="1"/><input type="checkbox" name="checkbox" value="2"/></li>
+	<li>textarea:<textarea name="textarea"></textarea></li>
+	<li>
+		select:
+		<select>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
 		</select>
-		
-        <input type="submit"  value="submit"/>
-		<input type="button" value="提交" id="btnSubmit"/>
-		<input type="button" value="重置" id="btnReset"/>
-	</form>
-<input type="file" name="file2"/>
+	</li>
+	<li>button:<input type="button" name="button" value="a button"/></li>
+	<li>noname:<input type="text"/></li>
+	<li>reset:<input type="reset" name="reset"/></li>
+	<li>file:<input type="file" name="file"/></li>
+</ul>
+<input type="button" id="btnSubmit" value="submit"/>
+</form>
 <script>
 var form = new baidu.more.Ajaxform("form");
 baidu.on("btnSubmit","click",function(){
@@ -31,6 +36,8 @@ baidu.on("btnSubmit","click",function(){
 		method:"POST",
 		//url:"xxx.do",
 		//iframe:true,
+		onsuccess:function(xhr,text){
+		},
 		onfailuer:function(){
 			console.log(arguments);
 		}
