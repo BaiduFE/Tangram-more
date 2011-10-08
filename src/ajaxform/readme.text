@@ -1,0 +1,32 @@
+% baidu.more.ajaxform
+% mfylee
+ 
+## baidu.more.ajaxform
+mfylee: lifayu@baidu.com
+ 
+### 功能介绍：
+
+    异步表单提交（包括文件上传），表单数据收集，表单序列表等
+
+#### 实例方法： 
+
+ajaxSubmit(opts) 核心方法，用于表单提交
+  opts.method: POST/GET
+  opts.url: 提交地址
+  opts.iframe: 是否使用iframe方式提交，默认false
+  opts.onsuccess(xhr,xhr.responseText):提交成功的回调函数
+  opts.onfailure(xhr): 失败的回调函数
+  opts.beforeSubmit(arr,form,opts):提交表单前执行，return false则取消提交
+resetForm() 重置表单
+clearForm() 清空表单
+formSerialize() 表单序列化
+formToJson() 将表单转换为json对象
+formToArray() 将表单转换为数组对象
+
+### 示例
+
+var formInstance = new baidu.more.Ajaxform("form");
+
+### 注意
+
+不支持image表单的提交，不提交没有name，diabled，reset，button等元素的值
