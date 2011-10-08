@@ -17,8 +17,10 @@ baidu.more.Ajaxform = baidu.lang.createClass(function(target){
 	 */
 	resetForm:function(){
 		var form = this.form;
-		if((typeof form.reset == "function") || (typeof form.reset == "object" && form.reset.nodeType)){
-            form.reset();
+		if(typeof form.reset == "function"){
+			form.reset();
+		}else if(typeof form.reset == "object" && form.reset.nodeType){
+            form.reset.click();
         }
 	},
 	/**
@@ -81,7 +83,7 @@ baidu.more.Ajaxform = baidu.lang.createClass(function(target){
      */
     formSerialize:function(semantic){
 		var arr = this.formToArray(semantic);
-		return baidu.url.jsonToQuery(arrayToObject(arr));
+		return baidu.url.jsonToQuery(this.arrayToObject(arr));
     },
 	/**
 	 * 收集表单数据
