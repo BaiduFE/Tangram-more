@@ -1,0 +1,529 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram Grid Editable</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.editable.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.keyboard.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+	<!--  for datepicker -->
+	<script type="text/javascript" src="../tangram/tangram-datepicker.js"></script>
+	<style type='text/css'> 
+            .tangram-calendar { 
+                height: 164px; 
+                width: 178px; 
+                font-size:12px; 
+                text-align: center; 
+                border: 5px solid #EEEEEE; 
+				background-color:#fff;
+            } 
+            .tangram-calendar-title { 
+                position: relative; 
+                background-color: #EEEEEE; 
+            } 
+            .tangram-calendar-label{ 
+                width: 100%;/*ie必要*/ 
+                background-color: #EEEEEE; 
+            } 
+            .tangram-calendar-prev { 
+                position: absolute; 
+                text-align: center; 
+                cursor: pointer; 
+                left: 0px; 
+                top: 0px; 
+                width: 30px; 
+            } 
+            .tangram-calendar-next{ 
+                position: absolute; 
+                text-align: center; 
+                cursor: pointer; 
+                right: 0px; 
+                top: 0px; 
+                width: 30px; 
+            } 
+            .tangram-calendar-table { 
+                width: 100%; 
+                height: 100%; 
+            } 
+            .tangram-calendar-week td{ 
+                cursor: default; 
+                font-weight: bold; 
+                font-size:12px; 
+                background-color: #EEEEEE; 
+            } 
+            .tangram-calendar-date td{ 
+                cursor:pointer; 
+                text-align: center; 
+                border: 1px solid #FAFAFA; 
+            } 
+            td.tangram-calendar-date-current{ 
+                border: 1px solid #A00000; 
+            } 
+            .tangram-calendar-date-other{ 
+                color: #ccc; 
+            } 
+            .tangram-calendar-disabled{ 
+                background: #CCCCCC; 
+            } 
+            .tangram-calendar-date-disable{ 
+                background: gray; 
+            } 
+            td.tangram-calendar-hover{ 
+                border: 1px solid blue; 
+            } 
+        </style>
+		
+</head>
+<body>
+	<h2>可编辑表格</h2>
+	<h3>方式一：全部编辑</h3>
+	
+<div id="editablegrid1"></div>
+
+<script type="text/javascript">
+	//初始化
+	var grid1 = new baidu.ui.Grid({
+		element:"editablegrid1",
+		editMode:2,//editMode:0-不编辑,1-单行编辑,2-多行编辑
+		columns:[{
+				field:'name',
+				header:"机器名称",
+				width:200,
+				editable:true,//可以编辑
+				editOption:{
+					editRenderer:function(param){//编辑时字段呈现
+						return "<input type='text' style='width:98%' class='name' name='name' value='"+param.cellvalue+"' />";
+					},
+					onBeginEdit:function(param){//字段激活编辑时触发事件，可以为编辑控件添加行为
+						var t= baidu.dom.query("[name=name]",param.cell)[0];
+						t.onblur=function(){
+							if(this.value==""){
+								this.style.backgroundColor="yellow";
+							}else{
+								this.style.backgroundColor="";
+							}
+						}
+						t.onfocus=function(){
+							this.style.backgroundColor="";
+						}
+					},
+					validate:function(param){//校验数据触发
+						if(param.fieldValue==""){
+							alert("机器名称不能为空!");
+							baidu.dom.query("[name=name]",param.cell)[0].focus();
+							return false;//return false 后面的字段不再校验
+						}
+						if(param.fieldValue=="abc"){
+							//返回错误信息将继续校验后面的字段
+							baidu.dom.query("[name=name]",param.cell)[0].style.backgroundColor="yellow";
+							return "第"+(parseInt(param.rowIndex,10)+1)+"行机器名称不能为abc";
+						}
+						
+					},
+					getFieldValue:function(param){
+						return baidu.dom.query("[name=name]",param.cell)[0].value;
+					}
+				}
+			},{
+				field:'creator',
+				header:"创建人",
+				width:100,
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						var map={"yhf":"Hafeyang","xyz":"XayeZang"},arr=["<select name='creator'>"];
+						for(var k in map){
+							arr.push("<option value='"+k+"' "+(param.cellvalue==k?" selected='selected' ":"")+">"+map[k]+"</option>");
+						}
+						arr.push("</select>");
+						return arr.join("");
+					}
+				}
+			},{
+				field:'dataKey',
+				header:"dataKey",
+				width:300,
+				align:"right",
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						return "<textarea name='dataKey' style='width:98%;height:60px;'>" + param.cellvalue + "</textarea>";
+					}
+				}
+			},{
+				field:'lastVersion',
+				header:"lastVersion",
+				width:120
+			},{
+				field:'canAddVersion',
+				header:"是否可以添加版本",
+				width:160,
+				editable:true,
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='checkbox' name='canAddVersion' value='1' "+(param.cellvalue=="1"?" checked='checked' ":"")+" />";
+					}
+				}
+			},{
+				field:'createTime',
+				header:"创建时间",
+				width:180,
+				editable:true,
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='text' name='createTime' id='createTime-"+param.rowIndex+"' value='"+param.cellvalue.substr(0,10)+"'  />";
+					},
+					onBeginEdit:function(param){
+						var calendar = new T.ui.DatePicker({ 
+				            calendarOptions: { } 
+				        }); 
+				        calendar.render('createTime-'+param.rowIndex);
+					}
+				}
+			}
+		],
+		height:300,
+		autoHeight:true,
+		hoverhighlight:false,
+		strip:false,
+		loadMask:true,
+		selectMode:0,
+		page:false,
+		onBeforeLoad:function(e,griddata){
+			//griddata.data.list=[];
+		},
+		url:"noahdata.json"
+		
+	});
+	
+	//ajax加载数据
+	grid1.request();
+	
+	
+	function savegrid1(){
+		if(grid1.validate()){//校验通过
+			alert("校验通过，保存");
+		}else{
+			var errors = grid1.getValidateErrors();
+			if(errors.length>0){
+				alert(errors.join("\n\n"));
+			}
+		}
+	}
+	
+</script>
+<input type="button" value="保存表格数据" onclick="savegrid1()" />
+<input type="button" value="新增行" onclick="grid1.beginEditRow(grid1.addDOMRow({},0));" />
+<h3>方式二：逐行编辑</h3>
+<div id="editablegrid2"></div>
+
+<script type="text/javascript">
+	//初始化
+	var grid2 = new baidu.ui.Grid({
+		element:"editablegrid2",
+		columns:[{
+				field:'name',
+				header:"机器名称",
+				width:200,
+				editable:true,//可以编辑
+				editOption:{
+					editRenderer:function(param){//编辑时字段呈现
+						return "<input type='text' style='width:98%' class='name' name='name' value='"+param.cellvalue+"' />";
+					},
+					onBeginEdit:function(param){//字段激活编辑时触发事件，可以为编辑控件添加行为
+						var t= baidu.dom.query("[name=name]",param.cell)[0];
+						t.onblur=function(){
+							if(this.value==""){
+								this.style.backgroundColor="yellow";
+							}else{
+								this.style.backgroundColor="";
+							}
+						}
+						t.onfocus=function(){
+							this.style.backgroundColor="";
+						}
+					},
+					validate:function(param){//校验数据触发
+						if(param.fieldValue==""){
+							alert("机器名称不能为空!");
+							baidu.dom.query("[name=name]",param.cell)[0].focus();
+							return false;//return false 后面的字段不再校验
+						}
+						if(param.fieldValue=="abc"){
+							//返回错误信息将继续校验后面的字段
+							baidu.dom.query("[name=name]",param.cell)[0].style.backgroundColor="yellow";
+							return "第"+(parseInt(param.rowIndex,10)+1)+"行机器名称不能为abc";
+						}
+						
+					},
+					getFieldValue:function(param){
+						return baidu.dom.query("[name=name]",param.cell)[0].value;
+					}
+				}
+			},{
+				field:'creator',
+				header:"创建人",
+				width:100,
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						var map={"yhf":"Hafeyang","xyz":"XayeZang"},arr=["<select name='creator'>"];
+						for(var k in map){
+							arr.push("<option value='"+k+"' "+(param.cellvalue==k?" selected='selected' ":"")+">"+map[k]+"</option>");
+						}
+						arr.push("</select>");
+						return arr.join("");
+					}
+				}
+			},{
+				field:'dataKey',
+				header:"dataKey",
+				width:300,
+				align:"right",
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						return "<textarea name='dataKey' style='width:98%;height:60px;'>" + param.cellvalue + "</textarea>";
+					}
+				}
+			},{
+				field:'lastVersion',
+				header:"lastVersion",
+				width:120
+			},{
+				field:'canAddVersion',
+				header:"是否可以添加版本",
+				width:160,
+				editable:true,
+				renderer:function(data){return data.cellvalue=="1"?"是":"否";},
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='checkbox' name='canAddVersion' value='1' "+(param.cellvalue=="1"?" checked='checked' ":"")+" />";
+					}
+				}
+			},{
+				field:'createTime',
+				header:"创建时间",
+				width:180,
+				editable:true,
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='text' name='createTime' value='"+param.cellvalue.substr(0,10)+"'  />";
+					},
+					onBeginEdit:function(param){
+						var txtCreateTime = baidu.dom.query("[name=createTime]",param.cell)[0];
+						var calendar = new T.ui.DatePicker({ 
+				            calendarOptions: { } 
+				        }); 
+				        calendar.render(txtCreateTime);
+					}
+				}
+			},{
+				header:"编辑",
+				width:180,
+				renderer:function(data){
+					return "<input type='button' value='编辑' id='btneditrow-"+data.rowIndex+"' onclick='begineditrow("+data.rowIndex+")' />"+
+							"<input type='button' value='删除' id='btndeleterow-"+data.rowIndex+"'   onclick='deleteEditRow("+data.rowIndex+")' />";
+				},
+				editable:true,
+				editOption:{
+					editRenderer:function(data){
+						return "<input type='button' value='保存' id='btnsaverow-"+data.rowIndex+"'   onclick='saveRow("+data.rowIndex+")' />"+
+							"<input type='button' value='取消' id='btncancelrow-"+data.rowIndex+"'   onclick='cancelEditRow("+data.rowIndex+")' />"+
+							"<input type='button' value='删除' id='btndeleterow-"+data.rowIndex+"'   onclick='deleteEditRow("+data.rowIndex+")' />"
+							;
+					}
+				}
+			}
+		],
+		height:300,
+		autoHeight:true,
+		hoverhighlight:false,
+		strip:false,
+		loadMask:true,
+		selectMode:0,
+		page:false,
+		url:"noahdata.json",
+		editMode:1//editMode:0-不编辑,1-单行编辑,2-多行编辑
+	});
+	
+	//ajax加载数据
+	grid2.request();
+	
+	
+	function savegrid2(){
+		if(grid2.validate()){//校验通过
+			alert("校验通过，保存");
+		}else{
+			var errors = grid2.getValidateErrors();
+			if(errors.length>0){
+				alert(errors.join("\n\n"));
+			}
+		}
+	}
+	
+	function begineditrow(rowIndex){
+		grid2.beginEditRow(rowIndex);
+	}
+	
+	function cancelEditRow(rowIndex){
+		grid2.endEditRow(rowIndex);
+	}
+	function deleteEditRow(rowIndex){
+		grid2.deleteEditRow(rowIndex);
+	}
+	
+	function saveRow(rowIndex){
+		var rowData = grid2.getCurrentData(null,rowIndex);
+		if(grid2.validate(rowIndex)){//校验通过
+			//do save logic
+			alert("校验通过，保存");
+			grid2.getData().data.list[rowIndex]=rowData[0];//更新行数据
+			grid2.endEditRow(rowIndex);//endEditRows会重新呈现表格数据
+		}else{
+			var errors = grid2.getValidateErrors();
+			if(errors.length>0){
+				alert(errors.join("\n\n"));
+			}
+		}
+		
+	}
+	
+</script>
+<input type="button" value="保存表格数据" onclick="savegrid2()" />
+<input type="button" value="新增行" onclick="grid2.beginEditRow(grid2.addDOMRow({},0));" />
+<h3>方式三：逐单元格编辑(点击编辑)tab键切换至下一个单元格</h3>
+<div id="editablegrid3"></div>
+
+<script type="text/javascript">
+	//初始化
+	var grid3 = new baidu.ui.Grid({
+		element:"editablegrid3",
+		editMode:3,//editMode:0-不编辑,1-单行编辑,2-多行编辑,3-逐单元格编辑
+		keyboard:true,
+		onEndEdit:function(e,data){
+			var validateResult = this.validate();
+			if(!validateResult){
+				var errors = this.getValidateErrors();
+				if(errors.length) alert(errors.join("\n"));
+			}
+			return validateResult;
+		},
+		columns:[{
+				field:'name',
+				header:"机器名称",
+				width:200,
+				editable:true,//可以编辑
+				editOption:{
+					editRenderer:function(param){//编辑时字段呈现
+						return "<input type='text' style='width:98%' class='name' name='name' value='"+param.cellvalue+"' />";
+					},
+					onBeginEdit:function(param){//字段激活编辑时触发事件，可以为编辑控件添加行为
+						var t= baidu.dom.query("[name=name]",param.cell)[0];
+						t.onblur=function(){
+							if(this.value==""){
+								this.style.backgroundColor="yellow";
+							}else{
+								this.style.backgroundColor="";
+							}
+						}
+						t.onfocus=function(){
+							this.style.backgroundColor="";
+						}
+					},
+					validate:function(param){//校验数据触发
+						if(param.fieldValue==""){
+							alert("机器名称不能为空!");
+							baidu.dom.query("[name=name]",param.cell)[0].focus();
+							return false;//return false 后面的字段不再校验
+						}
+						if(param.fieldValue=="abc"){
+							//返回错误信息将继续校验后面的字段
+							baidu.dom.query("[name=name]",param.cell)[0].style.backgroundColor="yellow";
+							return "第"+(parseInt(param.rowIndex,10)+1)+"行机器名称不能为abc";
+						}
+						
+					},
+					getFieldValue:function(param){
+						return baidu.dom.query("[name=name]",param.cell)[0].value;
+					}
+				}
+			},{
+				field:'creator',
+				header:"创建人",
+				width:100,
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						var map={"yhf":"Hafeyang","xyz":"XayeZang"},arr=["<select name='creator'>"];
+						for(var k in map){
+							arr.push("<option value='"+k+"' "+(param.cellvalue==k?" selected='selected' ":"")+">"+map[k]+"</option>");
+						}
+						arr.push("</select>");
+						return arr.join("");
+					}
+				}
+			},{
+				field:'dataKey',
+				header:"dataKey",
+				width:300,
+				align:"right",
+				editable:true,
+				editOption:{
+					editRenderer: function(param){//编辑时字段呈现
+						return "<textarea name='dataKey' style='width:98%;height:60px;'>" + param.cellvalue + "</textarea>";
+					}
+				}
+			},{
+				field:'lastVersion',
+				header:"lastVersion",
+				width:120
+			},{
+				field:'canAddVersion',
+				header:"是否可以添加版本",
+				width:160,
+				editable:true,
+				renderer:function(data){return data.cellvalue=="1"?"是":"否";},
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='checkbox' name='canAddVersion' value='1' "+(param.cellvalue=="1"?" checked='checked' ":"")+" />";
+					}
+				}
+			},{
+				field:'createTime',
+				header:"创建时间",
+				width:180,
+				editable:true,
+				editOption:{
+					editRenderer:function(param){
+						return "<input type='text' name='createTime' value='"+param.cellvalue.substr(0,10)+"'  />";
+					},
+					onBeginEdit:function(param){
+						var txtCreateTime = baidu.dom.query("[name=createTime]",param.cell)[0];
+						var calendar = new T.ui.DatePicker({ 
+				            calendarOptions: { } 
+				        }); 
+				        calendar.render(txtCreateTime);
+					}
+				}
+			}
+		],
+		height:300,
+		autoHeight:true,
+		hoverhighlight:false,
+		strip:false,
+		loadMask:true,
+		selectMode:0,
+		page:false,
+		url:"noahdata.json"
+	});
+	
+	//ajax加载数据
+	grid3.request();
+	
+</script>
+</body>
+</html>

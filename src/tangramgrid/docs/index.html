@@ -1,0 +1,1080 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram Grid Docs</title>
+	<link rel="stylesheet" href="shared.css" />
+	<script type="text/javascript" src="syntaxhighlighter/shCore.js"></script>
+	<script type="text/javascript" src="syntaxhighlighter/shBrushJScript.js"></script>
+	<script type="text/javascript" src="syntaxhighlighter/shBrushXml.js"></script>
+	<link type="text/css" rel="stylesheet" href="syntaxhighlighter/shCoreDefault.css"/>
+	<script type="text/javascript">
+		SyntaxHighlighter.defaults['smart-tabs'] = true;
+		SyntaxHighlighter.defaults['toolbar'] = false;
+		SyntaxHighlighter.all();
+		function findA(o){
+			var arr=[o.previousSibling,o.nextSibling],result = null;
+			if(o.previousSibling.previousSibling){arr.push(o.previousSibling.previousSibling);}
+			if(o.nextSibling.nextSibling){arr.push(o.nextSibling.nextSibling);}
+			var l = arr.length;
+			while(l--){
+				if(arr[l] && arr[l].tagName  && arr[l].tagName.toLowerCase()=="a" && arr[l].getAttribute("name")){
+					result = arr[l];
+					break;
+				}
+			}
+		}
+		function findSubList(h2){
+			var result = h2;
+			while(result.nextSibling){
+				if(result.nextSibling.tagName  && result.nextSibling.className){
+					if((result.nextSibling.tagName.toLowerCase()=="div" &&  ( result.nextSibling.className.indexOf("list")!=-1)) 
+					|| result.nextSibling.tagName.toLowerCase()=="h2"){
+						result = result.nextSibling;
+						break;
+					}
+				}
+				result = result.nextSibling;
+			}
+			return result;
+		}
+		window.onload = function(){
+			var arr =[],h2s = document.getElementsByTagName("h2");
+			arr.push("<ul>");
+			for(var i=0,l=h2s.length;i<l;i++){
+				var h2=h2s[i],a=findA(h2),list =findSubList(h2); h3s= list.getElementsByTagName?list.getElementsByTagName("h3"):[];
+				if(!a){
+					a  = document.createElement("a");
+					a.setAttribute("name",h2.innerHTML);
+					h2.parentNode.insertBefore(a,h2);
+				}
+				arr.push("<li><a href='#"+a.getAttribute("name")+"'>"+h2.innerHTML+"</a>");
+				if(h3s.length>0){
+					arr.push("<ul>");
+					for(var ii=0,ll=h3s.length;ii<ll;ii++){
+						var h3 = h3s[ii],h3a= findA(h3);
+						if(!h3a){
+							h3a  = document.createElement("a");
+							h3a.setAttribute("name",a.getAttribute("name")+"-"+h3.innerHTML);
+							h3.parentNode.insertBefore(h3a,h3);
+						}
+						arr.push("<li><a href='#"+h3a.getAttribute("name")+"'>"+h3.innerHTML+"</a></li>");
+					}
+					arr.push("</ul>");
+				}
+				arr.push("</li>");
+			}
+			arr.push("</ul>");
+			document.getElementById("content").innerHTML=arr.join("");
+		}
+	</script>
+
+</head>
+    <body>
+        <h1 >Tangram Grid 使用说明</h1>
+        <div class="content">
+            <h2>目录</h2>
+	    	<div class="list" id="content"></div>
+            <h2>概述</h2>
+            <div class="list">
+                <a name="about"></a>
+                <p class="padded">
+                    Tangrid Grid是基于Tangram 的一个Grid的控件，它易于使用，功能可拔插，非常方便的扩展出功能，性能优异。能兼容IE6。
+                </p>
+				<h3>功能列表</h3>
+				<a name="functionlist"></a>
+				<dl>
+					<dt>已经实现的功能</dt>
+					<dd>
+						<ul>
+							<li>基本的表格数据展现，提供方法将json数据加载到grid中</li>
+							<li>宽度自适应,设置表格宽度/高度 高度自适应高度,自动拉伸，也可以设置最小高度</li>
+							<li>ajax请求数据数据,分页，支持集成自定义分页控件，能适应不同的ajax请求数据 </li>
+							<li>表格单元格格式自定义，转换器，支持checkbox列 </li>
+							<li>Ajax请求时支持遮罩，也可以自定义遮罩 </li>
+							<li>点击列头字段排序 </li>
+							<li>基本事件绑定,行选择，hover ,点击</li>
+							<li>新增行/修改行/删除行</li>
+							<li>列宽可以拖动</li>
+							<li>列头分组</li>
+						</ul>
+					</dd>
+					<dt>扩展功能(插件实现)</dt>
+					<dd>
+						<ul>
+							<li>行可以通过拖放改变顺序(<a href="#addon-rowsortable">使用说明</a>)</li>
+							<li>列可以通过拖放改变顺序(<a href="#插件功能文档-列可以通过拖放改变顺序">使用说明</a>)</li>
+							<li>可编辑表格，支持常见的编辑类型，文本框，下拉框等，支持自定义编辑。(<a href="#addon-editable">使用说明</a>)</li>
+							<li>子表格，点击某单元格出现一块区域显示子数据，可以是表格，也可以是自定义内容(<a href="#addon-rowexpand">使用说明</a>) </li>
+							<li>冻结列，列比较多的时候出现横向滚动条，可以冻结左边的n列，这些列不随横向滚动条滚动 (<a href="#addon-columnfreeze">使用说明</a>)</li>
+							<li>数据显示的分组，统计，以及扩展机制，主要是扩展统计方法，支持从ajax请求结果读取统计数据，也支持javascript做简单统计。(<a href="#addon-groupsummary">使用说明</a>) </li>
+							<li>Treegrid，将表格的某个列显示成树形结构，并支持延迟加载<a href="#插件功能文档-TreeGrid">使用说明</a> </li>
+							<li>大数据量解决方案，延迟呈现，或者延迟加载</li>
+							<li>键盘事件支持，支持键盘事件，光标操作等<a href="#插件功能文档-键盘事件">使用说明</a></li>
+							<li>页内排序<a href="#插件功能文档-页内排序">使用说明</a></li>
+						</ul>
+					</dd>
+				</dl>
+				<h3>一些约定</h3>
+				<a name="conventions"></a>
+				<dl class="details">
+					<dt>基本使用，方法，配置参数，事件，事件参数</dt>
+					<dd>
+						<ul>
+							<li>基本使用:
+								<p class="padded">控件的实例化统一用下面格式:</p>
+								<pre class="brush: xml;"><div id="firsttangramgrid"></div></pre>
+								<pre class="brush: js;">
+								var gridInstance = new baidu.ui.Grid({
+									element:"firsttangramgrid" // other options
+								});
+								</pre>
+
+							</li>
+							<li>方法:
+								<p class="padded">方法是指Grid实例的方法，调用方式统一为:</p>
+								<pre class="brush: js;">
+								gridInstance.fn(parameter);
+								</pre>
+							</li>
+							<li>配置参数:
+								<p class="padded">配置参数是指Grid实例化时参数中的配置,Grid实例化参数为一个json，该json的可以约定为配置参数,没有特别指出，参数均可默认:</p>
+								<p class="padded">配置参数中onXXXX为配置事件监听:</p>
+								<pre class="brush:js">
+								var gridInstance = new baidu.ui.Grid({
+									element:"gridid",
+									onSelect:function(e,data){//在ajax请求时触发
+										//e为event对象
+										//data 为事件参数，参见该select事件
+									},
+									onBeforeRequest:function(e,data){
+										//onBeforeXXX事件中，可以读写事件参数data
+										//return false; //如果在onBeforeXXX方法中返回false，将会阻止事件的触发
+									}
+								});
+								</pre>
+							</li>
+							<li>事件，事件参数:
+								<p class="padded">事件是指Grid本身触发的事件，事件通过监听的方式:</p>
+								<pre class="brush:js">
+								gridInstance.addEventListener("select",function(e,data){//在行选择时触发
+									//e 是event对象
+									//data 是事件参数，在事件处理中可以读/写事件参数,参数格式应事件类型而异
+								});</pre>
+								<p class="padded">事件的命名约定:beforeXXX事件通常在事件真正执行事件前触发。</p>
+								<pre class="brush:js">
+								gridInstance.addEventListener("beforerequest",function(e,data){//在ajax请求前触发
+									//e 是event对象
+									//data 是事件参数，在事件处理中可以读/写事件参数,参数格式应事件类型而异
+									//e.returnValue=false;//如果在事件监听中将event.returnValue=false。事件的默认动作将会阻止
+								});</pre>
+							</li>
+							<li>事件的执行顺序
+								<p class="padded">事件约定的执行顺序是:beforeXXX事件监听->配置参数中的onBeforeXXXX方法->事件本身动作->事件XXX监听动作->配置参数中的onXXXX方法</p>
+								<p class="padded">beforeXXX事件监听,配置参数中的onBeforeXXXX方法中阻止了默认动作的触发，后面的事件将不会执行</p>
+								<p class="padded">beforeXXX事件以及配置参数是否存在以文档的<a href="#config">配置参数</a>与<a href="#events">事件</a>为准</p>
+							</li>
+							<li>this的指向
+								<p class="padded">非特别说明，方法中的this均指向Grid的实例</p>
+							</li>
+							<li>其他
+								<p class="padded">使用Grid控件时不支持直接访问控件内部DOM</p>
+							</li>
+						</ul>
+					</dd>
+				</dl>
+			</div>
+			<h2>配置参数</h2>
+			<a name="config"></a>
+			<div class="list">
+				<h3>element</h3>
+				<p class="padded">必选参数，DOM的id，确保DOM id在实例化Grid前已经存在</p>
+				<h3>height</h3>
+				<p class="padded">必选参数，数字。表格的高度</p>
+				<a name="config-autoHeight"></a>
+				<h3>autoHeight</h3>
+				<p class="padded">自动计算高度，默认为false。一旦设置为自动高度，height将最为Grid的最小高度。当表格数据小于height时，Grid将使用最小高度，否则将根据数据高度自动适应。</p>
+				<h3>docktop</h3>
+				<p class="padded">可以在表格顶部添加自定义html，例如表格标题，html的内容(不是绝对定位)将于表格一起计算高度和宽度</p>
+				<pre class="brush: js;">
+				var gridInstance = new baidu.ui.Grid({
+					docktop:"<h3>自定义表格标题</h3>" //other options
+				});
+				</pre>
+				<h3>columns</h3>
+				<a name="config-columns"></a>
+				<p class="padded">必选参数，数组，定义列模型</p>
+				<pre class="brush: js;">
+				//不分组列头
+				var gridInstance = new baidu.ui.Grid({
+					columns:[
+						{field:'id',width:30,renderer:'checkbox'},
+						{field:'name',header:"机器名称",fix:true},
+						{field:'creator',header:"创建人",width:200},
+						{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+						{field:'lastVersion',header:"lastVersion",width:200},
+						{field:'createTime',header:"创建时间",width:180}
+					]// other options
+				});
+				</pre>
+				<pre class="brush: js;">
+				//分组列头
+				var gridInstance = new baidu.ui.Grid({
+					columns:[
+						{field:'id',width:30,renderer:'checkbox',disableBy:function(){return Math.random()>0.5;}},
+						{field:'name',header:"机器名称",width:200,fix:true},
+						{header:"机器信息",columns:[
+							{field:'creator',header:"创建人",width:100},
+							{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+							{field:'lastVersion',header:"lastVersion",width:200}
+						]},
+						{field:'createTime',header:"创建时间",width:180,resizable:false,sortable:false}
+					]// other options
+				});
+				</pre>
+				<p class="padded">列配置属性</p>
+				<ul>
+					<li>field:字段名，对于列头分组的组头，field无需定义</li>
+					<li>width:列宽度，默认为 200。如果设置了fix=true，列宽由grid自动计算</li>
+					<li><a name="config-columns-renderer"></a>
+						renderer:呈现方式，有两种配置方式：
+						<p class="padded">字符串:读取baidu.ui.Grid.ext.coltype类型,如在baidu.ui.Grid.ext.coltype中定义了</p>
+						<pre class="brush:js">
+						baidu.ui.Grid.ext.coltype.checkbox={
+							headerformat:function (header,colopt,colIndex){//列头内容计算方法
+								//this为grid对象
+								colopt.resizable=false;
+								colopt.sortable=false;
+								return (this.selectMode==2)?"<input type='checkbox' class='tg-cball' />":"&nbsp;";
+							},
+							format:function(data){//单元格计算方法
+								if(!this.selectMode){return "";}
+								//{cellvalue:celltext,colopts:col,rowdata:row,rowIndex:i}
+								var f = data.colopts.field||"",v = data.rowdata[f]||"";
+								//是否禁用checkbox
+								var d=((typeof(data.colopts.disableBy)=="function") && data.colopts.disableBy(data)===false)?" disabled='disabled' ":"";
+								return "<input type='checkbox' class='tg-cb' name='"+f+"' value='"+v+"' "+d+" />";
+							},
+							init:function(){//初始话行为(在Grid初始化时执行,类似Grid的插件)
+								var g= this;
+								g.addEventListener("select",function(e,data){
+									var cb = baidu.dom.query("[rowindex="+data.rowIndex+"] .tg-cb",g.ref.gbody)[0];
+									cb.checked=true;
+								});
+								//...
+							}
+						};
+						</pre>
+						<p class="padded">这样，在renderer中只需要指定renderer="checkbox"即可使用自定义呈现列。</p>
+						<p class="padded">renderer也可以直接定义成一个function：该函数返回单元格中显示内容，函数接受参数格式为：</p>
+						<pre class="brush:js">
+							{
+								cellvalue:celltext,//单元格的数据
+								colopts:col,//列配置对象
+								rowdata:row,//该行数据
+								select:true/false,//是否选中
+								rowIndex:i//行下标，从0开始
+							}
+						</pre>
+						
+					</li>
+					<li>fix:是否自适应列宽，默认为false，只有一个列能设置该属性。
+					如果设置fix=true。该列的列宽将是表格控件容器的宽度减去其他列的宽度。
+					<br/>
+					如果在多个列中设置了该属性，只有第一个列起作用。
+					<br/>
+					分组列头的子列不支持该属性。
+					</li>
+					<li>sortable:是否可以点击列头排序，默认为true</li>
+					<li>resizable:是否可以拖拽改变列宽，默认为true</li>
+					<li>columns:数组，如果定义了该属性，该列将作为列头分组的组头。</li>
+				</ul>
+				<h3>selectMode</h3>
+				<p class="padded">行选择类型：0-为不选择,1-单选,2-多选，默认为0</p>
+				<h3>selectBy</h3>
+				<p class="padded">selectBy 初始选中是否选中字段或者判断函数，如果是字段名，则判断该字段是否为true/1/"1"，如果是函数，函数接收参数{rowdata:rowdata,rowIndex:rowIndex}。
+				<br/>仅在selectMode!=0时作用,初始选中行不会触发select事件
+				<br/>selectMode==1时,最多只需选中一行
+				</p>
+				<h3>clickToSelect</h3>
+				<p class="padded">点击行任何内容选中行，默认为true，如果设置为false，只有点击checkbox才能选中行</p>
+				<h3>hoverhighlight</h3>
+				<p class="padded">鼠标滑过行是否高亮,默认为true</p>
+				<h3>strip</h3>
+				<p class="padded">是否隔行变色,默认为true</p>
+				<h3>page</h3>
+				<a name="config-page"></a>
+				<p class="padded">分页配置，有三种配置方式：</p>
+				<ul>
+					<li>false: 不分页，分页条也不显示 </li>
+					<li>Object:使用Grid自带分页条，默认page属性使用该项。默认配置信息为：
+						<br/>
+						<pre class="brush:js">
+							page:{
+								perPage:10,//初始每页记录条数
+								pagenumbers:[10,20,50,100],//每页记录条数下拉框选项
+								curPage:1,//初始的当前页,从1开始 
+								total:0,//初始显示在分页条中总记录数
+								tools:"显示在分页条中的扩展html"
+							}
+						</pre>
+					</li>
+					<li>字符串:自定义分页条html,该html会参与表格高度计算
+						<br/>
+						<pre class="brush:js">
+							page:"<div>这是一个简单的分页<input type='button' value='到最后一页' id='btnLastPage' /></div>",//...
+						</pre>
+						<br/>
+						<pre class="brush:js">
+							//自定义分页条实现：模拟分页控件中的最后一页请求
+							baidu.event.on(baidu.dom.g("btnLastPage"),"click",function(){
+								var total = parseInt(griddemo.getData().data.page.total,10);
+								var pages= parseInt((total+1)/10,10)+1;
+								gridInstance.request({curPage:pages,perPage:10});
+							});
+						</pre>
+						<br/>
+						当然，更好的建议是直接使用Tangram UI 中的插件扩展方式
+					</li>
+					
+				</ul>
+				<h3>url</h3>
+				<p class="padded">ajax请求的url</p>
+				<a name="config-ajaxOption"></a>
+				<h3>ajaxOption</h3>
+				<p class="padded">直接作为tangram 中<a href="http://tangram.baidu.com/tangram/T_ajax_request.html" target="_blank">baidu.ajax.request(url,[options])</a>的第二个参数，onsuccess定义无效。
+				data参数只作为ajax请求的默认参数，可以被<a href="#methods-request">request方法</a>参数替换</p>
+				<h3>orderBy</h3>
+				<p class="padded">初始的排序字段序号，格式形如"1":第二列 。"2-1":第三列的第二个子列(第三列必须是组头)</p>
+				<h3>order</h3>
+				<p class="padded">初始的排序类型 desc / asc </p>
+				<h3>loadMask</h3>
+				<p class="padded">ajax请求时遮罩控件区域，默认为false </p>
+				<h3>loadMessage</h3>
+				<p class="padded">ajax请求时遮罩提示，默认为"正在加载..." </p>
+				<h3>onRowClick</h3>
+				<p class="padded">行点击时触发，事件参数为： </p>
+				<a name="rowclick-params"></a>
+				<pre class="brush:js">
+					{
+						rowIndex:rowIndex,//行序号
+						row:rowdata,//行数据
+						ref:{
+							cell:cell,//触发事件的单元格(td标签)
+							row:row,//触发事件的行(tr标签)
+							table:table,//触发事件的table标签DOM
+							src:src//触发事件的源对象
+						}
+					};
+				</pre>
+				<h3>onRowDblClick</h3>
+				<p class="padded">行双击时触发，事件参数为： </p>
+				<a name="rowclick-params"></a>
+				<pre class="brush:js">
+					{
+						rowIndex:rowIndex,//行序号
+						row:rowdata,//行数据
+						ref:{
+							cell:cell,//触发事件的单元格(td标签)
+							row:row,//触发事件的行(tr标签)
+							table:table,//触发事件的table标签DOM
+							src:src//触发事件的源对象
+						}
+					};
+				</pre>
+				<h3>onCellClick</h3>
+				<p class="padded">单元格点击时触发，事件参数为： </p>
+				<a name="cellclick-params"></a>
+				<pre class="brush:js">
+					{
+						columnIndex:columnIndex,//在table中是第几列 从0开始
+						refIndex:refIndex,//refIndex 在grid.optoins.columns中的下标，分组子列格式形如"1-0"
+						rowIndex:rowIndex,//行序号
+						column:column,//列配置信息
+						ref:{
+							cell:cell,//触发事件的单元格(td标签)
+							row:row,/触发行(tr标签)
+							table:table,//事件的table标签DOM
+							src:src//触发事件的源对象
+						}
+					}
+				</pre>
+				<h3>onSelect</h3>
+				<p class="padded">行选中时触发，点击行将会选中/取消选中行,也可以调用<a href="#methods-selectRow">selectRow</a>方法选中行：事件参数与<a href="#rowclick-params">rowclick事件参数</a>一致。
+				<br/>
+				如果时调用selectRow方法选中行，事件有关的参数为空 </p>
+				<h3>onUnSelect</h3>
+				<p class="padded">取消行选中时触发，点击行将会选中/取消选中行,也可以调用<a href="#methods-unSelectRow">unSelectRow</a>方法取消选中行：事件参数与<a href="#rowclick-params">rowclick事件参数</a>一致。
+				<br/>
+				如果时调用unSelectRow方法选中行，事件有关的参数为空 </p>
+				<h3>onBeforeRequest</h3>
+				<p class="padded">ajax请求前调用方法，事件参数为<a href="#config-ajaxOption">ajaxOption</a></p>
+				<a name="methods-onBeforeLoad"></a>
+				<h3>onBeforeLoad</h3>
+				<p class="padded">ajax请求回调时触发，或者调用<a href="#methods-loadData">loadData</a>时触发，事件参数为<a href="#griddata-format">表格参数</a></p>
+				<h3>onAfterLoad</h3>
+				<p class="padded">数据加载完毕后触发，或者调用<a href="#methods-loadData">loadData</a>后触发，事件参数为<a href="#griddata-format">表格参数</a></p>
+				<h3>onBeforeSort</h3>
+				<p class="padded">排序前触发方法：事件参数为
+					<a name="sort-params"></a>
+					<br/>
+					<pre class="brush:js">
+						{
+							orderBy:col.field,//排序字段
+							order:order//排序类型 desc asc
+						}
+					</pre>
+				</p>
+			</div>
+			<h2>方法</h2>
+			<a name="methods"></a>
+			<div class="list">
+				<a name="methods-resize"></a>
+				<h3>resize</h3>
+				<p class="padded">重新调整表格大小，通常在表格容器大小发生变化时调用。
+				<br/>参数({width:w,height:h})，width可以是数字，也可以是"auto"，height必须是数字。
+				<br/>
+				如果设置<a href ="#config-autoHeight">autoHeight</a>=true，height只是设置最小高度
+				</p>
+				<h3>request</h3>
+				<p class="padded">ajax请求加载表格数据，参数为(data),data为<a href="#config-ajaxOption">ajaxOption</a>中的data属性。data将会覆盖默认属性。
+				<br/>
+				Grid默认的请求参数为：
+				<a name="griddata-params"></a>
+				<pre class="brush:js">
+					{
+						orderBy:"排序字段",
+						order:"asc/desc",
+						curPage:"当前页数",
+						perPage:"每页记录条数"
+					}
+				</pre>
+				</p>
+				<h3>loadData</h3>
+				<p class="padded">手动加载表格数据，参数为(data)
+				<br/>
+				表格数据格式为：
+				<a name="griddata-format"></a>
+				<pre class="brush:js">
+					{
+						"data":{
+							"page":{
+								"total":"52"//total属性如果缺省，自动取上次请求时的值，没有上次请求值，total是list.length
+							},
+							"list":[
+								{"id":"42","name":"z0614_ui_sample_all"},
+								{"id":"41","name":"z0614_bws_sample"},
+								//...
+							]
+						}
+					}
+				</pre>
+				<br/>
+				如果表格数据不是上述约定格式，可以通过<a href="#methods-onBeforeLoad">onBeforeLoad方法</a>或者<a href="#events-beforeload">beforeload事件</a>解析成该格式。
+				</p>
+				<h3>getData</h3>
+				<p class="padded">获取表格数据，格式形如<a href="#griddata-format">表格数据格式</a></p>
+				<a name="methods-selectRow"></a>
+				<h3>selectRow</h3>
+				<p class="padded">选择行，参数为(rowIndex)</p>
+				<a name="methods-unSelectRow"></a>
+				<h3>unSelectRow</h3>
+				<p class="padded">选择行，参数为(rowIndex)</p>
+				<a name="methods-toggleSelectRow"></a>
+				<h3>toggleSelectRow</h3>
+				<p class="padded">选择行/取消选择行，参数为(rowIndex)</p>
+				<a name="methods-getSelected"></a>
+				<h3>getSelected</h3>
+				<p class="padded">获取选中行的第一行数据，如果没有选择行，返回null,可以指定参数列，返回指定列值,如getSelected("id")，只返回选中行id值,如getSelected(["id","name"])，只返回选中行{id:id,name:name}</p>
+				<a name="methods-getSelections"></a>
+				<h3>getSelections</h3>
+				<p class="padded">获取选中行数据，返回数组,可以指定参数列，返回指定列值,getSelections("id")，只返回选中行id值的数组,,getSelections(["id","name"])，返回选中行{id:id,name:name}的数组</p>
+				<a name="methods-reOrder"></a>
+				<h3>reOrder</h3>
+				<p class="padded">按字段排序，参数为(colIndex,order) colIndex格式形如"1","1-1"。order:asc/desc</p>
+				<a name="methods-hideColumn"></a>
+				<h3>hideColumn</h3>
+				<p class="padded">隐藏列，参数为(colIndex)colIndex格式形如"1","1-1"。</p>
+				<a name="methods-showColumn"></a>
+				<h3>showColumn</h3>
+				<p class="padded">显示列，参数为(colIndex)colIndex格式形如"1","1-1"。</p>
+				<a name="methods-addRow"></a>
+				<h3>addRow</h3>
+				<p class="padded">添加数据行，参数为(row[,rowIndex])row是新行数据,rowIndex:在第rowIndex行前新增，rowIndex如果不指定，行数据追加到表格最后。rowIndex从0开始，rowIndex如果为0，则在最上方添加行。<a href="#addRow_addDOMRow">addRow与addDOMRow区别</a></p>
+				<a name="methods-updateRow"></a>
+				<h3>updateRow</h3>
+				<p class="padded">添加数据行，参数为(row,rowIndex)row是新行数据,rowIndex:行序号，从0开始</p>
+				<a name="methods-deleteRow"></a>
+				<h3>deleteRow</h3>
+				<p class="padded">删除数据行，参数为(rowIndex)rowIndex:行序号，从0开始。会删除表格数据</p>
+				<h3>addDOMRow</h3>
+				<p class="padded">添加DOM行，参数为(row[,rowIndex])row是新行数据,rowIndex:在第rowIndex行钱新增，rowIndex如果不指定，行数据追加到表格最后。rowIndex从0开始，rowIndex如果为0，则在最上方添加行。函数返回新行的rowIndex
+					<br/>
+					<a name="addRow_addDOMRow"></a>
+					<p class="padded">addRow与addDOMRow区别，addRow是在表格数据上添加一行，然后重新加载一次数据，数据加载完后会触发afterload事件,addDOMRow则是在表格上找到rowIndex行，利用DOM操作直接添加行，不会触发afterload事件</p>
+				</p>
+				<h3>updateDOMRow</h3>
+				<p class="padded">更新DOM行，参数为(row,rowIndex)row是行数据,rowIndex:行序号，从0开始</p>
+				<h3>deleteDOMRow</h3>
+				<p class="padded">删除DOM行，参数为(rowIndex),删除DOM row。不删除表格数据。</p>
+				<h3>cellIterator</h3>
+				<p class="padded">单元格遍历，参数为遍历函数，函数参数为:<br/>
+					<a name="param-cellIterator"></a>
+					<pre class="brush:js">
+					{
+						column:colopts,//列选项
+						cell:cell,//单元格td
+						row:row,//单元格所在tr
+						colIndex:refcol,//列序号
+						rowIndex:rowIndex,//行序号
+						rowdata:rowdata//行数据
+					}
+					</pre>
+				</p>
+				<h3>showMask</h3>
+				<p class="padded">显示遮罩层</p>
+				<h3>hideMask</h3>
+				<p class="padded">隐藏遮罩层</p>
+			</div>
+			<h2>事件</h2>
+			<a name="events"></a>
+			<div class="list">
+				<a name="events-resize"></a>
+				<h3>resize</h3>
+				<p class="padded">调用resize方法是触发，事件参数为{}</p>
+				<a name="events-beforerequest"></a>
+				<h3>beforerequest</h3>
+				<p class="padded">ajax请求前触发该方法，事件参数为<a href="#config-ajaxOption">ajaxOption</a></p>
+				<h3>datafilter</h3>
+				<p class="padded">ajax请求成功触发该方法，可以利用该事件将服务端返回数据解析成表格所需的数据，事件参数为ajax返回的json对象。</p>
+				<a name="events-beforeload"></a>
+				<h3>beforeload</h3>
+				<p class="padded">数据加载前触发事件，在loadData方法中触发,参数为<a href="#griddata-format">表格数据格式</a></p>
+				<a name="events-afterload"></a>
+				<h3>afterload</h3>
+				<p class="padded">数据加载后触发事件,参数为<a href="#griddata-format">表格数据格式</a></p>
+				<a name="events-unselect"></a>
+				<h3>unselect</h3>
+				<p class="padded">取消行选择触发事件,参数为<a href="#rowclick-params">行点击参数格式</a></p>
+				<a name="events-select"></a>
+				<h3>select</h3>
+				<p class="padded">行选择触发事件,参数为<a href="#rowclick-params">行点击参数格式</a></p>
+				<a name="events-beforesort"></a>
+				<h3>beforesort</h3>
+				<p class="padded">排序前触发事件,参数为{orderBy:orderfiled,order:"asc/desc"}</p>
+				<a name="events-hidecolumn"></a>
+				<h3>hidecolumn</h3>
+				<p class="padded">隐藏列触发事件,参数为{colIndex:colIndex}</p>
+				<a name="events-showcolumn"></a>
+				<h3>showcolumn</h3>
+				<p class="padded">显示列触发事件,参数为{colIndex:colIndex}</p>
+				<a name="events-addrow"></a>
+				<h3>addrow</h3>
+				<p class="padded">添加数据行触发事件,参数为{row:row,rowIndex:rowIndex}</p>
+				<a name="events-updaterow"></a>
+				<h3>updaterow</h3>
+				<p class="padded">更新数据行触发事件,参数为{row:row,rowIndex:rowIndex}</p>
+				<a name="events-deleterow"></a>
+				<h3>deleterow</h3>
+				<p class="padded">删除数据行触发事件,参数为deleterow</p>
+				<h3>adddomrow</h3>
+				<p class="padded">添加DOM row触发，调用<a href="#方法-addDOMRow">addDOMRow方法时触发</a>参数{rowIndex:rowIndex,newRowIndex:newRowIndex,rowdata:rowdata}</p>
+				<h3>updatedomrow</h3>
+				<p class="padded">更新DOM row触发，调用<a href="#方法-updateDOMRow">updateDOMRow方法时触发，参数{rowIndex:rowIndex,rowdata:rowdata}</a></p>
+				<h3>deletedomrow</h3>
+				<p class="padded">删除DOM row触发，调用<a href="#方法-deleteDOMRow">deleteDOMRow方法时触发，参数{rowIndex:rowIndex}</a></p>
+				<a name="events-cellclick"></a>
+				<h3>cellclick</h3>
+				<p class="padded">单元格触发事件,参数为<a href="#cellclick-params">单元格点击事件参数</a></p>
+				<a name="events-rowclick"></a>
+				<h3>rowclick</h3>
+				<p class="padded">表格行点击触发事件,参数为<a href="#rowclick-params">表格行点击事件参数</a></p>
+				<h3>rowdblclick</h3>
+				<p class="padded">表格行双击触发事件,参数为<a href="#rowclick-params">表格行点击事件参数</a></p>
+				<a name="events-headercellclick"></a>
+				<h3>headercellclick</h3>
+				<p class="padded">列头单元格点击触发事件,参数为{ref:{table:table,row:row,cell:cell,src:src}}</p>
+				<h3>columnresize</h3>
+				<p class="padded">列宽发生变化时,参数为{column:columnopts}</p>
+				<a name="events-initialized"></a>
+				<h3>initialized</h3>
+				<p class="padded">初始化完毕触发事件,参数为{}</p>
+				<h3>beginrowjoin</h3>
+				<p class="padded">拼接表格html字符串，在每行循环开始时，可以利用该事件添加数据行前面的html代码(比如在分组时需要在每组的第一行前面添加分组行)
+					<br/>参数为：
+					</br/>
+					<pre class="brush:js">
+						{
+							realColumnsLength:realColumnsLength,//实际table中row的列数(td个数)
+							rowdata:row,//该行的数据
+							rowIndex:i,//行号，从0开始
+							joinedArray:arr//已经拼接的字符串数组，如果需要添加html，可以使用joinedArray.push("the html before &lt;tr&gt;");
+						}
+					</pre>
+				</p>
+				<h3>endrowjoin</h3>
+				<p class="padded">拼接表格html字符串，在每行循环结束时，可以利用该事件添加每数据行后面的html代码
+					<br/>参数为：
+					</br/>
+					<pre class="brush:js">
+						{
+							realColumnsLength:realColumnsLength,//实际table中row的列数(td个数)
+							rowdata:row,//该行的数据
+							rowIndex:i,//行号，从0开始
+							joinedArray:arr//已经拼接的字符串数组，如果需要添加html，可以使用joinedArray.push("the html after &lt;/tr&gt;");
+						}
+					</pre>
+				</p>
+				<h3>endrowsjoin</h3>
+				<p class="padded">在最后一行数据行循环完执行，可以在表格最下方添加tr。如合计。
+					<br/>参数为：
+					</br/>
+					<pre class="brush:js">
+						{
+							joinedArray:arr//已经拼接的字符串数组，如果需要添加html，可以使用joinedArray.push("the html after &lt;/tr&gt;");
+						}
+					</pre>
+				</p>
+			</div>
+			<a name="addons"></a>
+			<h2>插件功能文档</h2>
+			<div class="list">
+				<a name="addon-rowexpand"></a>
+				<h3>行扩展，数据展开/收缩</h3>
+				
+				<p class="padded">需引入tangram.grid.rowexpand.js</p>
+				<ul>
+					<li>定义列类型：rowexpand,使用方法为：
+					<br/>
+					<pre class="brush:js;highlight: [8,9,10,14]">
+					var griddemo = new baidu.ui.Grid({
+						element:"gridwidthsub",
+						columns:[
+							{
+								field:'id',
+								width:30,
+								align:"center",
+								renderer:"rowexpand",//列类型rowexpand
+								title:"点击查看/收起详细信息",// +/-提示信息
+								onExpand:function(param){
+									//param: {expandedrow:expandedrow,expandedcell:expandedcell,data:cellclickdata}
+									param.expandedcell.innerHTML=baidu.string.format("<div style='height:50px;padding:30px;'>机器#{name}详细信息</div>",this.getData().data.list[param.data.rowIndex]);
+								},
+								onUnExpand:function(param){
+									//param: {expandedrow:expandedrow,expandedcell:expandedcell,data:cellclickdata}
+									console.log("onunexpand");
+								}
+							},
+							//..
+					</pre>
+					</li>
+					<li>
+						将列renderer值设置为"rowexpand",其他属性：
+						<ul>
+							<li>title:是展开/收缩按钮的提示</li>
+							<li>onExpand:展开时执行的方法：接收参数{expandedrow:展开的tr标签,expandedcell:展开的td标签,data:<a href="#cellclick-params">单元格点击数据</a>}</li>
+							<li>onUnExpand:收缩执行的方法：接收参数{expandedrow:收缩的tr标签,expandedcell:收缩的td标签,data:<a href="#cellclick-params">单元格点击数据</a>}</li>
+						</ul>
+					</li>
+				</ul>
+				<a name="addon-rowsortable"></a>
+				<h3>行可以拖动改变顺序</h3>
+				<p class="padded">需引入tangram.grid.rowsortable.js</p>
+				<ul>
+					<li>配置属性rowsortable,当该属性为true时，启用该功能</li>
+					<li>定义方法:
+						<ul>
+							<li>serializeRows:返回当前行顺序，格式为[{当前第一行数据,rowIndex:原行序号},{当前第二行数据,rowIndex:原行序号},..]</li>
+							<li>getSerializedSelections:返回当前选择行顺序，格式为[{当前选中第一行数据,rowIndex:原行序号},{当前选中第二行数据,rowIndex:原行序号},..]</li>
+						</ul>
+					</li>
+					<li>增加事件:拖放开始事件rowsortable-dragstart,拖放时触发事件rowsortable-draggging,拖放结束事件rowsortable-dragend,事件参数均为{}</li>
+				</ul>
+				<a name="addon-columnfreeze"></a>
+				<h3>列冻结</h3>
+				<p class="padded">需引入tangram.grid.columnfreeze.js</p>
+				<ul>
+					<li>配置属性freeze,冻结列数
+						<br/>
+						<pre class="brush:js;highlight: [3]">
+						var griddemo = new baidu.ui.Grid({
+							element:"freezecolgrid",
+							freeze:3,//冻结前三列
+							columns:[
+								{field:'id',width:30,renderer:"checkbox"},
+								{field:'name',header:"机器名称",width:300},
+								{field:'creator',header:"创建人",width:200},
+								{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+								{field:'lastVersion',header:"lastVersion",width:200},
+								{field:'canAddVersion',header:"是否可以添加版本",width:200,renderer:function(data){return data.cellvalue=="1"?"是":"否"}},
+								{field:'createTime',header:"创建时间",width:180}
+							],
+						//...
+						</pre>
+					</li>
+				</ul>
+				<a name="addon-editable"></a>
+				<h3>可编辑表格</h3>
+				<p class="padded">需引入tangram.grid.editable.js</p>
+				<ul>
+					<li>配置属性editMode,editMode=1时为逐行编辑，需要调用beginEditRow方法激活行编辑功能，editMode=2是为全部编辑，数据处于编辑状态,使用方式如下：
+						<br/>
+						<pre class="brush:js;highlight: [3,8,9,10,13,26,39]">
+						var grid1 = new baidu.ui.Grid({
+							element:"editablegrid1",
+							editMode:2,//editMode:0-不编辑,1-单行编辑,2-多行编辑,3-逐单元格编辑
+							columns:[{
+									field:'name',
+									header:"机器名称",
+									width:200,
+									editable:true,//可以编辑
+									editOption:{
+										editRenderer:function(param){//编辑时字段呈现
+											return "<input type='text' style='width:98%' class='name' name='name' value='"+param.cellvalue+"' />";
+										},
+										onBeginEdit:function(param){//字段激活编辑时触发事件，可以为编辑控件添加行为
+											var t= baidu.dom.query("[name=name]",param.cell)[0];
+											t.onblur=function(){
+												if(this.value==""){
+													this.style.backgroundColor="yellow";
+												}else{
+													this.style.backgroundColor="";
+												}
+											}
+											t.onfocus=function(){
+												this.style.backgroundColor="";
+											}
+										},
+										validate:function(param){//校验数据触发
+											if(param.fieldValue==""){
+												alert("机器名称不能为空!");
+												baidu.dom.query("[name=name]",param.cell)[0].focus();
+												return false;//return false 后面的字段不再校验
+											}
+											if(param.fieldValue=="abc"){
+												//返回错误信息将继续校验后面的字段
+												baidu.dom.query("[name=name]",param.cell)[0].style.backgroundColor="yellow";
+												return "第"+(parseInt(param.rowIndex,10)+1)+"行机器名称不能为abc";
+											}
+											
+										},
+										getFieldValue:function(param){
+											return baidu.dom.query("[name=name]",param.cell)[0].value;
+										}
+									}
+								},//其他列
+						</pre>
+					</li>
+					<li>列定义中新增两属性：editable：是否可以编辑，默认是false,editOption编辑选项,可以定义四个方法。这四个方法参数均为<a href="#param-cellIterator">cellIterator方法参数</a>：
+						<ul>
+							<li>editRenderer:编辑单元格时单元格内的html，改方法必须返回单元格内的html,必须定义</li>
+							<li>onBeginEdit:激活单元格编辑时触发，用于初始化单元格编辑控件编辑行为,可空</li>
+							<li>validate:在调用表格控件的validate方法时触发的方法，用于数据校验，如果返回false,校验停止，如果返回字符串，认为是错误信息，校验会继续，校验错误信息可以通过getValidateErrors方法获取。</li>
+							<li>getFieldValue:声明从单元格编辑控件中取回字段值的方法，该方法必须放回字段的值。可以不定义，默认的取字段值的方法是查找单元格内name=字段名的表单控件值，如果是checkbox，取值是选中的checkbox的value用","的连接结果</li>
+						</ul>
+					</li>
+					<li>单元格编辑方式（editMode==3）时，可以配置方法onEndEdit，在结束单元格编辑时触发，如果该方法返回false，该单元格不会结束编辑状态。增加endedit事件<br/>
+						<p class="padded">该方法接受参数:</p>
+						<pre class="brush:js">
+							{
+								columnIndex:columnIndex,//列序号
+								refIndex:refIndex,//td的下标
+								rowIndex:rowIndex,//行号
+								column:column,//列配置信息
+								cell:editingcell,//td DOM节点
+								fieldValue:fieldValue//字段值
+							}
+						</pre>
+						<p class="padded">逐单元格编辑的例子:</p>
+						<pre class="brush:js;highlight:[3,4]">
+							var grid3 = new baidu.ui.Grid({
+								element:"editablegrid3",
+								editMode:3,//editMode:0-不编辑,1-单行编辑,2-多行编辑,3-逐单元格编辑
+								onEndEdit:function(e,data){
+									var validateResult = this.validate();
+									if(!validateResult){
+										var errors = this.getValidateErrors();
+										if(errors.length) alert(errors.join("\n"));
+									}
+									return validateResult;
+								},
+								columns:[{//...
+						</pre>
+						
+					</li>
+					<li><p>与可编辑表格相关的方法:</p>
+						<ul>
+							<li>validate(rowIndex):校验数据，参数rowIndex是需要校验行的序号。
+								<br/>rowIndex可以为空，为空时校验所有行数据，可以是数字，校验单行，可以是数组形如[0,1,2]，校验多行数据。
+								<br/>方法返回true/false，是否校验通过,校验返回错误信息也认为是校验不通过。</li>
+							<li>getValidateErrors():获取最近一次校验错误信息数组，每调用validate方法，错误信息数组会清空。<br/></li>
+							<li>getCurrentData([fields[,rowsIndexes]]):获取当前编辑结果数据。返回数组，数组中为每行的数据。fields,rowsIndexes参数为需要获取的字段和行序号。<br/>
+							<br/>
+							fields :可以是单个字段名，也可以是字段名数组，如果为空，则获取获取所有字段<br/>
+							rowsIndexes :可以是单个行序号，获取一行的数据，也可以是行序号数组，获取多行数据，如果为空，则获取获取行数据<br/>
+								<br/>
+								<i>getCurrentData(["id","name"],[0,1])</i> : 获取第1,2行的id,name字段值，返回格式为[{id:1,name:'name1'},[id:2,name:'name2']]<br/>
+								<i>getCurrentData(null,[0,1]) </i>: 获取第1,2行的所有字段值<br/>
+								<i>getCurrentData() </i>: 获取所有编辑行的所有字段值<br/>
+								<i>getCurrentData("name") </i>: 获取所有编辑行的所有name字段值，返回格式为[{name:"name1"},{name:"name2"}...]<br/>
+								<i>getCurrentData("name"，2) </i>: 获取第3行的name字段值，返回格式为[{name:"name in row 3"}]<br/>
+								<br/>
+							</li>
+							<li>getEditingRowIndexes():获取正在编辑行的序号数组：返回值格式形如:[0,1,2...]，仅在editMode=1逐行编辑时有效<br/></li>
+							<li>beginEditRow(rowIndex):激活行编辑,rowIndex为需要激活编辑的行序号，数字，激活一行，数组，激活多行,为空的话，不激活任何行，仅在editMode=1逐行编辑时有效<br/></li>
+							<li>endEditRow(rowIndex):结束行编辑，rowIndex需要结束编辑的行序号，数字，激活一行，数组，激活多行,为空的话，不结束编辑任何行，仅在editMode=1逐行编辑时有效<br/></li>
+							<!--<li>addEditRow(row,rowIndex):在rowIndex行后添加编辑行,相对于<a href="#方法-addRow">addRow</a>方法，该方法能记录当前表格的编辑状态，仅在editMode=1逐行编辑时有效。<br/></li>-->
+						</ul>
+					</li>
+				</ul>
+				<a name="addon-groupsummary"></a>
+				<h3>分组统计功能</h3>
+				<p class="padded">需引入tangram.grid.groupsummary.js</p>
+				<p class="padded">分组统计功能用数据分组显示，以及简单的统计，统计数据可以来源于ajax请求，也可以来源于javascript简单统计。
+				<br/>
+				Grid本身支持简单的统计类型，比如，count：计个数，sum：求和，avg：平均值，max：最大字符串值，min：最小字符串值，minnumber：最小数字,maxnumber：最大数字。并支持扩展
+				<br/>
+				<a name="custom-summarytype"></a>
+				自定义统计类型myaverage如:
+				<br/>
+					<pre class="brush:js">
+						baidu.ui.Grid.ext.summarytype.myaverage = function(previousValue,currentvalue,seqIndex,sequenceLength){
+							//previousvalue 同一个统计序列中上一次调用mysummary该方法的返回值
+							//currentvalue 当前值
+							//seqIndex:当前序号，统计数据组中的序号，从0开始
+							//sequenceLength:统计数据组的长度
+							if(seqIndex==0){
+								return parseFloat(currentvalue);
+							}else{
+								var v = previousValue;
+								v+=parseFloat(currentvalue);
+								if(seqIndex=sequenceLength-1){//最后一条求平均值
+									return v/sequenceLength;
+								}else{
+									return v;//不是最后一条，求和
+								}
+							}
+						}
+					</pre>
+				</p>
+				<p class="padded">分组统计功能使用示例：</p>
+				<pre class="brush:js;highlight: [3, 4, 8,9,22,23,24,25]">
+					var griddemo = new baidu.ui.Grid({
+						element:"gridwidthgroupsummary",
+						groupBy:"country",//分组字段
+						groupHeader:function(param){//分组行显示内容
+							//{groupValue:groupValue,groupData:{}}
+							return param.groupValue+" 共"+(param.groupData[param.groupValue].rows.length)+"公司";
+						},
+						groupSummary:true,//显示分组合计
+						summary:true,//显示总合计
+						columns:[{
+								field:'rank',
+								header:"2011排名",
+								width:80,
+								sortable:false,
+								summaryFormat:"合计：",//合计行单元格显示内容
+								groupSummaryFormat:"小计:"//小计行单元格显示内容
+							},{
+								field:'name',
+								header:"公司名称(中英文)",
+								width:400,
+								sortable:false,
+								groupSummary:"count",//分组合计类型,使用javascript统计
+								groupSummaryFormat:"共#{groupSummaryValue}家",
+								summay:"count",//总合计类型
+								summaryFormat:"共#{summaryValue}家"
+							},{
+								field:'income',
+								header:"营业收入(百万美元)",
+								width:140,
+								align:"right",
+								sortable:false,
+								groupSummary:"maxnumber",
+								groupSummaryFormat:"最高:#{groupSummaryValue}",
+								summay:"maxnumber",
+								summaryFormat:"最高:#{summaryValue}"
+							},{
+								field:'profit',
+								header:"利润(百万美元)",
+								width:140,
+								align:"right",
+								sortable:false,
+								groupSummary:"avg",
+								groupSummaryFormat:function(data){//groupSummaryFormat也可以是一个方法
+									//可以直接通过this.getData()获取ajax表格数据,this指向表格实例
+									return "平均："+data.groupSummaryValue.toFixed(2);
+								},
+								summay:"avg",
+								summaryFormat:function(data){
+									return  "平均："+data.summaryValue.toFixed(2);
+								}
+							},{
+								field:'country',
+								header:"国家",
+								width:120,
+								sortable:false
+							}
+						],//other grid options
+				</pre>
+				<p>添加的配置：</p>
+				<ul>
+					<li>groupBy:分组字段，表格数据会根据该字段值分组</li>
+					<li>groupHeader:分组行显示内容，函数返回分组行中的内容,参数格式为:
+						<br/>
+						<pre class="brush:js">
+							{
+								groupValue:groupValue,//分组字段值
+								groupData:{//groupData 是表格实例的属性，可以通过gridInstance.groupData获取
+									[分组字段值]:{
+										rows:[0,1..],//该组的数据行序号下标
+										summary:{}每组小计字段统计值
+									}
+								}
+							}
+						</pre>
+					</li>
+					<li>groupSummary:是否显示分组合计行，默认不显示</li>
+					<li>summary:是否显示总计行，默认不显示</li>
+				</ul>
+				<p>列定义添加的配置：</p>
+				<ul>
+					<li>groupSummary:分组合计类型，"min"等</li>
+					<li>groupSummaryFormat:分组合计行单元格显示内容。
+						<br/>如果是字符串，该字符串将被<a href="http://tangram.baidu.com/tangram/T_string_format.html" target="_blank">baidu.string.format</a>(col.groupSummaryFormat,{groupSummaryValue:groupSummaryValue})处理
+						<br/>如果是函数，该函数返回单元格显示内容，接收参数{groupSummaryValue:groupSummaryValue}
+					</li>
+					<li>summay:字段总合计类型</li>
+					<li>summaryFormat:总计行单元格显示内容。
+						<br/>如果是字符串，该字符串将被<a href="http://tangram.baidu.com/tangram/T_string_format.html" target="_blank">baidu.string.format</a>(col.summaryFormat,{summaryValue:summaryValue})处理
+						<br/>如果是函数，该函数返回单元格显示内容，接收参数{summaryValue:summaryValue}
+					</li>
+				</ul>
+				<h3>TreeGrid</h3>
+				<p class="padded">需引入tangram.grid.treegrid.js</p>
+				<p class="padded">使用TreeGrid可以将某一列显示为树形，该列能够展开/收缩节点。TreeGrid对表格请求数据没有特别格式要求，只需要指定id字段和parentid字段即可。</p>
+				<p class="padded">
+					<pre class="brush:js;highlight: [5,6,7,8,20]">
+						var griddemo = new baidu.ui.Grid({
+							element:"treegrid",
+							columns:[
+								{field:'name',header:"名称",width:400,
+									renderer:'tree',//树形列
+									idfield:'id',//主键字段名称，节点行的唯一标识
+									parentfield:'parentid',//父节点字段名称
+									expandBy:function(data){//可以展开特定的节点
+										return data.cellvalue=="EditPlus 3";//初始展开特定节点
+										//return true;//展开所有节点
+									}
+								},
+								{field:'createtime',header:"创建时间",width:100},
+								{field:'readonly',header:"只读",width:100,renderer:function(data){return data.cellvalue=="false"?"否":"是"}},
+								{header:"类型",width:100,renderer:function(data){
+									var id = data.rowdata.id;
+									if(data.rowdata.name.indexOf(".")!=-1){
+										return (data.rowdata.name.substr(data.rowdata.name.lastIndexOf(".")+1)+"文件");
+									}
+									if(this.treedata[id].children.length>0){//treedata是解析出来的属性数据
+										return "文件夹";
+									}
+									return "文件";
+								}}
+							],//...
+					</pre>
+					<pre class="brush:js;highlight: [2]">
+						//加载树形数据
+						//需要提供idfield,parentfield字段值
+						griddemo.loadData({
+							data:{
+								list:[
+									{id:"1",parentid:"",name:"C:\\",readonly:"false",createtime:"2011-07-30"},
+									{id:"18",parentid:"15",name:"htpasswd",readonly:"false",createtime:"2011-07-30"},
+									{id:"19",parentid:"15",name:"server.pid",readonly:"false",createtime:"2011-07-30"},
+									{id:"14",parentid:"",name:"D:\\",readonly:"false",createtime:"2011-07-30"},//...
+					</pre>
+				</p>
+				<p class="padded">
+					TreeGrid在呈现数据前会将Grid请求数据解析，解析将会改变data.list的数据，
+					（可以通过getOriginList()方法获取原始的表格请求数据），
+					同时会生成treedata，treedata的格式为：<br/>
+					<pre class="brush:js">
+						{
+							[idvalue]:{//key 为id字段值，如果为跟节点，idvalue为"root"
+								rowIndex:rowIndex,//该行数据在表格原始请求数据中的rowIndex,从0开始
+								parent:parentfieldvalue,//节点的父节点id值
+								children:[0,1..]该节点的子节点的rowIndex数据,rowIndex是原始数据的rowIndex
+							}
+						}
+					</pre>
+				</p>
+				<p class="padded">通过treedata的originList就可以方便的实现Tree的遍历</p>
+				<p class="padded">
+					TreeGrid中的同级节点的排序是以原始list顺序为准的，比如，A与B是同级节点，在原始list中A在B的后面，显示在Grid中的顺序也是A在B的后面。这样原有的表格排序将会变成同级节点的排序。
+				</p>
+				<p class="padded">Tree列的定义：</p>
+				<ul>
+					<li>renderer:设置为"tree"</li>
+					<li>idfield:主键字段名称，节点行的唯一标识，必须设置</li>
+					<li>parentfield:父节点字段名称，必须设置</li>
+					<li>expandBy:定义数据加载后需要展开的节点，默认的只显示一级节点，如果需要展开更深的节点，可以通过定义该方法，如果该方法返回tree，该节点将会展开。方法接收参数data同renderer函数中参数一致</li>
+				</ul>
+				<p class="padded">TreeGrid相关方法：</p>
+				<ul>
+					<li>getOriginList() :获取表格原始数据，返回数据形如[{},{}]</li>
+					<li>getNodeDeep(idvalue) :获取指定节点深度，参数idvalue为id字段值，返回深度从1开始</li>
+					<li>toggleNode(idvalue) :展开/收缩指定节点，参数idvalue为id字段值</li>
+					<li>expandNode(idvalue) :展开指定节点，参数idvalue为id字段值</li>
+					<li>unExpandNode(idvalue) :收缩指定节点，参数idvalue为id字段值</li>
+					<li>addNode(nodes) :添加节点,nodes可以是数组:[{行1},{行2}]，也可以单独行{}</li>
+					<li>deleteNode(idvalue) :删除节点,idvalue为id字段值，删除节点将会递归删除其所有的子节点</li>
+				</ul>
+				<p class="padded">如果需要修改指定节点行的字段值，可以使用<a href="#方法-updateDOMRow">updateDOMRow方法</a></p>
+			
+				<h3>键盘事件</h3>
+				<p class="padded">需引入tangram.grid.keyboard.js</p>
+				<p class="padded">增加配置属性keyboard当keyboard:true才可以激活键盘事件,配置属性keysrc为监听事件的DOM对象，默认是document.body</p>
+				<p class="padded">增加方法focus/blur用于表格控件聚焦/失去焦点。只有表格在聚焦状态下才能监听键盘事件。默认点击表格控件将会聚焦</p>
+				<p class="padded">可支持的键盘事件:</p>
+				<ul>
+					<li>表格单选(selectMode=1)是可以通过↓  ↑ 选中下一行 ，上一行</li>
+					<li>表格单选(selectMode=1)是可以通过回车触发选择行双击事件</li>
+					<li>使用表格自带分页控件，可以使用PageDown/PageUp/Ctrl+PageDown/Ctrl+PageUp下一页，上一页，最后一页，第一页</li>
+					<li>← → 在分页时可以分页，作用与PageDown,PageUp一致,treegrid时用于展开/收缩节点</li>
+					<li>可编辑表格单元格编辑(editMode=3)时可以使用tab/shift+tab切换编辑单元格</li>
+				</ul>
+				<h3>页内排序</h3>
+				<p class="padded">需引入tangram.grid.pagesort.js</p>
+				<p class="padded">对于没有分页而且没有url属性的表格，可以对指定field属性而且指定sortable为true(默认为true)的列进行页内排序。</p>
+				<h3>列可以通过拖放改变顺序</h3>
+				<p class="padded">需引入tangram.grid.columndragsort.js</p>
+				<p class="padded">配置属性columndraggable设置为true可是打开该功能。列拖动后顺序会发生改变，可以通过 getOriginColumns()方法获取原始列定义数组</p>
+			</div>
+			<a name="extensions"></a>
+			<h2>扩展</h2>
+			<div class="list">
+				<a name="extensions-col"></a>
+				<h3>列类型扩展</h3>
+				<p class="padded">参考<a href="#config-columns">列定义</a></p>
+				<a name="extensions-page"></a>
+				<h3>自定义分页控件</h3>
+				<p class="padded">参考<a href="#config-page">分页定义</a></p>
+				<h3>自定义统计类型</h3>
+				<p class="padded">参考<a href="#custom-summarytype">自定义统计类型</a></p>
+			</div>
+			<a name="bugs"></a>
+			<h2>已知的Bug</h2>
+			<div class="list">
+				<a name="extensions-1pxbug"></a>
+				<h3>WebKit浏览器下出现列对不齐的情况</h3>
+				<p class="padded">webkit的table-layout:fixed bug引起，参见<a href="http://www.blogjava.net/Hafeyang/archive/2011/06/30/table-layout-fixed-bug-in-webkit.html" target="_blank">这里</a></p>
+			</div>
+			<h2>对Grid有兴趣？</h2>
+			<p class="padded">Tangarm Grid代码目前托管在github 上：<a href="https://github.com/hafeyang/tangramgrid" target="_blank">https://github.com/hafeyang/tangramgrid</a></p>
+			<p class="padded">git地址：<a href="git://github.com/hafeyang/tangramgrid.git" target="_blank">git://github.com/hafeyang/tangramgrid.git</a></p>
+			<p class="padded">也可以用svn地址：<a href="http://svn.github.com/hafeyang/tangramgrid" target="_blank">http://svn.github.com/hafeyang/tangramgrid</a></p>
+			
+		</div>
+		<hr/>
+		<div style="text-align:center;"><i>Tangram Grid is the Grid you need!</i></div>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram-Grid-Pagesort 页内排序</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.pagesort.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+	<h2>页内排序</h2>
+<div id="pagesortgrid"></div>
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"pagesortgrid",
+		columns:[
+			{field:'name',header:"机器名称",fix:true},
+			{field:'creator',header:"创建人",width:200},
+			{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+			{field:'lastVersion',header:"lastVersion",width:200},
+			{field:'createTime',header:"创建时间",width:180}
+		],
+		height:200,
+		autoHeight:true,
+		order:"asc",//初始状态按照CODE 升序排序
+		orderBy:2,
+		page:false
+	});
+	
+	//手动载入数据
+	griddemo.loadData({data:{page:{total:32},list:[
+			{"id":"42","nodeId":"1","name":"z0614_ui_sample_all","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 14:58:37","lastVersion":"\u6682\u65e0","dataKey":"\/data\/82471ffb83615a57b9ab64826dd98061","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"41","nodeId":"1","name":"z0614_bws_sample","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 14:55:22","lastVersion":"\u6682\u65e0","dataKey":"\/data\/645307039c1307733346d2f74e990bb2","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"40","nodeId":"1","name":"z0614_ui_sample","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 11:51:43","lastVersion":"\u6682\u65e0","dataKey":"\/data\/e80a106b9e02175e161edcccca00ff8a","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"39","nodeId":"1","name":"yzjtest061300","sysId":"3","creator":"yanxiao","createTime":"2011-06-13 17:33:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d264625a61e7b9b772437ccbd0b39822","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"38","nodeId":"1","name":"cuijie_test","sysId":"3","creator":"yanxiao","createTime":"2011-06-13 15:05:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/107ffcb12c5c83c7db299624fd6f17ae","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"37","nodeId":"1","name":"test_da_reload","sysId":"3","creator":"yanxiao","createTime":"2011-06-09 15:10:34","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d7c7da05c6a6a371ecb6ad809c60e0e9","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"36","nodeId":"1","name":"test_da","sysId":"3","creator":"yanxiao","createTime":"2011-06-09 15:09:39","lastVersion":"\u6682\u65e0","dataKey":"\/data\/a5ee0dac201f21956d7c94834b2dc407","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"35","nodeId":"1","name":"ui_single","sysId":"3","creator":"yanxiao","createTime":"2011-06-07 19:58:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/91e54f5ff3e195265c16f73b868b6122","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"34","nodeId":"1","name":"yanzhijietest060791","sysId":"3","creator":"yanxiao","createTime":"2011-06-07 10:54:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/8ec675a0c09417a21a68f3ecae52cc24","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},
+			{"id":"33","nodeId":"1","name":"z_bws_back","sysId":"3","creator":"yanxiao","createTime":"2011-06-03 19:15:17","lastVersion":"\u6682\u65e0","dataKey":"\/data\/6bf9c48c5ddd25bbf9df36b66ac22566","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"}
+		]}});
+	
+	window.onresize = function(){//容器大小发生变化
+		griddemo.resize();//重新调整大小
+	}
+</script>
+</body>
+</html>

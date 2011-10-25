@@ -1,0 +1,68 @@
+============================================功能点==========================================================
+基本的表格数据展现，提供方法将json数据加载到grid中(完成)
+
+宽度自适应,设置表格宽度/高度 高度自适应高度,自动拉伸，也可以设置最大高度(完成)
+
+ajax请求数据数据,分页 
+可以使用自带分页组件，也可以集成其他分页组件 
+ajax请求数据格式默认为noah 后台返回数据，发送的参数默认也是现在分页的参数
+支持自带参数做ajax请求
+参数：
+curPage	2 当前页数下标从1开始 
+order	desc/asc
+orderBy	id 排序字段
+perPage	10 每页记录条数
+返回数据格式：
+{"success":true,"message":"ok","data":{"page":{"total":"52","perPage":"10","curPage":"2"},"config":"m1","list":[{"id":"42","nodeId":"1","name":"z0614_ui_sample_all","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 14:58:37","lastVersion":"\u6682\u65e0","dataKey":"\/data\/82471ffb83615a57b9ab64826dd98061","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"41","nodeId":"1","name":"z0614_bws_sample","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 14:55:22","lastVersion":"\u6682\u65e0","dataKey":"\/data\/645307039c1307733346d2f74e990bb2","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"40","nodeId":"1","name":"z0614_ui_sample","sysId":"3","creator":"yanxiao","createTime":"2011-06-14 11:51:43","lastVersion":"\u6682\u65e0","dataKey":"\/data\/e80a106b9e02175e161edcccca00ff8a","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"39","nodeId":"1","name":"yzjtest061300","sysId":"3","creator":"yanxiao","createTime":"2011-06-13 17:33:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d264625a61e7b9b772437ccbd0b39822","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"38","nodeId":"1","name":"cuijie_test","sysId":"3","creator":"yanxiao","createTime":"2011-06-13 15:05:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/107ffcb12c5c83c7db299624fd6f17ae","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"37","nodeId":"1","name":"test_da_reload","sysId":"3","creator":"yanxiao","createTime":"2011-06-09 15:10:34","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d7c7da05c6a6a371ecb6ad809c60e0e9","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"36","nodeId":"1","name":"test_da","sysId":"3","creator":"yanxiao","createTime":"2011-06-09 15:09:39","lastVersion":"\u6682\u65e0","dataKey":"\/data\/a5ee0dac201f21956d7c94834b2dc407","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"35","nodeId":"1","name":"ui_single","sysId":"3","creator":"yanxiao","createTime":"2011-06-07 19:58:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/91e54f5ff3e195265c16f73b868b6122","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"34","nodeId":"1","name":"yanzhijietest060791","sysId":"3","creator":"yanxiao","createTime":"2011-06-07 10:54:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/8ec675a0c09417a21a68f3ecae52cc24","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"},{"id":"33","nodeId":"1","name":"z_bws_back","sysId":"3","creator":"yanxiao","createTime":"2011-06-03 19:15:17","lastVersion":"\u6682\u65e0","dataKey":"\/data\/6bf9c48c5ddd25bbf9df36b66ac22566","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU"}]}}
+(完成)
+
+表格单元格格式自定义，转换器，支持checkbox列(完成)
+
+Ajax请求时支持遮罩，也可以自定义遮罩(完成)
+
+ajax数据返回时 触发一个事件，使可以处理返回json数据 表格数据加载完毕后 的事件，用于后续处理(完成)
+
+点击列头字段排序(完成)
+
+基本事件绑定,行选择，hover ,点击(完成)
+
+新增行/修改行/删除行(完成)
+
+列宽可以拖动(完成)
+
+列头分组(完成)
+
+=======================================(以下是扩展功能)=========================================================
+行可以通过拖放改变顺序(完成)
+子表格，点击某单元格出现一块区域显示子数据，可以是表格，也可以是自定义内容(完成)
+
+
+冻结列，列比较多的时候出现横向滚动条，可以冻结左边的n列，这些列不随横向滚动条滚动(完成)
+
+可编辑表格，支持常见的编辑类型，文本框，下拉框等，支持自定义编辑。(完成)
+
+
+数据显示的分组，统计，以及扩展机制，主要是扩展统计方法，支持从ajax请求结果读取统计数据，也支持javascript做简单统计。(完成)
+
+Treegrid，将表格的某个列显示成树形结构，并支持延迟加载(完成)
+
+大数据量解决方案，延迟呈现，或者延迟加载
+
+键盘事件支持，支持键盘事件，光标操作(完成) 
+列可以通过拖放改变顺序(完成) 
+本页排序(完成)
+右键菜单
+
+
+=======================================已知的问题=========================================================
+□显示/隐藏列 1px偏差 in webkit
+□点击当前页文本框再点击下一页出现两次ajax请求，当前页显示不正确。
+
+•	树载入数据时出错的处理
+•	自定义页码blur(点击下一页按钮)数据不变时的刷新bug
+•	column全为fix的bug?
+•	页码不要切边?
+
+一些组合：
+treegrid+ rowsortable??
+treegrid+ editable??

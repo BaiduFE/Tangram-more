@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram-Grid-Row-Sortable</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.rowsortable.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+<h2>行拖动</h2>
+<div id="rowsortablegrid"></div>
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"rowsortablegrid",
+		columns:[
+			{width:30,field:"id",renderer:"checkbox",disableBy:function(data){return Math.random()>0.3;}},
+			{field:'name',header:"机器名称",width:200,fix:true},
+			{field:'creator',header:"创建人",width:100},
+			{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+			{field:'lastVersion',header:"lastVersion",width:200},
+			{field:'createTime',header:"创建时间",width:180},
+			{header:"优先级",width:50,resizable:false,sortable:false,renderer:function(data){
+				return "<span class='grade'>"+(this.getData().data.list.length-data.rowIndex)+"<span>";
+			}}
+		],
+		height:200,
+		autoHeight:true,
+		selectMode:2,
+		clickToSelect:false,
+		url:"noahdata.json",
+		strip:false,
+		page:false,
+		ajaxOption:{
+			method:"POST",
+			data:"a=1"
+		},
+		onRowClick:function(e,data){
+			console.log("rowclick");
+		},
+		rowsortable:true
+	});
+	
+	//ajax加载数据
+	griddemo.request({b:2,a:3});
+	
+	//每次调整顺序，优先级列显示更新
+	griddemo.addEventListener("rowsortable-dragend",function(e){
+		baidu.array.each(baidu.dom.query("#rowsortablegrid .grade"),function(o,i){
+			o.innerHTML = (griddemo.getData().data.list.length-i);
+		});
+	});
+	
+</script>
+<input type="button" value="获取当前行顺序" onclick="baidu.g('c').value=baidu.json.stringify(griddemo.serializeRows());" />
+<input type="button" value="获取当前选中行顺序" onclick="baidu.g('c').value=baidu.json.stringify(griddemo.getSerializedSelections());" />
+<textarea style="width:100%;height:200px;" id="c"></textarea>
+</body>
+</html>

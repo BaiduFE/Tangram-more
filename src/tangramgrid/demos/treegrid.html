@@ -1,0 +1,134 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram-Grid-TreeGrid</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.columnfreeze.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.treegrid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.keyboard.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+<h2>TreeGrid</h2>
+<div id="treegrid"></div>
+<div>
+	<input type="button" id="addnodes" value="添加子树" autocomplete="off" />
+	<input type="button" id="deletenode" value="删除选中节点" autocomplete="off" />
+	
+</div>
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"treegrid",
+		keyboard:true,
+		columns:[
+			{field:'name',header:"名称",width:400,
+				renderer:'tree',//树形列
+				idfield:'id',//主键字段名称，节点行的唯一标识
+				parentfield:'parentid',//父节点字段名称
+				expandBy:function(data){//可以展开特定的节点
+					return data.cellvalue=="EditPlus 3";//展开特定节点
+					//return true;//展开所有节点
+				}
+			},
+			{field:'createtime',header:"创建时间",width:100},
+			{field:'readonly',header:"只读",width:100,renderer:function(data){return data.cellvalue=="false"?"否":"是"}},
+			{header:"类型",width:100,renderer:function(data){
+				var id = data.rowdata.id;
+				if(data.rowdata.name.indexOf(".")!=-1){
+					return (data.rowdata.name.substr(data.rowdata.name.lastIndexOf(".")+1)+"文件");
+				}
+				if(this.treedata[id].children.length>0){//treedata是解析出来的属性数据
+					return "文件夹";
+				}
+				return "文件";
+			}}
+		],
+		height:400,
+		freeze:1,
+		autoHeight:true,
+		selectMode:1,
+		strip:false,
+		page:false,
+		hoverhighlight:false
+	});
+	/*[
+				{id:"1",parentid:"",name:"C:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"2",parentid:"1",name:"Program Files",readonly:"true",createtime:"2011-07-30"},
+				{id:"7",parentid:"2",name:"Baidu",readonly:"true",createtime:"2011-07-30"},
+				{id:"8",parentid:"7",name:"BaiduPinyin",readonly:"true",createtime:"2011-07-30"},
+				{id:"9",parentid:"7",name:"BaiduUpdate",readonly:"true",createtime:"2011-07-30"},
+				{id:"11",parentid:"9",name:"bdaucommon.dll",readonly:"true",createtime:"2011-07-30"},
+				{id:"12",parentid:"9",name:"bdupdate.exe",readonly:"true",createtime:"2011-07-30"},
+				{id:"13",parentid:"9",name:"bdupdate.log",readonly:"true",createtime:"2011-07-30"},
+				{id:"10",parentid:"7",name:"BNAC",readonly:"true",createtime:"2011-07-30"},
+				{id:"3",parentid:"1",name:"EditPlus 3",readonly:"false",createtime:"2011-07-30"},
+				{id:"4",parentid:"1",name:"PuTTY",readonly:"false",createtime:"2011-07-30"},
+				{id:"5",parentid:"1",name:"Python27",readonly:"false",createtime:"2011-07-30"},
+				{id:"6",parentid:"1",name:"Windows",readonly:"false",createtime:"2011-07-30"},
+				{id:"14",parentid:"",name:"D:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"15",parentid:"14",name:"Repositories",readonly:"false",createtime:"2011-07-30"},
+				{id:"16",parentid:"15",name:"authz",readonly:"false",createtime:"2011-07-30"},
+				{id:"17",parentid:"15",name:"authz-windows",readonly:"false",createtime:"2011-07-30"},
+				{id:"18",parentid:"15",name:"htpasswd",readonly:"false",createtime:"2011-07-30"},
+				{id:"19",parentid:"15",name:"server.pid",readonly:"false",createtime:"2011-07-30"},
+				{id:"20",parentid:"",name:"E:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"21",parentid:"20",name:"Iridescent.mp3",readonly:"false",createtime:"2011-07-30"},
+				{id:"22",parentid:"20",name:"Transformer3.mov",readonly:"false",createtime:"2011-07-30"},
+			]*/
+			
+	//加载树形数据
+	//需要提供idfield,parentfield字段值
+	griddemo.loadData({
+		data:{
+			list:[
+				{id:"1",parentid:"",name:"C:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"18",parentid:"15",name:"htpasswd",readonly:"false",createtime:"2011-07-30"},
+				{id:"19",parentid:"15",name:"server.pid",readonly:"false",createtime:"2011-07-30"},
+				{id:"14",parentid:"",name:"D:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"20",parentid:"",name:"E:\\",readonly:"false",createtime:"2011-07-30"},
+				{id:"21",parentid:"20",name:"Iridescent.mp3",readonly:"false",createtime:"2011-07-30"},
+				{id:"22",parentid:"20",name:"Transformer3.mov",readonly:"false",createtime:"2011-07-30"},
+				{id:"9",parentid:"7",name:"BaiduUpdate",readonly:"true",createtime:"2011-07-30"},
+				{id:"11",parentid:"9",name:"bdaucommon.dll",readonly:"true",createtime:"2011-07-30"},
+				{id:"12",parentid:"9",name:"bdupdate.exe",readonly:"true",createtime:"2011-07-30"},
+				{id:"2",parentid:"1",name:"Program Files",readonly:"true",createtime:"2011-07-30"},
+				{id:"7",parentid:"2",name:"Baidu",readonly:"true",createtime:"2011-07-30"},
+				{id:"8",parentid:"7",name:"BaiduPinyin",readonly:"true",createtime:"2011-07-30"},
+				{id:"6",parentid:"1",name:"Windows",readonly:"false",createtime:"2011-07-30"},
+				{id:"15",parentid:"14",name:"Repositories",readonly:"false",createtime:"2011-07-30"},
+				{id:"16",parentid:"15",name:"authz",readonly:"false",createtime:"2011-07-30"},
+				{id:"17",parentid:"15",name:"authz-windows",readonly:"false",createtime:"2011-07-30"},
+				{id:"13",parentid:"9",name:"bdupdate.log",readonly:"true",createtime:"2011-07-30"},
+				{id:"10",parentid:"7",name:"BNAC",readonly:"true",createtime:"2011-07-30"},
+				{id:"3",parentid:"1",name:"EditPlus 3",readonly:"false",createtime:"2011-07-30"},
+				{id:"4",parentid:"1",name:"PuTTY",readonly:"false",createtime:"2011-07-30"},
+				{id:"5",parentid:"1",name:"Python27",readonly:"false",createtime:"2011-07-30"}
+			]
+		}
+	});
+	
+	baidu.dom.ready(function(){
+		baidu.on(baidu.g("addnodes"),"click",function(){
+			griddemo.addNode([
+				{id:"23",parentid:"15",name:"新建文件夹 ",readonly:"true",createtime:"2011-08-05"},
+				{id:"24",parentid:"23",name:"file1.txt",readonly:"true",createtime:"2011-08-05"},
+				{id:"26",parentid:"23",name:"新建子文件夹",readonly:"true",createtime:"2011-08-05"},
+				{id:"25",parentid:"26",name:"file2.txt",readonly:"true",createtime:"2011-08-05"},
+				{id:"27",parentid:"26",name:"file3.txt",readonly:"true",createtime:"2011-08-05"}
+			]);
+			this.disabled=true;
+		});
+		baidu.on(baidu.g("deletenode"),"click",function(){
+			var selected = griddemo.getSelected();
+			if(!selected){alert("请选择行");return false;}
+			var idvalue = selected.id;
+			griddemo.deleteNode(idvalue);
+		});
+	});
+</script>
+</body>
+</html>
