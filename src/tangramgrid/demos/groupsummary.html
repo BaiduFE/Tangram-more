@@ -1,0 +1,192 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>表格数据分组统计</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.groupsummary.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.keyboard.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+	<h2>2011全球100强企业</h2>
+<div id="gridwidthgroupsummary"></div>
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"gridwidthgroupsummary",
+		groupBy:"country",//分组字段
+		groupHeader:function(param){//分组行显示内容
+			//{groupValue:groupValue,groupData:{}}
+			return param.groupValue+" 共"+(param.groupData[param.groupValue].rows.length)+"公司";
+		},
+		groupSummary:true,//显示分组合计
+		summary:true,//显示总合计
+		columns:[{
+				field:'rank',
+				header:"2011排名",
+				width:80,
+				sortable:false,
+				summaryFormat:"合计：",//合计行单元格显示内容
+				groupSummaryFormat:"小计:"//小计行单元格显示内容
+			},{
+				field:'name',
+				header:"公司名称(中英文)",
+				width:400,
+				sortable:false,
+				groupSummary:"count",//分组合计类型,使用javascript统计
+				groupSummaryFormat:"共#{groupSummaryValue}家",
+				summay:"count",//总合计类型
+				summaryFormat:"共#{summaryValue}家"
+			},{
+				field:'income',
+				header:"营业收入(百万美元)",
+				width:140,
+				align:"right",
+				sortable:false,
+				groupSummary:"maxnumber",
+				groupSummaryFormat:"最高:#{groupSummaryValue}",
+				summay:"maxnumber",
+				summaryFormat:"最高:#{summaryValue}"
+			},{
+				field:'profit',
+				header:"利润(百万美元)",
+				width:140,
+				align:"right",
+				sortable:false,
+				groupSummary:"avg",
+				groupSummaryFormat:function(data){//groupSummaryFormat也可以是一个方法
+					//可以直接通过this.getData()获取ajax表格数据,this指向表格实例
+					return "平均："+data.groupSummaryValue.toFixed(2);
+					//return "";
+				},
+				summay:"avg",
+				summaryFormat:function(data){
+					return  "平均："+data.summaryValue.toFixed(2);
+					//return "";
+				}
+			},{
+				field:'country',
+				header:"国家",
+				width:120,
+				sortable:false
+			}
+		],
+		height:500,
+		autoHeight:false,
+		hoverhighlight:true,
+		page:false,
+		selectMode:1,
+		keyboard:true
+		
+	});
+	var top100of2011={data:{list:[
+		{"rank":1,"name":"沃尔玛(Wal-Mart Stores)","income":421849,"profit":16389,"country":"美国"},
+		{"rank":2,"name":"荷兰皇家壳牌石油公司(Royal Dutch Shell)","income":378152,"profit":20127,"country":"荷兰"},
+		{"rank":3,"name":"埃克森美孚(Exxon Mobil)","income":354674,"profit":30460,"country":"美国"},
+		{"rank":4,"name":"英国石油公司(BP)","income":308928,"profit":-3719,"country":"英国"},
+		{"rank":5,"name":"中国石油化工集团公司(Sinopec Group)","income":273421.9,"profit":7628.7,"country":"中国"},
+		{"rank":6,"name":"中国石油天然气集团公司(China National Petroleum)","income":240192.4,"profit":14366.9,"country":"中国"},
+		{"rank":7,"name":"国家电网公司(State Grid)","income":226294,"profit":4556.1,"country":"中国"},
+		{"rank":8,"name":"丰田汽车公司(Toyota Motor)","income":221760.2,"profit":4765.7,"country":"日本"},
+		{"rank":9,"name":"日本邮政控股公司(Japan Post Holdings)","income":203958.1,"profit":4891.2,"country":"日本"},
+		{"rank":10,"name":"雪佛龙(Chevron)","income":196337,"profit":19024,"country":"美国"},
+		{"rank":11,"name":"道达尔公司(Total)","income":186055,"profit":14000.9,"country":"法国"},
+		{"rank":12,"name":"康菲石油公司(Conocophillips)","income":184966,"profit":11358,"country":"美国"},
+		{"rank":13,"name":"大众公司(Volkswagen)","income":168041,"profit":9052.7,"country":"德国"},
+		{"rank":14,"name":"安盛(AXA)","income":162235.9,"profit":3640.9,"country":"法国"},
+		{"rank":15,"name":"房利美(Fannie Mae)","income":153825,"profit":-14014,"country":"美国"},
+		{"rank":16,"name":"通用电气公司(General Electric)","income":151628,"profit":11644,"country":"美国"},
+		{"rank":17,"name":"荷兰国际集团(Ing Group)","income":147052.2,"profit":3678,"country":"荷兰"},
+		{"rank":18,"name":"嘉能可国际(Glencore International)","income":144978,"profit":1291,"country":"瑞士"},
+		{"rank":19,"name":"伯克希尔－哈撒韦公司(Berkshire Hathaway)","income":136185,"profit":12967,"country":"美国"},
+		{"rank":20,"name":"通用汽车公司(General Motors)","income":135592,"profit":6172,"country":"美国"},
+		{"rank":21,"name":"美国银行(Bank Of America Corp。)","income":134194,"profit":-2238,"country":"美国"},
+		{"rank":22,"name":"三星电子(Samsung Electronics)","income":133780.5,"profit":13668.7,"country":"韩国"},
+		{"rank":23,"name":"埃尼石油公司(Eni)","income":131756,"profit":8367.9,"country":"意大利"},
+		{"rank":24,"name":"戴姆勒(Daimler)","income":129480.6,"profit":5957.4,"country":"德国"},
+		{"rank":25,"name":"福特汽车公司(Ford Motor)","income":128954,"profit":6561,"country":"美国"},
+		{"rank":26,"name":"法国巴黎银行(Bnp Paribas)","income":128725.7,"profit":10387.7,"country":"法国"},
+		{"rank":27,"name":"安联保险集团(Allianz)","income":127378.7,"profit":6692.5,"country":"德国"},
+		{"rank":28,"name":"惠普(Hewlett-Packard)","income":126033,"profit":8761,"country":"美国"},
+		{"rank":29,"name":"意昂集团(E.On)","income":125063.5,"profit":7752.1,"country":"德国"},
+		{"rank":30,"name":"美国电话电报公司(At&T)","income":124629,"profit":19864,"country":"美国"},
+		{"rank":31,"name":"日本电报电话公司(Nippon Telegraph & Telephone)","income":120315.7,"profit":5950.2,"country":"日本"},
+		{"rank":32,"name":"家乐福(Carrefour)","income":120296.8,"profit":573.5,"country":"法国"},
+		{"rank":33,"name":"意大利忠利保险公司(Assicurazioni Generali)","income":120233.5,"profit":2254.1,"country":"意大利"},
+		{"rank":34,"name":"巴西国家石油公司(Petrobras)","income":120052,"profit":19184,"country":"巴西"},
+		{"rank":35,"name":"俄罗斯天然气工业股份公司(Gazprom)","income":118656.8,"profit":31894.5,"country":"俄罗斯"},
+		{"rank":36,"name":"摩根大通(J.P. Morgan Chase & Co。)","income":115475,"profit":17370,"country":"美国"},
+		{"rank":37,"name":"麦克森公司(Mckesson)","income":112084,"profit":1202,"country":"美国"},
+		{"rank":38,"name":"苏伊士集团(Gdf Suez)","income":111887.8,"profit":6113.7,"country":"法国"},
+		{"rank":39,"name":"花旗集团(Citigroup)","income":111055,"profit":10602,"country":"美国"},
+		{"rank":40,"name":"日立(Hitachi)","income":108766.4,"profit":2788.9,"country":"日本"},
+		{"rank":41,"name":"威瑞森电信(Verizon Communications)","income":106565,"profit":2549,"country":"美国"},
+		{"rank":42,"name":"雀巢公司(Nestlé)","income":105266.7,"profit":32843,"country":"瑞士"},
+		{"rank":43,"name":"法国农业信贷银行(Crédit Agricole)","income":105003.3,"profit":1672.8,"country":"法国"},
+		{"rank":44,"name":"美国国际集团(American International Group)","income":104417,"profit":7786,"country":"美国"},
+		{"rank":45,"name":"本田汽车(Honda Motor)","income":104342.1,"profit":6235.7,"country":"日本"},
+		{"rank":46,"name":"汇丰银行控股公司(Hsbc Holdings)","income":102680,"profit":13159,"country":"英国"},
+		{"rank":47,"name":"西门子(Siemens)","income":102657.2,"profit":5268,"country":"德国"},
+		{"rank":48,"name":"日产汽车(Nissan Motor)","income":102430,"profit":3727.1,"country":"日本"},
+		{"rank":49,"name":"墨西哥石油公司(Pemex)","income":101506.4,"profit":-3757.8,"country":"墨西哥"},
+		{"rank":50,"name":"松下(Panasonic)","income":101491,"profit":864.2,"country":"日本"},
+		{"rank":51,"name":"西班牙国家银行(Banco Santander)","income":100349.9,"profit":10835.3,"country":"西班牙"},
+		{"rank":52,"name":"国际商业机器公司(International Business Machines)","income":99870,"profit":14833,"country":"美国"},
+		{"rank":53,"name":"卡地纳健康(Cardinal Health)","income":98601.9,"profit":642.2,"country":"美国"},
+		{"rank":54,"name":"房地美(Freddie Mac)","income":98368,"profit":-14025,"country":"美国"},
+		{"rank":55,"name":"现代汽车(Hyundai Motor)","income":97408.4,"profit":4707.6,"country":"韩国"},
+		{"rank":56,"name":"意大利国家电力公司(Enel)","income":97185,"profit":5814.4,"country":"意大利"},
+		{"rank":57,"name":"Cvs Caremark公司(Cvs Caremark)","income":96413,"profit":3427,"country":"美国"},
+		{"rank":58,"name":"Jx控股公司(Jx Holdings)","income":95964.2,"profit":3639.7,"country":"日本"},
+		{"rank":59,"name":"英国劳埃德银行集团(Lloyds Banking Group)","income":95681.9,"profit":-4102.7,"country":"英国"},
+		{"rank":60,"name":"鸿海科技集团(Hon Hai Precision Industry)","income":95190.5,"profit":2450.4,"country":"中国"},
+		{"rank":61,"name":"特易购(Tesco)","income":94185.2,"profit":4104,"country":"英国"},
+		{"rank":62,"name":"联合健康集团(Unitedhealth Group)","income":94155,"profit":4634,"country":"美国"},
+		{"rank":63,"name":"美国富国银行(Wells Fargo)","income":93249,"profit":12362,"country":"美国"},
+		{"rank":64,"name":"英杰华集团(Aviva)","income":90210.7,"profit":2259.9,"country":"英国"},
+		{"rank":65,"name":"麦德龙(Metro)","income":89080.6,"profit":1125.8,"country":"德国"},
+		{"rank":66,"name":"委内瑞拉国家石油公司(Pdvsa)","income":88361,"profit":4313,"country":"委内瑞拉"},
+		{"rank":67,"name":"挪威国家石油公司(Statoil)","income":87645.6,"profit":6301.8,"country":"挪威"},
+		{"rank":68,"name":"法国电力公司(électricité De France)","income":86308.5,"profit":1351,"country":"法国"},
+		{"rank":69,"name":"卢克石油公司(Lukoil)","income":86078,"profit":9006,"country":"俄罗斯"},
+		{"rank":70,"name":"瓦莱罗能源公司(Valero Energy)","income":86034,"profit":324,"country":"美国"},
+		{"rank":71,"name":"巴斯夫公司(Basf)","income":84597.3,"profit":6035.6,"country":"德国"},
+		{"rank":72,"name":"法国兴业银行(Société Générale)","income":84349.6,"profit":5187.9,"country":"法国"},
+		{"rank":73,"name":"索尼(Sony)","income":83844.7,"profit":-3030.8,"country":"日本"},
+		{"rank":74,"name":"阿塞洛-米塔尔(Arcelormittal)","income":83443,"profit":2916,"country":"卢森堡"},
+		{"rank":75,"name":"德国电信(Deutsche Telekom)","income":82674.2,"profit":2245,"country":"德国"},
+		{"rank":76,"name":"克罗格(Kroger)","income":82189.4,"profit":1116.3,"country":"美国"},
+		{"rank":77,"name":"中国工商银行(Industrial & Commercial Bank Of China)","income":80501.3,"profit":24398.2,"country":"中国"},
+		{"rank":78,"name":"西班牙电信(Telefónica)","income":80443.8,"profit":13465.8,"country":"西班牙"},
+		{"rank":79,"name":"宝马(BMW)","income":80099.4,"profit":4262.1,"country":"德国"},
+		{"rank":80,"name":"宝洁公司(Procter & Gamble)","income":79689,"profit":12736,"country":"美国"},
+		{"rank":81,"name":"日本生命保险公司(Nippon Life Insurance)","income":78571.4,"profit":2630.7,"country":"日本"},
+		{"rank":82,"name":"Sk集团(Sk Holdings)","income":78435.3,"profit":570,"country":"韩国"},
+		{"rank":83,"name":"Exor集团(Exor Group)","income":78123.3,"profit":181.5,"country":"意大利"},
+		{"rank":84,"name":"美源伯根公司(Amerisourcebergen)","income":77954,"profit":636.7,"country":"美国"},
+		{"rank":85,"name":"好市多(Costco Wholesale)","income":77946,"profit":1303,"country":"美国"},
+		{"rank":86,"name":"马来西亚国家石油公司(Petronas)","income":76875.9,"profit":17479.3,"country":"马来西亚"},
+		{"rank":87,"name":"中国移动通信集团公司(China Mobile Communications)","income":76673.3,"profit":9733.1,"country":"中国"},
+		{"rank":88,"name":"慕尼黑再保险公司(Munich Re Group)","income":76220.1,"profit":3207.8,"country":"德国"},
+		{"rank":89,"name":"东芝(Toshiba)","income":74705.5,"profit":1609.4,"country":"日本"},
+		{"rank":90,"name":"标致(Peugeot)","income":74250.6,"profit":1501.9,"country":"法国"},
+		{"rank":91,"name":"保诚集团(Prudential)","income":73597.7,"profit":2210.4,"country":"英国"},
+		{"rank":92,"name":"沃达丰(Vodafone)","income":71344,"profit":12389.3,"country":"英国"},
+		{"rank":93,"name":"德国邮政(Deutsche Post)","income":71120.9,"profit":3365.5,"country":"德国"},
+		{"rank":94,"name":"雷普索尔-Ypf公司(Repsol Ypf)","income":70456,"profit":6215.7,"country":"西班牙"},
+		{"rank":95,"name":"中国中铁股份有限公司(China Railway Group)","income":69973.3,"profit":1106.3,"country":"中国"},
+		{"rank":96,"name":"德克夏银行集团(Dexia Group)","income":69490.5,"profit":957.6,"country":"比利时"},
+		{"rank":97,"name":"法国bpce银行集团(Groupe Bpce)","income":69297.1,"profit":4821,"country":"法国"},
+		{"rank":98,"name":"印度石油公司(Indian Oil)","income":68836.7,"profit":1718.7,"country":"印度"},
+		{"rank":99,"name":"马拉松石油公司(Marathon Oil)","income":68413,"profit":2568,"country":"美国"},
+		{"rank":100,"name":"苏格兰皇家银行(Royal Bank Of Scotland)","income":68087.8,"profit":-1546.2,"country":"英国"}]
+	}};
+	
+	griddemo.loadData(top100of2011);
+	
+</script>
+</body>
+</html>

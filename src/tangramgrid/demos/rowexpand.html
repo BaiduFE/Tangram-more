@@ -1,0 +1,57 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram Grid Row Expand</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.rowexpand.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+	<h2>行数据展开</h2>
+<div id="gridwidthsub"></div>
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"gridwidthsub",
+		columns:[
+			{
+				field:'id',
+				width:30,
+				align:"center",
+				renderer:"rowexpand",//列类型rowexpand
+				title:"点击查看/收起详细信息",// +/-提示信息
+				onExpand:function(param){
+					//param: {expandedrow:expandedrow,expandedcell:expandedcell,data:cellclickdata}
+					param.expandedcell.innerHTML=baidu.string.format("<div style='height:50px;padding:30px;'>机器#{name}详细信息</div>",this.getData().data.list[param.data.rowIndex]);
+				},
+				onUnExpand:function(param){
+					//param: {expandedrow:expandedrow,expandedcell:expandedcell,data:cellclickdata}
+					console.log("onunexpand");
+				}
+			},
+			{field:'name',header:"机器名称",fix:true},
+			{field:'creator',header:"创建人",width:200},
+			{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+			{field:'lastVersion',header:"lastVersion",width:200},
+			{field:'createTime',header:"创建时间",width:180}
+		],
+		height:200,
+		autoHeight:true,
+		hoverhighlight:true,
+		loadMask:true,
+		url:"noahdata.json",
+		ajaxOption:{
+			method:"POST",
+			data:"a=1"
+		}
+	});
+	
+	//ajax加载数据
+	griddemo.request({b:2,a:3});
+	
+</script>
+</body>
+</html>

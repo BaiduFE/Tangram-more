@@ -1,0 +1,21 @@
+{
+	"success":true,
+	"message":"ok",
+	"data":{
+		"page":{
+			"total":"52"
+		},
+		"list":[
+			{"id":"42","nodeId":"1","name":"z0614_ui_sample_all","sysId":"3","creator":"yhf","createTime":"2011-06-14 14:58:37","lastVersion":"\u6682\u65e0","dataKey":"\/data\/82471ffb83615a57b9ab64826dd98061","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":"0"},
+			{"id":"41","nodeId":"1","name":"z0614_bws_sample","sysId":"3","creator":"yhf","createTime":"2011-06-14 14:55:22","lastVersion":"\u6682\u65e0","dataKey":"\/data\/645307039c1307733346d2f74e990bb2","publisher":"","publishTime":"","canAddVersion":0,"nodeName":"BAIDU","nodePath":"BAIDU","status":0},
+			{"id":"40","nodeId":"1","name":"z0614_ui_sample","sysId":"3","creator":"yhf","createTime":"2011-06-14 11:51:43","lastVersion":"\u6682\u65e0","dataKey":"\/data\/e80a106b9e02175e161edcccca00ff8a","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":"0"},
+			{"id":"39","nodeId":"1","name":"yzjtest061300","sysId":"3","creator":"yhf","createTime":"2011-06-13 17:33:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d264625a61e7b9b772437ccbd0b39822","publisher":"","publishTime":"","canAddVersion":0,"nodeName":"BAIDU","nodePath":"BAIDU","status":0},
+			{"id":"38","nodeId":"1","name":"cuijie_test","sysId":"3","creator":"yhf","createTime":"2011-06-13 15:05:56","lastVersion":"\u6682\u65e0","dataKey":"\/data\/107ffcb12c5c83c7db299624fd6f17ae","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":0},
+			{"id":"37","nodeId":"1","name":"test_da_reload","sysId":"3","creator":"yhf","createTime":"2011-06-09 15:10:34","lastVersion":"\u6682\u65e0","dataKey":"\/data\/d7c7da05c6a6a371ecb6ad809c60e0e9","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":0},
+			{"id":"36","nodeId":"1","name":"test_da","sysId":"3","creator":"yhf","createTime":"2011-06-09 15:09:39","lastVersion":"\u6682\u65e0","dataKey":"\/data\/a5ee0dac201f21956d7c94834b2dc407","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":"1"},
+			{"id":"35","nodeId":"1","name":"ui_single","sysId":"3","creator":"xyz","createTime":"2011-06-07 19:58:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/91e54f5ff3e195265c16f73b868b6122","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":1},
+			{"id":"34","nodeId":"1","name":"yanzhijietest060791","sysId":"3","creator":0,"createTime":"2011-06-07 10:54:16","lastVersion":"\u6682\u65e0","dataKey":"\/data\/8ec675a0c09417a21a68f3ecae52cc24","publisher":"","publishTime":"","canAddVersion":0,"nodeName":"BAIDU","nodePath":"BAIDU","status":0},
+			{"id":"33","nodeId":"1","name":"z_bws_back","sysId":"3","creator":"yhf","createTime":"2011-06-03 19:15:17","lastVersion":"\u6682\u65e0","dataKey":"\/data\/6bf9c48c5ddd25bbf9df36b66ac22566","publisher":"","publishTime":"","canAddVersion":1,"nodeName":"BAIDU","nodePath":"BAIDU","status":"0"}
+		]
+	}
+}

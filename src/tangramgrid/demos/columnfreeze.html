@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8"> 
+	<title>Tangram Grid Column Freeze</title>
+	<script type="text/javascript" src="../tangram/tangram-1.3.9.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.baseUI.source.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.js"></script>
+	<script type="text/javascript" src="../tangram/tangram.grid.columnfreeze.js"></script>
+	<link rel="stylesheet" href="../resources/tangram.grid.css" />
+</head>
+<body>
+	<h2>列冻结</h2>
+	
+<div id="freezecolgrid"></div>
+
+<script type="text/javascript">
+	//初始化
+	var griddemo = new baidu.ui.Grid({
+		element:"freezecolgrid",
+		freeze:3,//冻结前三列
+		columns:[
+			{field:'id',width:30,renderer:"checkbox"},
+			{field:'name',header:"机器名称",width:300},
+			{field:'creator',header:"创建人",width:200},
+			{field:'dataKey',header:"dataKey",width:400,align:"right",renderer:function(data){return data.cellvalue+"-formated";}},
+			{field:'lastVersion',header:"lastVersion",width:200},
+			{field:'canAddVersion',header:"是否可以添加版本",width:200,renderer:function(data){return data.cellvalue=="1"?"是":"否"}},
+			{field:'createTime',header:"创建时间",width:180}
+		],
+		height:180,
+		hoverhighlight:true,
+		loadMask:true,
+		selectMode:1,
+		url:"noahdata.json",
+		ajaxOption:{
+			method:"POST",
+			data:"a=1"
+		}
+	});
+	
+	//ajax加载数据
+	griddemo.request();
+	
+</script>
+<input type="button" value="隐藏机器名称列" onclick="griddemo.hideColumn('1');" />
+<input type="button" value="显示机器名称列"  onclick="griddemo.showColumn('1');"  />
+<input type="button" value="按照机器名称排序"  onclick="griddemo.reOrder('1','asc');"  />
+</body>
+</html>
